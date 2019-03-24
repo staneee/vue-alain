@@ -77,7 +77,7 @@ const message: any = {
     'component.noticeIcon.empty': '暂无数据',
     'menu.home': '首页',
     'menu.dashboard': 'Dashboard',
-    'menu.dashboard.analysis': '分析页',
+    'menu.dashboard.analysis': '分析页 by ts',
     'menu.dashboard.monitor': '监控页',
     'menu.dashboard.workplace': '工作台',
     'menu.form': '表单页',
