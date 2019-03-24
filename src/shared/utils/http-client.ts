@@ -21,6 +21,7 @@ httpClient.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
+import { Modal } from 'ant-design-vue'
 let vm = new Vue({});
 
 // response error interceptor
@@ -31,14 +32,21 @@ httpClient.interceptors.response.use((response) => {
     return response;
 }, (error) => {
     if (!!error.response && !!error.response.data.error && !!error.response.data.error.message && error.response.data.error.details) {
-        alert('1 ' + error.response.data.error.message);
-        // vm.$Modal.error({ title: error.response.data.error.message, content: error.response.data.error.details })
+        Modal.error({
+            title: error.response.data.error.message,
+            content: error.response.data.error.details
+        })
     } else if (!!error.response && !!error.response.data.error && !!error.response.data.error.message) {
-        alert('2 ' + error.response.data.error.message);
-        // vm.$Modal.error()
+        Modal.error({
+            title: abp.localization.localize("LoginFailed",AppConsts.localization.defaultLocalizationSourceName),
+            ontent: error.response.data.error.message
+        })
     } else if (!error.response) {
-        alert('3 UnknownError');
+        Modal.error({
+            content: abp.localization.localize('UnknownError', AppConsts.localization.defaultLocalizationSourceName)
+        });
     }
+
     return Promise.reject(error);
 })
 export default httpClient;

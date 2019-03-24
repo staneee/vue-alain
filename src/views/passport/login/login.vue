@@ -140,6 +140,13 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { State, Mutation, namespace } from "vuex-class";
+import AppComponentBase from "@/shared/component-base/app-component-base";
+import {
+  AccountServiceProxy,
+  TokenAuthServiceProxy,
+  AuthenticateModel
+} from "@/shared/service-proxies/service-proxies";
+import httpClient from "@/shared/utils/http-client";
 
 const userModule = namespace("user");
 
@@ -148,7 +155,7 @@ import axios from "axios";
 @Component({
   components: {}
 })
-export default class PassportLayout extends Vue {
+export default class PassportLayout extends AppComponentBase {
   private loginForm: any = null;
 
   private loading: boolean = false;
@@ -163,8 +170,14 @@ export default class PassportLayout extends Vue {
   @userModule.Mutation("loginSuccess")
   private loginSuccess: any;
 
+  private accountService: AccountServiceProxy;
+  private tokenService: TokenAuthServiceProxy;
+
   constructor() {
     super();
+
+    this.accountService = new AccountServiceProxy(undefined, httpClient);
+    this.tokenService = new TokenAuthServiceProxy(undefined, httpClient);
   }
 
   private mounted() {}
@@ -183,26 +196,34 @@ export default class PassportLayout extends Vue {
     this.loginForm.validateFields((err: any, values: any) => {
       if (!err) {
         this.loading = true;
-        axios
-          .post("/login", this.loginModel)
-          .then((res: any) => {
-            const resData = res.data;
-            if (resData.error) {
-              this.error = resData.error;
-              return;
-            }
-            this.loginSuccess({ token: resData.token });
-            this.$ss.set("token", resData.token);
-            const redirect = this.getRedirect();
-            if (redirect != null) {
-              this.$router.push(redirect);
-            } else {
-              this.$router.push("/");
-            }
-          })
-          .finally(() => {
-            this.loading = false;
-          });
+        let input: AuthenticateModel = new AuthenticateModel();
+        input.userNameOrEmailAddress = this.loginModel.username;
+        input.password = this.loginModel.password;
+        this.tokenService.authenticate(input).then(res => {
+          debugger
+        }).finally(()=>{
+          this.loading = false;
+        });
+        // axios
+        //   .post("/login", this.loginModel)
+        //   .then((res: any) => {
+        //     const resData = res.data;
+        //     if (resData.error) {
+        //       this.error = resData.error;
+        //       return;
+        //     }
+        //     this.loginSuccess({ token: resData.token });
+        //     this.$ss.set("token", resData.token);
+        //     const redirect = this.getRedirect();
+        //     if (redirect != null) {
+        //       this.$router.push(redirect);
+        //     } else {
+        //       this.$router.push("/");
+        //     }
+        //   })
+        //   .finally(() => {
+        //     this.loading = false;
+        //   });
       }
     });
   }

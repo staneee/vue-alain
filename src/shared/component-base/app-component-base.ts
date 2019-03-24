@@ -1,7 +1,7 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 import  AppConsts  from '../AppConsts';
 
-export default class AbpComponentBase extends Vue {
+export default class AppComponentBase extends Vue {
 
     /** 校验权限 */
     isGranted(permissionName: string): boolean {
