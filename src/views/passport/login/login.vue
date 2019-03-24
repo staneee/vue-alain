@@ -19,7 +19,7 @@
             <a-input
               size="large"
               type="password"
-              placeholder="888888"
+              placeholder="123qwe"
               v-model="loginModel.password"
             >
               <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)"/>
@@ -196,34 +196,34 @@ export default class PassportLayout extends AppComponentBase {
     this.loginForm.validateFields((err: any, values: any) => {
       if (!err) {
         this.loading = true;
-        let input: AuthenticateModel = new AuthenticateModel();
-        input.userNameOrEmailAddress = this.loginModel.username;
-        input.password = this.loginModel.password;
-        this.tokenService.authenticate(input).then(res => {
-          debugger
-        }).finally(()=>{
-          this.loading = false;
-        });
-        // axios
-        //   .post("/login", this.loginModel)
-        //   .then((res: any) => {
-        //     const resData = res.data;
-        //     if (resData.error) {
-        //       this.error = resData.error;
-        //       return;
-        //     }
-        //     this.loginSuccess({ token: resData.token });
-        //     this.$ss.set("token", resData.token);
-        //     const redirect = this.getRedirect();
-        //     if (redirect != null) {
-        //       this.$router.push(redirect);
-        //     } else {
-        //       this.$router.push("/");
-        //     }
-        //   })
-        //   .finally(() => {
-        //     this.loading = false;
-        //   });
+        // let input: AuthenticateModel = new AuthenticateModel();
+        // input.userNameOrEmailAddress = this.loginModel.username;
+        // input.password = this.loginModel.password;
+        // this.tokenService.authenticate(input).then(res => {
+        //   debugger
+        // }).finally(()=>{
+        //   this.loading = false;
+        // });
+        axios
+          .post("/login", this.loginModel)
+          .then((res: any) => {
+            const resData = res.data;
+            if (resData.error) {
+              this.error = resData.error;
+              return;
+            }
+            this.loginSuccess({ token: resData.token });
+            this.$ss.set("token", resData.token);
+            const redirect = this.getRedirect();
+            if (redirect != null) {
+              this.$router.push(redirect);
+            } else {
+              this.$router.push("/");
+            }
+          })
+          .finally(() => {
+            this.loading = false;
+          });
       }
     });
   }

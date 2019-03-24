@@ -66,6 +66,7 @@ export default class AdminSidebar extends Vue {
 
     get menuData() {
         const router: any = this.$router;
+        debugger
         return router.options.routes;
     }
 
