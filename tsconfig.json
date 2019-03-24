@@ -2,7 +2,10 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "strict": true,
+    "strict": false,
+    "declaration": false,
+    "strictNullChecks": false,
+    "sourceMap": true,
     "jsx": "preserve",
     "jsxFactory": "h",
     "importHelpers": true,
@@ -10,7 +13,6 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
     "baseUrl": ".",
     "types": [
       "node",

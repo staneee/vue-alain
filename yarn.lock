@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@aspnet/signalr@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@aspnet/signalr/-/signalr-1.0.0.tgz#26b10a32014a65c540cc5053cffa883c320788ce"
+  integrity sha512-7fXNdSTnp2y7a3i7BnvBpQpDEoG71DNq1J/Caowr+3v/nzGivnJApRg40VgBp6FlyeJqoBEQO/QuDPE0kTpczg==
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0.tgz#06e2ab19bdb535385559aabb5ba59729482800f8"
@@ -1160,6 +1165,11 @@ abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
+
+abp-web-resources@3.8.2:
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/abp-web-resources/-/abp-web-resources-3.8.2.tgz#b7768eb0757cff0266fd3c4e789af81e15c9dc96"
+  integrity sha512-3GOfWVMw0oDMIuEwv1Az9SKgDhhtGtjcJ18kreWrfRvLXy/xiXqg4la9yuJciKotksNwFB9Nwd2x9giFp1mi7g==
 
 accepts@~1.3.4, accepts@~1.3.5:
   version "1.3.5"
@@ -6477,10 +6487,22 @@ mockjs@^1.0.1-beta3:
   dependencies:
     commander "*"
 
+moment-timezone@^0.5.21:
+  version "0.5.23"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.23.tgz#7cbb00db2c14c71b19303cb47b0fb0a6d8651463"
+  integrity sha512-WHFH85DkCfiNMDX5D3X7hpNH3/PUhjTGcD0U1SgfBGZxJ3qUmJh5FdvaFjcClxOvB3rzdfj4oRffbI38jEnC1w==
+  dependencies:
+    moment ">= 2.9.0"
+
 moment@2.22.2, moment@^2.21.0:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
   integrity sha1-PCV/mDn8DpP/UxSWMiOeuQeD/2Y=
+
+"moment@>= 2.9.0":
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
 moment@^2.23.0:
   version "2.23.0"
@@ -6738,6 +6760,11 @@ npmlog@^4.0.2:
     console-control-strings "~1.1.0"
     gauge "~2.7.3"
     set-blocking "~2.0.0"
+
+nswag@^12.0.17:
+  version "12.0.17"
+  resolved "https://registry.yarnpkg.com/nswag/-/nswag-12.0.17.tgz#dfb4b42325d31837d3b967ccd710cf8e58ea5422"
+  integrity sha512-zLJb/MbWThQDFD+EXKTeyShe6Ps3di6LYP7m78qNK0jnh8vvMNet5ylZq4NpfT/zYQuDsG7kcx9kpcQMXm4XYQ==
 
 nth-check@^1.0.2, nth-check@~1.0.1:
   version "1.0.2"
