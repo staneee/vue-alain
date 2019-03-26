@@ -1,19 +1,19 @@
 <template>
 <div>
-    <av-page-header :title="$t(`menu.list.searchtable`)">
+    <av-page-header :title="l(`menu.list.searchtable`)">
         <div slot="breadcrumb">
             <a-breadcrumb>
                 <a-breadcrumb-item>
-                    <a >{{$t(`menu.home`)}}</a>
+                    <a >{{l(`menu.home`)}}</a>
                 </a-breadcrumb-item>
                 <a-breadcrumb-item>
-                    <a >{{$t(`menu.list`)}}</a>
+                    <a >{{l(`menu.list`)}}</a>
                 </a-breadcrumb-item>
-                <a-breadcrumb-item>{{$t(`menu.list.searchtable`)}}</a-breadcrumb-item>
+                <a-breadcrumb-item>{{l(`menu.list.searchtable`)}}</a-breadcrumb-item>
             </a-breadcrumb>
         </div>
         <div slot="content">
-            {{$t(`menu.list.searchtable`)}}
+            {{l(`menu.list.searchtable`)}}
         </div>
     </av-page-header>
 
@@ -160,7 +160,7 @@ import TestModal from './components/TestModal.vue';
 
 
 import modalService from '@/core/ModalService.ts';
-
+import AppComponentBase from '@/shared/component-base/app-component-base';
 const statusMap = ['default', 'processing', 'success', 'error'];
 const status = ['关闭', '运行中', '已上线', '异常'];
 
@@ -169,7 +169,7 @@ const status = ['关闭', '运行中', '已上线', '异常'];
         UpdateTaskForm,
     },
 })
-export default class QueryList extends Vue {
+export default class QueryList extends AppComponentBase {
     private searchForm: any;
 
     private searchFormLayout: any = {

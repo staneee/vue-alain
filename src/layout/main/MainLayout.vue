@@ -37,6 +37,8 @@ import AdminSidebar from './components/AdminSidebar.vue';
 import AdminFooter from './components/AdminFooter.vue';
 
 import * as _ from 'lodash';
+import AppComponentBase from '@/shared/component-base/app-component-base';
+
 
 @Component({
   components: {
@@ -46,7 +48,7 @@ import * as _ from 'lodash';
     AdminFooter,
   },
 })
-export default class MainLayout extends Vue {
+export default class MainLayout extends AppComponentBase {
 
   // 是否折叠
   @appModule.State('isCollapse')
@@ -73,7 +75,7 @@ export default class MainLayout extends Vue {
   get tabList() {
     _.forEach(this.reuseTabSource, (item: any) => {
       if ( item.i18n ) {
-        item.title = this.$t(item.i18n);
+        item.title = this.l(item.i18n);
       }
       return item;
     });

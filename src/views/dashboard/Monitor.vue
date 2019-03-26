@@ -2,24 +2,24 @@
   <div class="grid-content-main">
     <a-row :gutter="24">
           <a-col :xl="18" :lg="24" :md="24" :sm="24" :xs="24" style="margin-bottom: 24px">
-            <a-card :title="$t(`app.monitor.trading-activity`)" :bordered="false">
+            <a-card :title="l(`app.monitor.trading-activity`)" :bordered="false">
               <a-row>
                 <a-col :md="6" :sm="12" :xs="24">
                   <av-number-info
-                    :subTitle="$t(`app.monitor.total-transactions`)"
+                    :subTitle="l(`app.monitor.total-transactions`)"
                     suffix="元"
                     :total="$numeral(124543233).format('0,0')"
                   />
                 </a-col>
                 <a-col :md="6" :sm="12" :xs="24">
-                  <av-number-info :subTitle="$t(`app.monitor.sales-target`)" total="92%" />
+                  <av-number-info :subTitle="l(`app.monitor.sales-target`)" total="92%" />
                 </a-col>
                 <a-col :md="6" :sm="12" :xs="24">
-                  <av-number-info :subTitle="$t(`app.monitor.remaining-time`)" total="00:56:32" />
+                  <av-number-info :subTitle="l(`app.monitor.remaining-time`)" total="00:56:32" />
                 </a-col>
                 <a-col :md="6" :sm="12" :xs="24">
                   <av-number-info
-                    :subTitle="$t(`app.monitor.total-transactions-per-second`)"
+                    :subTitle="l(`app.monitor.total-transactions-per-second`)"
                     suffix="元"
                     :total="$numeral(234).format('0,0')"
                   />
@@ -36,13 +36,13 @@
             </a-card>
           </a-col>
           <a-col :xl="6" :lg="24" :md="24" :sm="24" :xs="24">
-            <a-card :title="$t(`app.monitor.activity-forecast`)" style="margin-bottom: 24px" :bordered="false">
+            <a-card :title="l(`app.monitor.activity-forecast`)" style="margin-bottom: 24px" :bordered="false">
               <!--
               <ActiveChart />
               -->
             </a-card>
             <a-card
-              :title="$t(`app.monitor.efficiency`)"
+              :title="l(`app.monitor.efficiency`)"
               style="margin-bottom: 24px"
               :bodyStyle="{ textAlign: 'center' }"
               :bordered="false"
@@ -53,7 +53,7 @@
         </a-row>
         <a-row :gutter="24">
           <a-col :xl="12" :lg="24" :sm="24" :xs="24">
-            <a-card :title="$t(`app.monitor.proportion-per-category`)" :bordered="false" class="pieCard">
+            <a-card :title="l(`app.monitor.proportion-per-category`)" :bordered="false" class="pieCard">
               <a-row style="padding: '16px 0'">
                 <a-col :span="8">
                   <av-pie
@@ -92,7 +92,7 @@
           </a-col>
           <a-col :xl="6" :lg="12" :sm="24" :xs="24">
             <a-card
-              :title="$t(`app.monitor.popular-searches`)"
+              :title="l(`app.monitor.popular-searches`)"
               :bordered="false"
               :bodyStyle="{ overflow: 'hidden' }"
             >
@@ -101,7 +101,7 @@
           </a-col>
           <a-col :xl="6" :lg="12" :sm="24" :xs="24">
             <a-card
-              :title="$t(`app.monitor.resource-surplus`)"
+              :title="l(`app.monitor.resource-surplus`)"
               :bodyStyle="{ textAlign: 'center', fontSize: 0 }"
               :bordered="false"
             >
@@ -116,8 +116,10 @@
 <script  lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import axios from 'axios';
+import AppComponentBase from '@/shared/component-base/app-component-base';
+
 @Component({})
-export default class Monitor extends Vue {
+export default class Monitor extends AppComponentBase {
 
   private chartList: any[] = [];
   private mounted() {

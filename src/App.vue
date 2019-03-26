@@ -15,6 +15,8 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 import { State, Mutation, namespace } from 'vuex-class';
+import AppComponentBase from '@/shared/component-base/app-component-base';
+
 // app模块
 const appModule = namespace('app');
 
@@ -25,7 +27,7 @@ const appModule = namespace('app');
   components: {
   },
 })
-export default class App extends Vue {
+export default class App extends AppComponentBase {
 
   // 折叠
   @appModule.State('isCollapse')
@@ -45,7 +47,7 @@ export default class App extends Vue {
   get title() {
     let title = this.doctitle.title;
     if (this.doctitle.i18n) {
-      title = this.$t(this.doctitle.i18n);
+      title = this.l(this.doctitle.i18n);
     }
     return this.appName ? `${title} - ${this.appName}` : title;
   }

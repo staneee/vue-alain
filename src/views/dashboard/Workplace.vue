@@ -4,15 +4,15 @@
       <div slot="breadcrumb">
         <a-breadcrumb>
           <a-breadcrumb-item>
-            <a >{{$t(`menu.home`)}}</a>
+            <a >{{l(`menu.home`)}}</a>
           </a-breadcrumb-item>
           <a-breadcrumb-item>
             <a >Dashboard</a>
           </a-breadcrumb-item>
-          <a-breadcrumb-item>{{$t(`menu.dashboard.workplace`)}}</a-breadcrumb-item>
+          <a-breadcrumb-item>{{l(`menu.dashboard.workplace`)}}</a-breadcrumb-item>
         </a-breadcrumb>
       </div>
-      <div slot="title">{{$t(`menu.dashboard.workplace`)}}</div>
+      <div slot="title">{{l(`menu.dashboard.workplace`)}}</div>
       <div  slot="content" class="page-content">
         <div class="avatar">
           <a-avatar src="https://gw.alipayobjects.com/zos/rmsportal/lctvVCLfRpYCkYxAsiVQ.png"></a-avatar>
@@ -138,13 +138,14 @@
 <script  lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Mutation, namespace } from 'vuex-class';
+import AppComponentBase from '@/shared/component-base/app-component-base';
 const appModule = namespace('app');
 
 @Component({
     components: {
     },
 })
-export default class Workplace extends Vue {
+export default class Workplace extends AppComponentBase {
 
     constructor() {
         super();

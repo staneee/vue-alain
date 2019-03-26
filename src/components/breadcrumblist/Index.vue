@@ -4,14 +4,14 @@
     <a-breadcrumb-item>
         <router-link to="/" style="color:#fff">
             <a-icon type="home" />
-            <span >{{$t(`menu.home`)}}</span>
+            <span >{{l(`menu.home`)}}</span>
         </router-link>
     </a-breadcrumb-item>
 
     <a-breadcrumb-item v-for="(item,index) in source" :key="index">
         <router-link :to="item.name" style="color:#fff">
             <a-icon v-if="item.meta.icon" :type="item.meta.icon" />
-            <span>{{$t(item.meta.i18n)}}</span>
+            <span>{{l(item.meta.i18n)}}</span>
         </router-link>
     </a-breadcrumb-item>
 </a-breadcrumb>
@@ -32,6 +32,7 @@ import {
     Watch,
 } from 'vue-property-decorator';
 import * as _ from 'lodash';
+import AppComponentBase from '@/shared/component-base/app-component-base';
 
 @Component({
     components: {
@@ -40,7 +41,7 @@ import * as _ from 'lodash';
         [Breadcrumb.Item.name]: Breadcrumb.Item,
     },
 })
-export default class BreadcrumbList extends Vue {
+export default class BreadcrumbList extends AppComponentBase {
 
     get source() {
         return this.$route.matched;

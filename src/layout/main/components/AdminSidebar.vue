@@ -46,11 +46,12 @@ import {
 const appModule = namespace('app');
 
 import * as _ from 'lodash';
+import AppComponentBase from '@/shared/component-base/app-component-base';
 
 @Component({
     components: {},
 })
-export default class AdminSidebar extends Vue {
+export default class AdminSidebar extends AppComponentBase {
 
     @appModule.State('isCollapse')
     private isCollapse!: boolean;
@@ -66,7 +67,6 @@ export default class AdminSidebar extends Vue {
 
     get menuData() {
         const router: any = this.$router;
-        debugger
         return router.options.routes;
     }
 
@@ -107,7 +107,7 @@ export default class AdminSidebar extends Vue {
 
     private displayMenuTitle(menu: any) {
         if (menu.meta.i18n) {
-            return this.$t(menu.meta.i18n);
+            return this.l(menu.meta.i18n);
         }
         return menu.meta.title;
     }

@@ -9,7 +9,7 @@ const router = {
         title: '工作台',
         icon: 'dashboard',
         routerGuard: true,
-        i18n: `menu.dashboard`,
+        i18n: `Dashboard`,
     },
     children: [{
       path: '/analysis',
@@ -18,7 +18,7 @@ const router = {
       meta: {
         title: '分析页',
         routerGuard: true,
-        i18n: `menu.dashboard.analysis`,
+        i18n: `DashboardAnalysis`,
       },
     },
     {

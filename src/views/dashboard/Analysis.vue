@@ -2,50 +2,50 @@
   <div>
 <a-row style="margin: 0 -12px">
       <a-col :sm="24" :md="12" :xl="6" style="padding: 12px 12px 24px;">
-        <av-chart-card :title="$t('app.analysis.total-sales')" total="￥ 189,345">
-          <a-tooltip :title="$t('app.analysis.introduce')" slot="action">
+        <av-chart-card :title="l('app.analysis.total-sales')" total="￥ 189,345">
+          <a-tooltip :title="l('app.analysis.introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
             <av-trend style="margin-right: 16px" 
-            :term="$t(`app.analysis.week`)" 
+            :term="l(`app.analysis.week`)" 
             :percent="12" 
             :is-increase="true" 
             :scale="0" />
             <av-trend 
-            :term="$t(`app.analysis.day`)" 
+            :term="l(`app.analysis.day`)" 
             :target="100" 
             :value="89" 
             :scale="0" />
           </div>
-          <div slot="footer">{{$t('app.analysis.day-sales')}}<span> ￥234.56</span></div>
+          <div slot="footer">{{l('app.analysis.day-sales')}}<span> ￥234.56</span></div>
         </av-chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" style="padding: 12px 12px 24px;">
-        <av-chart-card :title="$t('app.analysis.visits')" total="￥ 189,345">
-          <a-tooltip :title="$t('app.analysis.introduce')" slot="action">
+        <av-chart-card :title="l('app.analysis.visits')" total="￥ 189,345">
+          <a-tooltip :title="l('app.analysis.introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
             <av-mini-area color="#975FE4" :data="visitData" />
           </div>
-          <div slot="footer">{{$t(`app.analysis.day-visits`)}}<span> 123,4</span></div>
+          <div slot="footer">{{l(`app.analysis.day-visits`)}}<span> 123,4</span></div>
         </av-chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" style="padding: 12px 12px 24px;">
-        <av-chart-card :title="$t(`app.analysis.payments`)" total="￥ 189,345">
-          <a-tooltip :title="$t('app.analysis.introduce')" slot="action">
+        <av-chart-card :title="l(`app.analysis.payments`)" total="￥ 189,345">
+          <a-tooltip :title="l('app.analysis.introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
             <av-mini-bar :data="visitData"/>
           </div>
-          <div slot="footer">{{$t(`app.analysis.conversion-rate`)}} <span>60%</span></div>
+          <div slot="footer">{{l(`app.analysis.conversion-rate`)}} <span>60%</span></div>
         </av-chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" style="padding: 12px 12px 24px;">
-        <av-chart-card :title="$t(`app.analysis.operational-effect`)" total="73%">
-          <a-tooltip :title="$t('app.analysis.introduce')" slot="action">
+        <av-chart-card :title="l(`app.analysis.operational-effect`)" total="73%">
+          <a-tooltip :title="l('app.analysis.introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
@@ -53,12 +53,12 @@
           </div>
           <div slot="footer">
             <av-trend style="margin-right: 16px" 
-            :term="$t(`app.analysis.week`)" 
+            :term="l(`app.analysis.week`)" 
             :percent="12" 
             :is-increase="true" 
             :scale="0" />
             <av-trend 
-            :term="$t(`app.analysis.day`)" 
+            :term="l(`app.analysis.day`)" 
             :target="100" 
             :value="89" 
             :scale="0" />
@@ -76,16 +76,16 @@
       <div class="salesExtraWrap">
         <div class="salesExtra">
           <a :class="this.isActive('today')" @click="selectDate('today')">
-            {{$t(`app.analysis.all-day`)}}
+            {{l(`app.analysis.all-day`)}}
           </a>
           <a :class="this.isActive('week')" @click="selectDate('week')">
-            {{$t(`app.analysis.all-week`)}}
+            {{l(`app.analysis.all-week`)}}
           </a>
           <a :class="this.isActive('month')" @click="selectDate('month')">
-            {{$t(`app.analysis.all-month`)}}
+            {{l(`app.analysis.all-month`)}}
           </a>
           <a  :class="this.isActive('year')" @click="selectDate('year')">
-            {{$t(`app.analysis.all-year`)}}
+            {{l(`app.analysis.all-year`)}}
           </a>
         </div>
         <a-range-picker :value="rangePickerValue" @change="handleRangePickerChange" :style="{ width: 256 }"/>
@@ -93,14 +93,14 @@
 
             </div>
             <a-tab-pane
-                :tab="$t(`app.analysis.sales`)"
+                :tab="l(`app.analysis.sales`)"
                 key="sales">
                 <a-row>
                   <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
                     <div class="salesBar">
                       <av-bar
                         :height="295"
-                        :title="$t(`app.analysis.sales-trend`)"
+                        :title="l(`app.analysis.sales-trend`)"
                         :data="salesData"
                       />
                     </div>
@@ -108,7 +108,7 @@
                   <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
                     <div class="salesRank">
                       <h4 class="rankingTitle">
-                        {{$t(`app.analysis.sales-ranking`)}}
+                        {{l(`app.analysis.sales-ranking`)}}
                       </h4>
                       <ul class="rankingList">
                             <li :key='item.title' v-for="(item,i) in rankingListData">
@@ -132,14 +132,14 @@
                 </a-row>
             </a-tab-pane>
             <a-tab-pane
-                :tab="$t(`app.analysis.visits`)"
+                :tab="l(`app.analysis.visits`)"
                 key="views">
                 <a-row>
                   <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
                     <div  class="salesBar">
                       <av-bar
                         :height="292"
-                        :title="$t(`app.analysis.visits-trend`)"
+                        :title="l(`app.analysis.visits-trend`)"
                         :data="salesData"
                       />
                     </div>
@@ -147,7 +147,7 @@
                   <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
                     <div class="salesRank">
                       <h4 class="rankingTitle">
-                        {{$t(`app.analysis.visits-ranking`)}}
+                        {{l(`app.analysis.visits-ranking`)}}
                       </h4>
                       <ul class="rankingList">
                         
@@ -179,7 +179,7 @@
           <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
             <a-card
               :bordered="false"
-              :title="$t(`app.analysis.online-top-search`)"
+              :title="l(`app.analysis.online-top-search`)"
               :style="{ 'margin-top': '24px' }"
             >
               <div slot="extra">更多操作</div>
@@ -191,9 +191,9 @@
                         :subTotal="17.1">
 
                     <span slot="subTitle">
-                      {{$t(`app.analysis.search-users`)}}
+                      {{l(`app.analysis.search-users`)}}
                       <a-tooltip
-                          :title="$t('app.analysis.introduce')"
+                          :title="l('app.analysis.introduce')"
                         >
                           <a-icon style="margin-left: 8" type="info-circle-o" />
                         </a-tooltip>
@@ -208,7 +208,7 @@
                         status="down"
                         :subTotal="26.2">
                     <span slot="subTitle">
-                      {{$t(`app.analysis.per-capita-search`)}}
+                      {{l(`app.analysis.per-capita-search`)}}
                     </span>
                   </av-number-info>
                   <av-mini-area line style="height: 45px" :data="visitData2" />
@@ -236,7 +236,7 @@
             <a-card
               class="salesCard"
               :bordered="false"
-              :title="$t(`app.analysis.the-proportion-of-sales`)"
+              :title="l(`app.analysis.the-proportion-of-sales`)"
               :bodyStyle="{ padding: 24 }"
               :style="{ 'margin-top': '24px', 'min-height': '509px' }"
             >
@@ -245,24 +245,24 @@
             <div style="padding-bottom:15px">
                     <a-radio-group v-model="salesType">
                       <a-radio-button value="all">
-                        {{$t(`app.analysis.channel.all`)}}
+                        {{l(`app.analysis.channel.all`)}}
                       </a-radio-button>
                       <a-radio-button value="online">
-                        {{$t(`app.analysis.channel.online`)}}
+                        {{l(`app.analysis.channel.online`)}}
                       </a-radio-button>
                       <a-radio-button value="stores">
-                        {{$t(`app.analysis.channel.stores`)}}
+                        {{l(`app.analysis.channel.stores`)}}
                       </a-radio-button>
                     </a-radio-group>
                   </div>
               <h4 :style="{ marginTop: 8, marginBottom: 32 }">
-                {{$t(`app.analysis.sales`)}}
+                {{l(`app.analysis.sales`)}}
               </h4>
               <av-pie
                 hasLegend
                 hasLabel
                 hasTooltip
-                :title="$t(`app.analysis.sales`)"
+                :title="l(`app.analysis.sales`)"
                 :total="this.pieTotal"
                 :data="salesPieData"
                 style="height:248px"
@@ -290,7 +290,7 @@
                   <a-col :span="12">
                     <av-number-info
                       :title="shop.name"
-                      :subTitle="$t(`app.analysis.conversion-rate`)"
+                      :subTitle="l(`app.analysis.conversion-rate`)"
                       :gap="2"
                       :total="`${shop.cvr * 100}%`"
                     />
@@ -336,7 +336,7 @@ import moment from 'moment';
 import { getTimeDistance } from '@/util/util';
 import {format} from 'date-fns';
 import axios from 'axios';
-
+import AppComponentBase from '@/shared/component-base/app-component-base';
 const rankingListDataSource: any[] = [];
 for (let i = 0; i < 7; i += 1) {
   rankingListDataSource.push({
@@ -348,7 +348,7 @@ for (let i = 0; i < 7; i += 1) {
 @Component({
   components: {},
 })
-export default class Analysis extends Vue {
+export default class Analysis extends AppComponentBase {
   private rangePickerValue: moment.Moment[] = getTimeDistance('year');
 
   private rankingListData: any[] = rankingListDataSource;
@@ -406,12 +406,12 @@ export default class Analysis extends Vue {
   get columns() {
     return [
       {
-        title: this.$t(`app.analysis.table.rank`),
+        title: this.l(`app.analysis.table.rank`),
         dataIndex: 'index',
         key: 'index',
       },
       {
-        title: this.$t(`app.analysis.table.search-keyword`),
+        title: this.l(`app.analysis.table.search-keyword`),
         dataIndex: 'keyword',
         key: 'keyword',
         scopedSlots: {
@@ -419,14 +419,14 @@ export default class Analysis extends Vue {
         },
       },
       {
-        title: this.$t(`app.analysis.table.users`),
+        title: this.l(`app.analysis.table.users`),
         dataIndex: 'count',
         key: 'count',
         sorter: (a: any, b: any) => a.count - b.count,
         class: 'alignRight',
       },
       {
-        title: this.$t(`app.analysis.table.weekly-range`),
+        title: this.l(`app.analysis.table.weekly-range`),
         dataIndex: 'range',
         key: 'range',
         sorter: (a: any, b: any) => a.range - b.range,

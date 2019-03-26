@@ -2,11 +2,11 @@
 <a-dropdown>
     <div class="item">
         <a-icon type="global" />
-        <span>{{$t(`lang.${this.$i18n.locale}`)}}</span>
+        <span>{l(`lang.${this.$i18n.locale}`)}}</span>
     </div>
     <a-menu slot="overlay" @click="localeChange">
         <a-menu-item v-for="(locale) in localeList()" :key="locale.key">
-            <a href="javascript:;">{{$t(`lang.${locale.key}`)}}</a>
+            <a href="javascript:;">{{l(`lang.${locale.key}`)}}</a>
         </a-menu-item>
     </a-menu>
 </a-dropdown>
@@ -20,11 +20,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Mutation, namespace } from 'vuex-class';
 
 import localeService from '@/core/localeService';
-
+import AppComponentBase from '@/shared/component-base/app-component-base';
 import * as _ from 'lodash';
 
 @Component({})
-export default class SelectLange extends Vue {
+export default class SelectLange extends AppComponentBase {
 
     /**
      * 多语言列表
