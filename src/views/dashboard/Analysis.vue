@@ -337,6 +337,10 @@ import { getTimeDistance } from '@/util/util';
 import {format} from 'date-fns';
 import axios from 'axios';
 import AppComponentBase from '@/shared/component-base/app-component-base';
+
+import { UserServiceProxy } from '@/shared/service-proxies/service-proxies';
+import httpClient from '@/shared/utils/http-client';
+
 const rankingListDataSource: any[] = [];
 for (let i = 0; i < 7; i += 1) {
   rankingListDataSource.push({
@@ -375,8 +379,14 @@ export default class Analysis extends AppComponentBase {
 
   private offlineData: any[] = [];
 
+  private userService:UserServiceProxy;
+
   constructor() {
     super();
+    this.userService=new UserServiceProxy(undefined,httpClient);
+     this.userService.getAll(undefined,undefined,0,10).then((res)=>{
+       debugger
+     });
   }
 
   private handleTabChange(name: string) {
