@@ -16,9 +16,8 @@ import './directives/index';
 import AppPreBootstrap from './AppPreBootstrap';
 import { SessionServiceProxy } from './shared/service-proxies/service-proxies';
 import httpClient from './shared/utils/http-client';
-import AppConsts from './shared/AppConsts';
-import Util from './shared/utils/util';
-import { async } from 'rxjs/internal/scheduler/async';
+
+import * as _ from 'lodash';
 
 // 创建vue实例
 const rootApp = new Vue({
@@ -30,16 +29,9 @@ const rootApp = new Vue({
 
 
 async function main() {
-  // 获取appconfig信息
-  var result = await AppPreBootstrap.getApplicationConfig();
-  AppConsts.appBaseUrl = window.location.protocol + '//' + window.location.host;
-  AppConsts.remoteServiceBaseUrl = result.data.remoteServiceBaseUrl;
-  // 获取当前(未)登陆用户系统配置信息
-  result = await AppPreBootstrap.getUserConfiguration();
-  (<any>abp) = Util.extend(true, abp, result.data);
-  abp.localization.defaultSourceName = AppConsts.localization.defaultLocalizationSourceName;
+  await AppPreBootstrap.bootstrap();
   // 获取(未)登陆用户信息
-  result = await (new SessionServiceProxy('', httpClient).getCurrentLoginInformations());
+  var result = await (new SessionServiceProxy('', httpClient).getCurrentLoginInformations());
 }
 
 main().then(() => {

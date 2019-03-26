@@ -1,4 +1,12 @@
 {
-    "remoteServiceBaseUrl": "http://localhost:21021",
-    "appBaseUrl": "http://localhost:8080"
+    "momentLocaleMappings": [
+        {
+            "from": "en",
+            "to": "en"
+        },
+        {
+            "from": "zh-Hans",
+            "to": "zh-cn"
+        }
+    ]
 }

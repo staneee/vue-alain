@@ -3,13 +3,13 @@ const AppConsts = {
         defaultAdminUserName: 'admin'
     },
     localization: {
-        defaultLocalizationSourceName: 'ABPFreeVue'
+        defaultLocalizationSourceName: 'YoyoCmsTemplate'
     },
     authorization: {
         encrptedAuthTokenName: 'enc_auth_token'
     },
     appBaseUrl: '',
-    remoteServiceBaseUrl: process.env.NODE_ENV === 'production' ? 'https://yourdomain' : 'http://localhost:21021',
+    remoteServiceBaseUrl: process.env.NODE_ENV === 'production' ? 'https://yourdomain' : 'http://localhost:6297',
 
     /** 本地化 */
     l: (key: string, ...args: any[]): string => {
@@ -27,6 +27,8 @@ const AppConsts = {
         }
 
         return abp.utils.formatString(localizedText, args);
-    }
+    },
+    /** 后端本地化和moment.js本地化映射 */
+    momentLocaleMappings: null,
 }
 export default AppConsts

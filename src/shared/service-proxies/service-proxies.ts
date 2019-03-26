@@ -10,7 +10,7 @@
 import 'rxjs/add/operator/finally';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import moment from 'moment';
+import  moment from 'moment';
 
 export class AccountServiceProxy {
     private instance: AxiosInstance;
@@ -70,6 +70,50 @@ export class AccountServiceProxy {
      * @param input (optional) 
      * @return Success
      */
+    resolveTenantId(input: ResolveTenantIdInput | null | undefined): Promise<number> {
+        let url_ = this.baseUrl + "/api/services/app/Account/ResolveTenantId";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processResolveTenantId(_response);
+        });
+    }
+
+    protected processResolveTenantId(response: AxiosResponse): Promise<number> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<number>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
     register(input: RegisterInput | null | undefined): Promise<RegisterOutput> {
         let url_ = this.baseUrl + "/api/services/app/Account/Register";
         url_ = url_.replace(/[?&]$/, "");
@@ -109,24 +153,13 @@ export class AccountServiceProxy {
         }
         return Promise.resolve<RegisterOutput>(<any>null);
     }
-}
-
-export class ConfigurationServiceProxy {
-    private instance: AxiosInstance;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(baseUrl?: string, instance?: AxiosInstance) {
-        this.instance = instance ? instance : axios.create();
-        this.baseUrl = baseUrl ? baseUrl : "";
-    }
 
     /**
      * @param input (optional) 
      * @return Success
      */
-    changeUiTheme(input: ChangeUiThemeInput | null | undefined): Promise<void> {
-        let url_ = this.baseUrl + "/api/services/app/Configuration/ChangeUiTheme";
+    sendPasswordResetCode(input: SendPasswordResetCodeInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Account/SendPasswordResetCode";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(input);
@@ -141,11 +174,2484 @@ export class ConfigurationServiceProxy {
         };
 
         return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processChangeUiTheme(_response);
+            return this.processSendPasswordResetCode(_response);
         });
     }
 
-    protected processChangeUiTheme(response: AxiosResponse): Promise<void> {
+    protected processSendPasswordResetCode(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * 重置密码
+     * @param input (optional) 
+     * @return Success
+     */
+    resetPasswordAsync(input: ResetPasswordInput | null | undefined): Promise<ResetPasswordOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Account/ResetPasswordAsync";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processResetPasswordAsync(_response);
+        });
+    }
+
+    protected processResetPasswordAsync(response: AxiosResponse): Promise<ResetPasswordOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? ResetPasswordOutput.fromJS(resultData200) : new ResetPasswordOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ResetPasswordOutput>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    sendEmailActivationLink(input: SendEmailActivationLinkInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Account/SendEmailActivationLink";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processSendEmailActivationLink(_response);
+        });
+    }
+
+    protected processSendEmailActivationLink(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    activateEmail(input: ActivateEmailInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Account/ActivateEmail";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processActivateEmail(_response);
+        });
+    }
+
+    protected processActivateEmail(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    impersonate(input: ImpersonateInput | null | undefined): Promise<ImpersonateOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Account/Impersonate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processImpersonate(_response);
+        });
+    }
+
+    protected processImpersonate(response: AxiosResponse): Promise<ImpersonateOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? ImpersonateOutput.fromJS(resultData200) : new ImpersonateOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ImpersonateOutput>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    backToImpersonator(): Promise<ImpersonateOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Account/BackToImpersonator";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "POST",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processBackToImpersonator(_response);
+        });
+    }
+
+    protected processBackToImpersonator(response: AxiosResponse): Promise<ImpersonateOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? ImpersonateOutput.fromJS(resultData200) : new ImpersonateOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ImpersonateOutput>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    switchToLinkedAccount(input: SwitchToLinkedAccountInput | null | undefined): Promise<SwitchToLinkedAccountOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Account/SwitchToLinkedAccount";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processSwitchToLinkedAccount(_response);
+        });
+    }
+
+    protected processSwitchToLinkedAccount(response: AxiosResponse): Promise<SwitchToLinkedAccountOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? SwitchToLinkedAccountOutput.fromJS(resultData200) : new SwitchToLinkedAccountOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<SwitchToLinkedAccountOutput>(<any>null);
+    }
+}
+
+export class AuditLogServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param startDate (optional) 开始时间
+     * @param endDate (optional) 结束时间
+     * @param userName (optional) 用户名
+     * @param serviceName (optional) 服务名称
+     * @param methodName (optional) 方法名称
+     * @param browserInfo (optional) 浏览器信息
+     * @param hasException (optional) 是否包含异常
+     * @param minExecutionDuration (optional) 
+     * @param maxExecutionDuration (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getPagedAuditLogs(startDate: moment.Moment | null | undefined, endDate: moment.Moment | null | undefined, userName: string | null | undefined, serviceName: string | null | undefined, methodName: string | null | undefined, browserInfo: string | null | undefined, hasException: boolean | null | undefined, minExecutionDuration: number | null | undefined, maxExecutionDuration: number | null | undefined, sorting: string | null | undefined, maxResultCount: number | null | undefined, skipCount: number | null | undefined): Promise<PagedResultDtoOfAuditLogListDto> {
+        let url_ = this.baseUrl + "/api/services/app/AuditLog/GetPagedAuditLogs?";
+        if (startDate !== undefined)
+            url_ += "StartDate=" + encodeURIComponent(startDate ? "" + startDate.toJSON() : "") + "&"; 
+        if (endDate !== undefined)
+            url_ += "EndDate=" + encodeURIComponent(endDate ? "" + endDate.toJSON() : "") + "&"; 
+        if (userName !== undefined)
+            url_ += "UserName=" + encodeURIComponent("" + userName) + "&"; 
+        if (serviceName !== undefined)
+            url_ += "ServiceName=" + encodeURIComponent("" + serviceName) + "&"; 
+        if (methodName !== undefined)
+            url_ += "MethodName=" + encodeURIComponent("" + methodName) + "&"; 
+        if (browserInfo !== undefined)
+            url_ += "BrowserInfo=" + encodeURIComponent("" + browserInfo) + "&"; 
+        if (hasException !== undefined)
+            url_ += "HasException=" + encodeURIComponent("" + hasException) + "&"; 
+        if (minExecutionDuration !== undefined)
+            url_ += "MinExecutionDuration=" + encodeURIComponent("" + minExecutionDuration) + "&"; 
+        if (maxExecutionDuration !== undefined)
+            url_ += "MaxExecutionDuration=" + encodeURIComponent("" + maxExecutionDuration) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetPagedAuditLogs(_response);
+        });
+    }
+
+    protected processGetPagedAuditLogs(response: AxiosResponse): Promise<PagedResultDtoOfAuditLogListDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? PagedResultDtoOfAuditLogListDto.fromJS(resultData200) : new PagedResultDtoOfAuditLogListDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<PagedResultDtoOfAuditLogListDto>(<any>null);
+    }
+}
+
+export class CommonLookupServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param onlyFreeItems (optional) 
+     * @return Success
+     */
+    getEditionsForCombobox(onlyFreeItems: boolean | null | undefined): Promise<ListResultDtoOfSubscribableEditionComboboxItemDto> {
+        let url_ = this.baseUrl + "/api/services/app/CommonLookup/GetEditionsForCombobox?";
+        if (onlyFreeItems !== undefined)
+            url_ += "onlyFreeItems=" + encodeURIComponent("" + onlyFreeItems) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetEditionsForCombobox(_response);
+        });
+    }
+
+    protected processGetEditionsForCombobox(response: AxiosResponse): Promise<ListResultDtoOfSubscribableEditionComboboxItemDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? ListResultDtoOfSubscribableEditionComboboxItemDto.fromJS(resultData200) : new ListResultDtoOfSubscribableEditionComboboxItemDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ListResultDtoOfSubscribableEditionComboboxItemDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    findUsers(input: CommonLookupFindUsersInput | null | undefined): Promise<PagedResultDtoOfNameValueDto> {
+        let url_ = this.baseUrl + "/api/services/app/CommonLookup/FindUsers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processFindUsers(_response);
+        });
+    }
+
+    protected processFindUsers(response: AxiosResponse): Promise<PagedResultDtoOfNameValueDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? PagedResultDtoOfNameValueDto.fromJS(resultData200) : new PagedResultDtoOfNameValueDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<PagedResultDtoOfNameValueDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getDefaultEditionName(): Promise<GetDefaultEditionNameOutput> {
+        let url_ = this.baseUrl + "/api/services/app/CommonLookup/GetDefaultEditionName";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetDefaultEditionName(_response);
+        });
+    }
+
+    protected processGetDefaultEditionName(response: AxiosResponse): Promise<GetDefaultEditionNameOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? GetDefaultEditionNameOutput.fromJS(resultData200) : new GetDefaultEditionNameOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<GetDefaultEditionNameOutput>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getValidateCodeTypesForCombobox(): Promise<ListResultDtoOfComboboxItemDtoTOfInt32> {
+        let url_ = this.baseUrl + "/api/services/app/CommonLookup/GetValidateCodeTypesForCombobox";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetValidateCodeTypesForCombobox(_response);
+        });
+    }
+
+    protected processGetValidateCodeTypesForCombobox(response: AxiosResponse): Promise<ListResultDtoOfComboboxItemDtoTOfInt32> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? ListResultDtoOfComboboxItemDtoTOfInt32.fromJS(resultData200) : new ListResultDtoOfComboboxItemDtoTOfInt32();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ListResultDtoOfComboboxItemDtoTOfInt32>(<any>null);
+    }
+}
+
+export class EditionServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getEditions(): Promise<ListResultDtoOfEditionListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Edition/GetEditions";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetEditions(_response);
+        });
+    }
+
+    protected processGetEditions(response: AxiosResponse): Promise<ListResultDtoOfEditionListDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? ListResultDtoOfEditionListDto.fromJS(resultData200) : new ListResultDtoOfEditionListDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ListResultDtoOfEditionListDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getEditionForEdit(id: number | null | undefined): Promise<GetEditionEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Edition/GetEditionForEdit?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetEditionForEdit(_response);
+        });
+    }
+
+    protected processGetEditionForEdit(response: AxiosResponse): Promise<GetEditionEditOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? GetEditionEditOutput.fromJS(resultData200) : new GetEditionEditOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<GetEditionEditOutput>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    createOrUpdateEdition(input: CreateOrUpdateEditionDto | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Edition/CreateOrUpdateEdition";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processCreateOrUpdateEdition(_response);
+        });
+    }
+
+    protected processCreateOrUpdateEdition(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteEdition(id: number | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Edition/DeleteEdition?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "DELETE",
+            url: url_,
+            headers: {
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processDeleteEdition(_response);
+        });
+    }
+
+    protected processDeleteEdition(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param selectedEditionId (optional) 
+     * @param addAllItem (optional) 
+     * @param onlyFreeItems (optional) 
+     * @return Success
+     */
+    getEditionComboboxItems(selectedEditionId: number | null | undefined, addAllItem: boolean | null | undefined, onlyFreeItems: boolean | null | undefined): Promise<SubscribableEditionComboboxItemDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Edition/GetEditionComboboxItems?";
+        if (selectedEditionId !== undefined)
+            url_ += "selectedEditionId=" + encodeURIComponent("" + selectedEditionId) + "&"; 
+        if (addAllItem !== undefined)
+            url_ += "addAllItem=" + encodeURIComponent("" + addAllItem) + "&"; 
+        if (onlyFreeItems !== undefined)
+            url_ += "onlyFreeItems=" + encodeURIComponent("" + onlyFreeItems) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetEditionComboboxItems(_response);
+        });
+    }
+
+    protected processGetEditionComboboxItems(response: AxiosResponse): Promise<SubscribableEditionComboboxItemDto[]> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(SubscribableEditionComboboxItemDto.fromJS(item));
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<SubscribableEditionComboboxItemDto[]>(<any>null);
+    }
+}
+
+export class HostCachingServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAllCaches(): Promise<ListResultDtoOfHostCacheDto> {
+        let url_ = this.baseUrl + "/api/services/app/HostCaching/GetAllCaches";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetAllCaches(_response);
+        });
+    }
+
+    protected processGetAllCaches(response: AxiosResponse): Promise<ListResultDtoOfHostCacheDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? ListResultDtoOfHostCacheDto.fromJS(resultData200) : new ListResultDtoOfHostCacheDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ListResultDtoOfHostCacheDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    clearCache(input: EntityDtoOfString | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/HostCaching/ClearCache";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processClearCache(_response);
+        });
+    }
+
+    protected processClearCache(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    clearAllCaches(): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/HostCaching/ClearAllCaches";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "POST",
+            url: url_,
+            headers: {
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processClearAllCaches(_response);
+        });
+    }
+
+    protected processClearAllCaches(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+}
+
+export class HostSettingsServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAllSettings(): Promise<HostSettingsEditDto> {
+        let url_ = this.baseUrl + "/api/services/app/HostSettings/GetAllSettings";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetAllSettings(_response);
+        });
+    }
+
+    protected processGetAllSettings(response: AxiosResponse): Promise<HostSettingsEditDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? HostSettingsEditDto.fromJS(resultData200) : new HostSettingsEditDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<HostSettingsEditDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    updateAllSettings(input: HostSettingsEditDto | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/HostSettings/UpdateAllSettings";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "PUT",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processUpdateAllSettings(_response);
+        });
+    }
+
+    protected processUpdateAllSettings(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    sendTestEmail(input: SendTestEmailInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/HostSettings/SendTestEmail";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processSendTestEmail(_response);
+        });
+    }
+
+    protected processSendTestEmail(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+}
+
+export class LanguageServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getLanguages(): Promise<GetLanguagesOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Language/GetLanguages";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetLanguages(_response);
+        });
+    }
+
+    protected processGetLanguages(response: AxiosResponse): Promise<GetLanguagesOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? GetLanguagesOutput.fromJS(resultData200) : new GetLanguagesOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<GetLanguagesOutput>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    createOrUpdateLanguage(input: CreateOrUpdateLanguageInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Language/CreateOrUpdateLanguage";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processCreateOrUpdateLanguage(_response);
+        });
+    }
+
+    protected processCreateOrUpdateLanguage(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getLanguageForEdit(id: number | null | undefined): Promise<GetLanguageForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Language/GetLanguageForEdit?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetLanguageForEdit(_response);
+        });
+    }
+
+    protected processGetLanguageForEdit(response: AxiosResponse): Promise<GetLanguageForEditOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? GetLanguageForEditOutput.fromJS(resultData200) : new GetLanguageForEditOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<GetLanguageForEditOutput>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteLanguage(id: number | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Language/DeleteLanguage?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "DELETE",
+            url: url_,
+            headers: {
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processDeleteLanguage(_response);
+        });
+    }
+
+    protected processDeleteLanguage(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    setDefaultLanguage(input: SetDefaultLanguageInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Language/SetDefaultLanguage";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processSetDefaultLanguage(_response);
+        });
+    }
+
+    protected processSetDefaultLanguage(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param sourceName 语言名称
+     * @param baseLanguageName (optional) 原语言名称
+     * @param targetLanguageName 目标语言名称
+     * @param targetValueFilter (optional) 目标值过滤
+     * @param filterText (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getLanguageTexts(sourceName: string, baseLanguageName: string | null | undefined, targetLanguageName: string, targetValueFilter: string | null | undefined, filterText: string | null | undefined, sorting: string | null | undefined, maxResultCount: number | null | undefined, skipCount: number | null | undefined): Promise<PagedResultDtoOfLanguageTextListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Language/GetLanguageTexts?";
+        if (sourceName === undefined || sourceName === null)
+            throw new Error("The parameter 'sourceName' must be defined and cannot be null.");
+        else
+            url_ += "SourceName=" + encodeURIComponent("" + sourceName) + "&"; 
+        if (baseLanguageName !== undefined)
+            url_ += "BaseLanguageName=" + encodeURIComponent("" + baseLanguageName) + "&"; 
+        if (targetLanguageName === undefined || targetLanguageName === null)
+            throw new Error("The parameter 'targetLanguageName' must be defined and cannot be null.");
+        else
+            url_ += "TargetLanguageName=" + encodeURIComponent("" + targetLanguageName) + "&"; 
+        if (targetValueFilter !== undefined)
+            url_ += "TargetValueFilter=" + encodeURIComponent("" + targetValueFilter) + "&"; 
+        if (filterText !== undefined)
+            url_ += "FilterText=" + encodeURIComponent("" + filterText) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetLanguageTexts(_response);
+        });
+    }
+
+    protected processGetLanguageTexts(response: AxiosResponse): Promise<PagedResultDtoOfLanguageTextListDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? PagedResultDtoOfLanguageTextListDto.fromJS(resultData200) : new PagedResultDtoOfLanguageTextListDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<PagedResultDtoOfLanguageTextListDto>(<any>null);
+    }
+
+    /**
+     * 修改语言的文本内容
+     * @param input (optional) 
+     * @return Success
+     */
+    updateLanguageText(input: UpdateLanguageTextInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Language/UpdateLanguageText";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "PUT",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processUpdateLanguageText(_response);
+        });
+    }
+
+    protected processUpdateLanguageText(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * 批量删除
+     * @param ids (optional) 
+     * @return Success
+     */
+    batchDelete(ids: number[] | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Language/BatchDelete";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(ids);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processBatchDelete(_response);
+        });
+    }
+
+    protected processBatchDelete(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+}
+
+export class NotificationServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param state (optional) 是否阅读枚举 0是未读 1是已经阅读
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getPagedUserNotificationsAsync(state: State | null | undefined, maxResultCount: number | null | undefined, skipCount: number | null | undefined): Promise<GetNotificationsOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Notification/GetPagedUserNotificationsAsync?";
+        if (state !== undefined)
+            url_ += "State=" + encodeURIComponent("" + state) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetPagedUserNotificationsAsync(_response);
+        });
+    }
+
+    protected processGetPagedUserNotificationsAsync(response: AxiosResponse): Promise<GetNotificationsOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? GetNotificationsOutput.fromJS(resultData200) : new GetNotificationsOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<GetNotificationsOutput>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    makeAllUserNotificationsAsRead(): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Notification/MakeAllUserNotificationsAsRead";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "POST",
+            url: url_,
+            headers: {
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processMakeAllUserNotificationsAsRead(_response);
+        });
+    }
+
+    protected processMakeAllUserNotificationsAsRead(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    makeNotificationAsRead(input: EntityDtoOfGuid | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Notification/MakeNotificationAsRead";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processMakeNotificationAsRead(_response);
+        });
+    }
+
+    protected processMakeNotificationAsRead(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getNotificationSettings(): Promise<GetNotificationSettingsOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Notification/GetNotificationSettings";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetNotificationSettings(_response);
+        });
+    }
+
+    protected processGetNotificationSettings(response: AxiosResponse): Promise<GetNotificationSettingsOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? GetNotificationSettingsOutput.fromJS(resultData200) : new GetNotificationSettingsOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<GetNotificationSettingsOutput>(<any>null);
+    }
+
+    /**
+     * 更新消息设置
+     * @param input (optional) 
+     * @return Success
+     */
+    updateNotificationSettings(input: UpdateNotificationSettingsInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Notification/UpdateNotificationSettings";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "PUT",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processUpdateNotificationSettings(_response);
+        });
+    }
+
+    protected processUpdateNotificationSettings(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * 删除通知
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteNotification(id: string | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Notification/DeleteNotification?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "DELETE",
+            url: url_,
+            headers: {
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processDeleteNotification(_response);
+        });
+    }
+
+    protected processDeleteNotification(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param msg (optional) 
+     * @param tenantId (optional) 
+     * @param userId (optional) 
+     * @return Success
+     */
+    sendNoticeToUser(msg: string | null | undefined, tenantId: number | null | undefined, userId: number | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Notification/SendNoticeToUser?";
+        if (msg !== undefined)
+            url_ += "msg=" + encodeURIComponent("" + msg) + "&"; 
+        if (tenantId !== undefined)
+            url_ += "tenantId=" + encodeURIComponent("" + tenantId) + "&"; 
+        if (userId !== undefined)
+            url_ += "userId=" + encodeURIComponent("" + userId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "POST",
+            url: url_,
+            headers: {
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processSendNoticeToUser(_response);
+        });
+    }
+
+    protected processSendNoticeToUser(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+}
+
+export class OrganizationUnitServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAllOrganizationUnitList(): Promise<ListResultDtoOfOrganizationUnitListDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/GetAllOrganizationUnitList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetAllOrganizationUnitList(_response);
+        });
+    }
+
+    protected processGetAllOrganizationUnitList(response: AxiosResponse): Promise<ListResultDtoOfOrganizationUnitListDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? ListResultDtoOfOrganizationUnitListDto.fromJS(resultData200) : new ListResultDtoOfOrganizationUnitListDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ListResultDtoOfOrganizationUnitListDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    create(input: CreateOrganizationUnitInput | null | undefined): Promise<OrganizationUnitListDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processCreate(_response);
+        });
+    }
+
+    protected processCreate(response: AxiosResponse): Promise<OrganizationUnitListDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? OrganizationUnitListDto.fromJS(resultData200) : new OrganizationUnitListDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<OrganizationUnitListDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/Delete?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "DELETE",
+            url: url_,
+            headers: {
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processDelete(_response);
+        });
+    }
+
+    protected processDelete(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    update(input: UpdateOrganizationUnitInput | null | undefined): Promise<OrganizationUnitListDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "PUT",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processUpdate(_response);
+        });
+    }
+
+    protected processUpdate(response: AxiosResponse): Promise<OrganizationUnitListDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? OrganizationUnitListDto.fromJS(resultData200) : new OrganizationUnitListDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<OrganizationUnitListDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    move(input: MoveOrganizationUnitInput | null | undefined): Promise<OrganizationUnitListDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/Move";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processMove(_response);
+        });
+    }
+
+    protected processMove(response: AxiosResponse): Promise<OrganizationUnitListDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? OrganizationUnitListDto.fromJS(resultData200) : new OrganizationUnitListDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<OrganizationUnitListDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @param filterText (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getPagedOrganizationUnitUsers(id: number | null | undefined, filterText: string | null | undefined, sorting: string | null | undefined, maxResultCount: number | null | undefined, skipCount: number | null | undefined): Promise<PagedResultDtoOfOrganizationUnitUserListDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/GetPagedOrganizationUnitUsers?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        if (filterText !== undefined)
+            url_ += "FilterText=" + encodeURIComponent("" + filterText) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetPagedOrganizationUnitUsers(_response);
+        });
+    }
+
+    protected processGetPagedOrganizationUnitUsers(response: AxiosResponse): Promise<PagedResultDtoOfOrganizationUnitUserListDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? PagedResultDtoOfOrganizationUnitUserListDto.fromJS(resultData200) : new PagedResultDtoOfOrganizationUnitUserListDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<PagedResultDtoOfOrganizationUnitUserListDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    addUsers(input: UsersToOrganizationUnitInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/AddUsers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processAddUsers(_response);
+        });
+    }
+
+    protected processAddUsers(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param userId (optional) 
+     * @param organizationUnitId (optional) 
+     * @return Success
+     */
+    removeUser(userId: number | null | undefined, organizationUnitId: number | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/RemoveUser?";
+        if (userId !== undefined)
+            url_ += "UserId=" + encodeURIComponent("" + userId) + "&"; 
+        if (organizationUnitId !== undefined)
+            url_ += "OrganizationUnitId=" + encodeURIComponent("" + organizationUnitId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "DELETE",
+            url: url_,
+            headers: {
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processRemoveUser(_response);
+        });
+    }
+
+    protected processRemoveUser(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    isInOrganizationUnit(input: UserToOrganizationUnitInput | null | undefined): Promise<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/IsInOrganizationUnit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processIsInOrganizationUnit(_response);
+        });
+    }
+
+    protected processIsInOrganizationUnit(response: AxiosResponse): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<boolean>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    findUsers(input: FindUsersInput | null | undefined): Promise<PagedResultDtoOfNameValueDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/FindUsers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processFindUsers(_response);
+        });
+    }
+
+    protected processFindUsers(response: AxiosResponse): Promise<PagedResultDtoOfNameValueDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? PagedResultDtoOfNameValueDto.fromJS(resultData200) : new PagedResultDtoOfNameValueDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<PagedResultDtoOfNameValueDto>(<any>null);
+    }
+
+    /**
+     * 批量从组织中移除用户
+     * @param userIds (optional) 用户Id列表
+     * @param organizationUnitId (optional) 组织机构Id
+     * @return Success
+     */
+    batchRemoveUserFromOrganizationUnit(userIds: number[] | null | undefined, organizationUnitId: number | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/BatchRemoveUserFromOrganizationUnit?";
+        if (organizationUnitId !== undefined)
+            url_ += "organizationUnitId=" + encodeURIComponent("" + organizationUnitId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(userIds);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processBatchRemoveUserFromOrganizationUnit(_response);
+        });
+    }
+
+    protected processBatchRemoveUserFromOrganizationUnit(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+}
+
+export class PermissionServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAllPermissions(): Promise<ListResultDtoOfFlatPermissionWithLevelDto> {
+        let url_ = this.baseUrl + "/api/services/app/Permission/GetAllPermissions";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetAllPermissions(_response);
+        });
+    }
+
+    protected processGetAllPermissions(response: AxiosResponse): Promise<ListResultDtoOfFlatPermissionWithLevelDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? ListResultDtoOfFlatPermissionWithLevelDto.fromJS(resultData200) : new ListResultDtoOfFlatPermissionWithLevelDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ListResultDtoOfFlatPermissionWithLevelDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllPermissionsTree(): Promise<ListResultDtoOfTreePermissionDto> {
+        let url_ = this.baseUrl + "/api/services/app/Permission/GetAllPermissionsTree";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetAllPermissionsTree(_response);
+        });
+    }
+
+    protected processGetAllPermissionsTree(response: AxiosResponse): Promise<ListResultDtoOfTreePermissionDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? ListResultDtoOfTreePermissionDto.fromJS(resultData200) : new ListResultDtoOfTreePermissionDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ListResultDtoOfTreePermissionDto>(<any>null);
+    }
+}
+
+export class ProfileServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getCurrentUserProfileForEdit(): Promise<CurrentUserProfileEditDto> {
+        let url_ = this.baseUrl + "/api/services/app/Profile/GetCurrentUserProfileForEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetCurrentUserProfileForEdit(_response);
+        });
+    }
+
+    protected processGetCurrentUserProfileForEdit(response: AxiosResponse): Promise<CurrentUserProfileEditDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? CurrentUserProfileEditDto.fromJS(resultData200) : new CurrentUserProfileEditDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<CurrentUserProfileEditDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    updateCurrentUserProfile(input: CurrentUserProfileEditDto | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Profile/UpdateCurrentUserProfile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "PUT",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processUpdateCurrentUserProfile(_response);
+        });
+    }
+
+    protected processUpdateCurrentUserProfile(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    changePassword(input: ChangePasswordInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Profile/ChangePassword";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processChangePassword(_response);
+        });
+    }
+
+    protected processChangePassword(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    changeLanguage(input: ChangeUserLanguageDto | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Profile/ChangeLanguage";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processChangeLanguage(_response);
+        });
+    }
+
+    protected processChangeLanguage(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param profilePictureId (optional) 
+     * @return Success
+     */
+    getProfilePictureByIdAsync(profilePictureId: string | null | undefined): Promise<GetProfilePictureOutputDto> {
+        let url_ = this.baseUrl + "/api/services/app/Profile/GetProfilePictureByIdAsync?";
+        if (profilePictureId !== undefined)
+            url_ += "profilePictureId=" + encodeURIComponent("" + profilePictureId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetProfilePictureByIdAsync(_response);
+        });
+    }
+
+    protected processGetProfilePictureByIdAsync(response: AxiosResponse): Promise<GetProfilePictureOutputDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? GetProfilePictureOutputDto.fromJS(resultData200) : new GetProfilePictureOutputDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<GetProfilePictureOutputDto>(<any>null);
+    }
+
+    /**
+     * 删除用户头像
+     * @param profilePictureId (optional) 头像ID
+     * @return Success
+     */
+    deleteProfilePictureById(profilePictureId: string | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Profile/DeleteProfilePictureById?";
+        if (profilePictureId !== undefined)
+            url_ += "profilePictureId=" + encodeURIComponent("" + profilePictureId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "DELETE",
+            url: url_,
+            headers: {
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processDeleteProfilePictureById(_response);
+        });
+    }
+
+    protected processDeleteProfilePictureById(response: AxiosResponse): Promise<void> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -173,55 +2679,12 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param input (optional) 
+     * 服务于前端RoleComboxComponent 组件信息，
+     * @param permission (optional) 权限名称
      * @return Success
      */
-    create(input: CreateRoleDto | null | undefined): Promise<RoleDto> {
-        let url_ = this.baseUrl + "/api/services/app/Role/Create";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(input);
-
-        let options_ = <AxiosRequestConfig>{
-            data: content_,
-            method: "POST",
-            url: url_,
-            headers: {
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            }
-        };
-
-        return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processCreate(_response);
-        });
-    }
-
-    protected processCreate(response: AxiosResponse): Promise<RoleDto> {
-        const status = response.status;
-        let _headers: any = {}; 
-        if (response.headers && response.headers.forEach) { 
-            response.headers.forEach((v: any, k: any) => _headers[k] = v);
-        };
-        if (status === 200) {
-            const _responseText = response.data;
-            let result200: any = null;
-            let resultData200  = _responseText;
-            result200 = resultData200 ? RoleDto.fromJS(resultData200) : new RoleDto();
-            return result200;
-        } else if (status !== 200 && status !== 204) {
-            const _responseText = response.data;
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-        }
-        return Promise.resolve<RoleDto>(<any>null);
-    }
-
-    /**
-     * @param permission (optional) 
-     * @return Success
-     */
-    getRolesAsync(permission: string | null | undefined): Promise<ListResultDtoOfRoleListDto> {
-        let url_ = this.baseUrl + "/api/services/app/Role/GetRolesAsync?";
+    getAll(permission: string | null | undefined): Promise<ListResultDtoOfRoleListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Role/GetAll?";
         if (permission !== undefined)
             url_ += "Permission=" + encodeURIComponent("" + permission) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
@@ -235,11 +2698,11 @@ export class RoleServiceProxy {
         };
 
         return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processGetRolesAsync(_response);
+            return this.processGetAll(_response);
         });
     }
 
-    protected processGetRolesAsync(response: AxiosResponse): Promise<ListResultDtoOfRoleListDto> {
+    protected processGetAll(response: AxiosResponse): Promise<ListResultDtoOfRoleListDto> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -259,31 +2722,41 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param input (optional) 
+     * @param permissionNames (optional) 权限名称
+     * @param filterText (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
-    update(input: RoleDto | null | undefined): Promise<RoleDto> {
-        let url_ = this.baseUrl + "/api/services/app/Role/Update";
+    getPaged(permissionNames: string[] | null | undefined, filterText: string | null | undefined, sorting: string | null | undefined, maxResultCount: number | null | undefined, skipCount: number | null | undefined): Promise<PagedResultDtoOfRoleListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Role/GetPaged?";
+        if (permissionNames !== undefined)
+            permissionNames && permissionNames.forEach(item => { url_ += "PermissionNames=" + encodeURIComponent("" + item) + "&"; });
+        if (filterText !== undefined)
+            url_ += "FilterText=" + encodeURIComponent("" + filterText) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(input);
-
         let options_ = <AxiosRequestConfig>{
-            data: content_,
-            method: "PUT",
+            method: "GET",
             url: url_,
             headers: {
-                "Content-Type": "application/json", 
                 "Accept": "application/json"
             }
         };
 
         return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processUpdate(_response);
+            return this.processGetPaged(_response);
         });
     }
 
-    protected processUpdate(response: AxiosResponse): Promise<RoleDto> {
+    protected processGetPaged(response: AxiosResponse): Promise<PagedResultDtoOfRoleListDto> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -293,13 +2766,95 @@ export class RoleServiceProxy {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = resultData200 ? RoleDto.fromJS(resultData200) : new RoleDto();
+            result200 = resultData200 ? PagedResultDtoOfRoleListDto.fromJS(resultData200) : new PagedResultDtoOfRoleListDto();
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<RoleDto>(<any>null);
+        return Promise.resolve<PagedResultDtoOfRoleListDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getForEdit(id: number | null | undefined): Promise<GetRoleForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Role/GetForEdit?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetForEdit(_response);
+        });
+    }
+
+    protected processGetForEdit(response: AxiosResponse): Promise<GetRoleForEditOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? GetRoleForEditOutput.fromJS(resultData200) : new GetRoleForEditOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<GetRoleForEditOutput>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    createOrUpdate(input: CreateOrUpdateRoleInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Role/CreateOrUpdate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processCreateOrUpdate(_response);
+        });
+    }
+
+    protected processCreateOrUpdate(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
     }
 
     /**
@@ -341,26 +2896,30 @@ export class RoleServiceProxy {
     }
 
     /**
+     * @param input (optional) 
      * @return Success
      */
-    getAllPermissions(): Promise<ListResultDtoOfPermissionDto> {
-        let url_ = this.baseUrl + "/api/services/app/Role/GetAllPermissions";
+    updatePermissions(input: UpdateRolePermissionsInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Role/UpdatePermissions";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(input);
+
         let options_ = <AxiosRequestConfig>{
-            method: "GET",
+            data: content_,
+            method: "PUT",
             url: url_,
             headers: {
-                "Accept": "application/json"
+                "Content-Type": "application/json", 
             }
         };
 
         return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processGetAllPermissions(_response);
+            return this.processUpdatePermissions(_response);
         });
     }
 
-    protected processGetAllPermissions(response: AxiosResponse): Promise<ListResultDtoOfPermissionDto> {
+    protected processUpdatePermissions(response: AxiosResponse): Promise<void> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -368,41 +2927,40 @@ export class RoleServiceProxy {
         };
         if (status === 200) {
             const _responseText = response.data;
-            let result200: any = null;
-            let resultData200  = _responseText;
-            result200 = resultData200 ? ListResultDtoOfPermissionDto.fromJS(resultData200) : new ListResultDtoOfPermissionDto();
-            return result200;
+            return Promise.resolve<void>(<any>null);
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<ListResultDtoOfPermissionDto>(<any>null);
+        return Promise.resolve<void>(<any>null);
     }
 
     /**
-     * @param id (optional) 
+     * 批量删除角色
+     * @param ids (optional) 
      * @return Success
      */
-    getRoleForEdit(id: number | null | undefined): Promise<GetRoleForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/Role/GetRoleForEdit?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+    batchDeleteAsync(ids: number[] | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Role/BatchDeleteAsync";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(ids);
+
         let options_ = <AxiosRequestConfig>{
-            method: "GET",
+            data: content_,
+            method: "POST",
             url: url_,
             headers: {
-                "Accept": "application/json"
+                "Content-Type": "application/json", 
             }
         };
 
         return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processGetRoleForEdit(_response);
+            return this.processBatchDeleteAsync(_response);
         });
     }
 
-    protected processGetRoleForEdit(response: AxiosResponse): Promise<GetRoleForEditOutput> {
+    protected processBatchDeleteAsync(response: AxiosResponse): Promise<void> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -410,105 +2968,12 @@ export class RoleServiceProxy {
         };
         if (status === 200) {
             const _responseText = response.data;
-            let result200: any = null;
-            let resultData200  = _responseText;
-            result200 = resultData200 ? GetRoleForEditOutput.fromJS(resultData200) : new GetRoleForEditOutput();
-            return result200;
+            return Promise.resolve<void>(<any>null);
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<GetRoleForEditOutput>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    get(id: number | null | undefined): Promise<RoleDto> {
-        let url_ = this.baseUrl + "/api/services/app/Role/Get?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <AxiosRequestConfig>{
-            method: "GET",
-            url: url_,
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processGet(_response);
-        });
-    }
-
-    protected processGet(response: AxiosResponse): Promise<RoleDto> {
-        const status = response.status;
-        let _headers: any = {}; 
-        if (response.headers && response.headers.forEach) { 
-            response.headers.forEach((v: any, k: any) => _headers[k] = v);
-        };
-        if (status === 200) {
-            const _responseText = response.data;
-            let result200: any = null;
-            let resultData200  = _responseText;
-            result200 = resultData200 ? RoleDto.fromJS(resultData200) : new RoleDto();
-            return result200;
-        } else if (status !== 200 && status !== 204) {
-            const _responseText = response.data;
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-        }
-        return Promise.resolve<RoleDto>(<any>null);
-    }
-
-    /**
-     * @param keyword (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(keyword: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Promise<PagedResultDtoOfRoleDto> {
-        let url_ = this.baseUrl + "/api/services/app/Role/GetAll?";
-        if (keyword !== undefined)
-            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <AxiosRequestConfig>{
-            method: "GET",
-            url: url_,
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processGetAll(_response);
-        });
-    }
-
-    protected processGetAll(response: AxiosResponse): Promise<PagedResultDtoOfRoleDto> {
-        const status = response.status;
-        let _headers: any = {}; 
-        if (response.headers && response.headers.forEach) { 
-            response.headers.forEach((v: any, k: any) => _headers[k] = v);
-        };
-        if (status === 200) {
-            const _responseText = response.data;
-            let result200: any = null;
-            let resultData200  = _responseText;
-            result200 = resultData200 ? PagedResultDtoOfRoleDto.fromJS(resultData200) : new PagedResultDtoOfRoleDto();
-            return result200;
-        } else if (status !== 200 && status !== 204) {
-            const _responseText = response.data;
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-        }
-        return Promise.resolve<PagedResultDtoOfRoleDto>(<any>null);
+        return Promise.resolve<void>(<any>null);
     }
 }
 
@@ -560,9 +3025,87 @@ export class SessionServiceProxy {
         }
         return Promise.resolve<GetCurrentLoginInformationsOutput>(<any>null);
     }
+
+    /**
+     * @return Success
+     */
+    updateUserSignInToken(): Promise<UpdateUserSignInTokenOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Session/UpdateUserSignInToken";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "PUT",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processUpdateUserSignInToken(_response);
+        });
+    }
+
+    protected processUpdateUserSignInToken(response: AxiosResponse): Promise<UpdateUserSignInTokenOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? UpdateUserSignInTokenOutput.fromJS(resultData200) : new UpdateUserSignInTokenOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<UpdateUserSignInTokenOutput>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getUserConfigurations(): Promise<AbpUserConfigurationDto> {
+        let url_ = this.baseUrl + "/api/services/app/Session/GetUserConfigurations";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetUserConfigurations(_response);
+        });
+    }
+
+    protected processGetUserConfigurations(response: AxiosResponse): Promise<AbpUserConfigurationDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? AbpUserConfigurationDto.fromJS(resultData200) : new AbpUserConfigurationDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<AbpUserConfigurationDto>(<any>null);
+    }
 }
 
-export class TenantServiceProxy {
+export class SettingsAppServiceBaseServiceProxy {
     private instance: AxiosInstance;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -576,7 +3119,124 @@ export class TenantServiceProxy {
      * @param input (optional) 
      * @return Success
      */
-    create(input: CreateTenantDto | null | undefined): Promise<TenantDto> {
+    sendTestEmail(input: SendTestEmailInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/SettingsAppServiceBase/SendTestEmail";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processSendTestEmail(_response);
+        });
+    }
+
+    protected processSendTestEmail(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+}
+
+export class TenantServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param subscriptionStart (optional) 
+     * @param subscriptionEnd (optional) 
+     * @param creationDateStart (optional) 
+     * @param creationDateEnd (optional) 
+     * @param editionId (optional) 
+     * @param filterText (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getPaged(subscriptionStart: moment.Moment | null | undefined, subscriptionEnd: moment.Moment | null | undefined, creationDateStart: moment.Moment | null | undefined, creationDateEnd: moment.Moment | null | undefined, editionId: number | null | undefined, filterText: string | null | undefined, sorting: string | null | undefined, maxResultCount: number | null | undefined, skipCount: number | null | undefined): Promise<PagedResultDtoOfTenantListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Tenant/GetPaged?";
+        if (subscriptionStart !== undefined)
+            url_ += "SubscriptionStart=" + encodeURIComponent(subscriptionStart ? "" + subscriptionStart.toJSON() : "") + "&"; 
+        if (subscriptionEnd !== undefined)
+            url_ += "SubscriptionEnd=" + encodeURIComponent(subscriptionEnd ? "" + subscriptionEnd.toJSON() : "") + "&"; 
+        if (creationDateStart !== undefined)
+            url_ += "CreationDateStart=" + encodeURIComponent(creationDateStart ? "" + creationDateStart.toJSON() : "") + "&"; 
+        if (creationDateEnd !== undefined)
+            url_ += "CreationDateEnd=" + encodeURIComponent(creationDateEnd ? "" + creationDateEnd.toJSON() : "") + "&"; 
+        if (editionId !== undefined)
+            url_ += "EditionId=" + encodeURIComponent("" + editionId) + "&"; 
+        if (filterText !== undefined)
+            url_ += "FilterText=" + encodeURIComponent("" + filterText) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetPaged(_response);
+        });
+    }
+
+    protected processGetPaged(response: AxiosResponse): Promise<PagedResultDtoOfTenantListDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? PagedResultDtoOfTenantListDto.fromJS(resultData200) : new PagedResultDtoOfTenantListDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<PagedResultDtoOfTenantListDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    create(input: CreateTenantInput | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/services/app/Tenant/Create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -588,7 +3248,6 @@ export class TenantServiceProxy {
             url: url_,
             headers: {
                 "Content-Type": "application/json", 
-                "Accept": "application/json"
             }
         };
 
@@ -597,7 +3256,86 @@ export class TenantServiceProxy {
         });
     }
 
-    protected processCreate(response: AxiosResponse): Promise<TenantDto> {
+    protected processCreate(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    update(input: TenantEditDto | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Tenant/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "PUT",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processUpdate(_response);
+        });
+    }
+
+    protected processUpdate(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getForEdit(id: number | null | undefined): Promise<TenantEditDto> {
+        let url_ = this.baseUrl + "/api/services/app/Tenant/GetForEdit?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetForEdit(_response);
+        });
+    }
+
+    protected processGetForEdit(response: AxiosResponse): Promise<TenantEditDto> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -607,13 +3345,53 @@ export class TenantServiceProxy {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = resultData200 ? TenantDto.fromJS(resultData200) : new TenantDto();
+            result200 = resultData200 ? TenantEditDto.fromJS(resultData200) : new TenantEditDto();
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<TenantDto>(<any>null);
+        return Promise.resolve<TenantEditDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    unlockTenantAdmin(input: EntityDto | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Tenant/UnlockTenantAdmin";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processUnlockTenantAdmin(_response);
+        });
+    }
+
+    protected processUnlockTenantAdmin(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
     }
 
     /**
@@ -655,11 +3433,51 @@ export class TenantServiceProxy {
     }
 
     /**
+     * @param input (optional) 
+     * @return Success
+     */
+    batchDelete(input: EntityDto[] | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Tenant/BatchDelete";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processBatchDelete(_response);
+        });
+    }
+
+    protected processBatchDelete(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
-    get(id: number | null | undefined): Promise<TenantDto> {
-        let url_ = this.baseUrl + "/api/services/app/Tenant/Get?";
+    getTenantFeaturesForEdit(id: number | null | undefined): Promise<GetTenantFeaturesEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Tenant/GetTenantFeaturesForEdit?";
         if (id !== undefined)
             url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
@@ -673,11 +3491,11 @@ export class TenantServiceProxy {
         };
 
         return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processGet(_response);
+            return this.processGetTenantFeaturesForEdit(_response);
         });
     }
 
-    protected processGet(response: AxiosResponse): Promise<TenantDto> {
+    protected processGetTenantFeaturesForEdit(response: AxiosResponse): Promise<GetTenantFeaturesEditOutput> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -687,32 +3505,168 @@ export class TenantServiceProxy {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = resultData200 ? TenantDto.fromJS(resultData200) : new TenantDto();
+            result200 = resultData200 ? GetTenantFeaturesEditOutput.fromJS(resultData200) : new GetTenantFeaturesEditOutput();
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<TenantDto>(<any>null);
+        return Promise.resolve<GetTenantFeaturesEditOutput>(<any>null);
     }
 
     /**
-     * @param keyword (optional) 
-     * @param isActive (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
+     * @param input (optional) 
      * @return Success
      */
-    getAll(keyword: string | null | undefined, isActive: boolean | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Promise<PagedResultDtoOfTenantDto> {
-        let url_ = this.baseUrl + "/api/services/app/Tenant/GetAll?";
-        if (keyword !== undefined)
-            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&"; 
-        if (isActive !== undefined)
-            url_ += "IsActive=" + encodeURIComponent("" + isActive) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+    updateTenantFeatures(input: UpdateTenantFeaturesInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Tenant/UpdateTenantFeatures";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "PUT",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processUpdateTenantFeatures(_response);
+        });
+    }
+
+    protected processUpdateTenantFeatures(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    resetTenantSpecificFeatures(input: EntityDto | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/Tenant/ResetTenantSpecificFeatures";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processResetTenantSpecificFeatures(_response);
+        });
+    }
+
+    protected processResetTenantSpecificFeatures(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+}
+
+export class TenantRegistrationServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * 注册租户信息
+     * @param input (optional) 
+     * @return Success
+     */
+    registerTenantAsync(input: CreateTenantDto | null | undefined): Promise<RegisterTenantResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/TenantRegistration/RegisterTenantAsync";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processRegisterTenantAsync(_response);
+        });
+    }
+
+    protected processRegisterTenantAsync(response: AxiosResponse): Promise<RegisterTenantResultDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? RegisterTenantResultDto.fromJS(resultData200) : new RegisterTenantResultDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<RegisterTenantResultDto>(<any>null);
+    }
+}
+
+export class TenantSettingsServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * 获取所有设置
+     * @return Success
+     */
+    getAllSettings(): Promise<TenantSettingsEditDto> {
+        let url_ = this.baseUrl + "/api/services/app/TenantSettings/GetAllSettings";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = <AxiosRequestConfig>{
@@ -724,11 +3678,11 @@ export class TenantServiceProxy {
         };
 
         return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processGetAll(_response);
+            return this.processGetAllSettings(_response);
         });
     }
 
-    protected processGetAll(response: AxiosResponse): Promise<PagedResultDtoOfTenantDto> {
+    protected processGetAllSettings(response: AxiosResponse): Promise<TenantSettingsEditDto> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -738,21 +3692,22 @@ export class TenantServiceProxy {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = resultData200 ? PagedResultDtoOfTenantDto.fromJS(resultData200) : new PagedResultDtoOfTenantDto();
+            result200 = resultData200 ? TenantSettingsEditDto.fromJS(resultData200) : new TenantSettingsEditDto();
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<PagedResultDtoOfTenantDto>(<any>null);
+        return Promise.resolve<TenantSettingsEditDto>(<any>null);
     }
 
     /**
+     * 更新所有设置
      * @param input (optional) 
      * @return Success
      */
-    update(input: TenantDto | null | undefined): Promise<TenantDto> {
-        let url_ = this.baseUrl + "/api/services/app/Tenant/Update";
+    updateAllSettings(input: TenantSettingsEditDto | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/TenantSettings/UpdateAllSettings";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(input);
@@ -763,16 +3718,175 @@ export class TenantServiceProxy {
             url: url_,
             headers: {
                 "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processUpdateAllSettings(_response);
+        });
+    }
+
+    protected processUpdateAllSettings(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    clearLogo(): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/TenantSettings/ClearLogo";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "POST",
+            url: url_,
+            headers: {
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processClearLogo(_response);
+        });
+    }
+
+    protected processClearLogo(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    clearCustomCss(): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/TenantSettings/ClearCustomCss";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "POST",
+            url: url_,
+            headers: {
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processClearCustomCss(_response);
+        });
+    }
+
+    protected processClearCustomCss(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    sendTestEmail(input: SendTestEmailInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/TenantSettings/SendTestEmail";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processSendTestEmail(_response);
+        });
+    }
+
+    protected processSendTestEmail(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+}
+
+export class TimingServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param defaultTimezoneScope (optional) 
+     * @return Success
+     */
+    getTimezones(defaultTimezoneScope: DefaultTimezoneScope | null | undefined): Promise<ListResultDtoOfNameValueDto> {
+        let url_ = this.baseUrl + "/api/services/app/Timing/GetTimezones?";
+        if (defaultTimezoneScope !== undefined)
+            url_ += "DefaultTimezoneScope=" + encodeURIComponent("" + defaultTimezoneScope) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
                 "Accept": "application/json"
             }
         };
 
         return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processUpdate(_response);
+            return this.processGetTimezones(_response);
         });
     }
 
-    protected processUpdate(response: AxiosResponse): Promise<TenantDto> {
+    protected processGetTimezones(response: AxiosResponse): Promise<ListResultDtoOfNameValueDto> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -782,13 +3896,59 @@ export class TenantServiceProxy {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = resultData200 ? TenantDto.fromJS(resultData200) : new TenantDto();
+            result200 = resultData200 ? ListResultDtoOfNameValueDto.fromJS(resultData200) : new ListResultDtoOfNameValueDto();
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<TenantDto>(<any>null);
+        return Promise.resolve<ListResultDtoOfNameValueDto>(<any>null);
+    }
+
+    /**
+     * @param selectedTimezoneId (optional) 
+     * @return Success
+     */
+    getTimezoneComboboxItems(selectedTimezoneId: string | null | undefined): Promise<ComboboxItemDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Timing/GetTimezoneComboboxItems?";
+        if (selectedTimezoneId !== undefined)
+            url_ += "SelectedTimezoneId=" + encodeURIComponent("" + selectedTimezoneId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetTimezoneComboboxItems(_response);
+        });
+    }
+
+    protected processGetTimezoneComboboxItems(response: AxiosResponse): Promise<ComboboxItemDto[]> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ComboboxItemDto.fromJS(item));
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ComboboxItemDto[]>(<any>null);
     }
 }
 
@@ -932,6 +4092,90 @@ export class TokenAuthServiceProxy {
         }
         return Promise.resolve<ExternalAuthenticateResultModel>(<any>null);
     }
+
+    /**
+     * @param impersonationToken (optional) 
+     * @return Success
+     */
+    impersonatedAuthenticate(impersonationToken: string | null | undefined): Promise<ImpersonatedAuthenticateResultModel> {
+        let url_ = this.baseUrl + "/api/TokenAuth/ImpersonatedAuthenticate?";
+        if (impersonationToken !== undefined)
+            url_ += "impersonationToken=" + encodeURIComponent("" + impersonationToken) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "POST",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processImpersonatedAuthenticate(_response);
+        });
+    }
+
+    protected processImpersonatedAuthenticate(response: AxiosResponse): Promise<ImpersonatedAuthenticateResultModel> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? ImpersonatedAuthenticateResultModel.fromJS(resultData200) : new ImpersonatedAuthenticateResultModel();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ImpersonatedAuthenticateResultModel>(<any>null);
+    }
+
+    /**
+     * @param switchAccountToken (optional) 
+     * @return Success
+     */
+    linkedAccountAuthenticate(switchAccountToken: string | null | undefined): Promise<SwitchedAccountAuthenticateResultModel> {
+        let url_ = this.baseUrl + "/api/TokenAuth/LinkedAccountAuthenticate?";
+        if (switchAccountToken !== undefined)
+            url_ += "switchAccountToken=" + encodeURIComponent("" + switchAccountToken) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "POST",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processLinkedAccountAuthenticate(_response);
+        });
+    }
+
+    protected processLinkedAccountAuthenticate(response: AxiosResponse): Promise<SwitchedAccountAuthenticateResultModel> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? SwitchedAccountAuthenticateResultModel.fromJS(resultData200) : new SwitchedAccountAuthenticateResultModel();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<SwitchedAccountAuthenticateResultModel>(<any>null);
+    }
 }
 
 export class UserServiceProxy {
@@ -948,8 +4192,8 @@ export class UserServiceProxy {
      * @param input (optional) 
      * @return Success
      */
-    create(input: CreateUserDto | null | undefined): Promise<UserDto> {
-        let url_ = this.baseUrl + "/api/services/app/User/Create";
+    createOrUpdate(input: CreateOrUpdateUserInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/User/CreateOrUpdate";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(input);
@@ -960,16 +4204,76 @@ export class UserServiceProxy {
             url: url_,
             headers: {
                 "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processCreateOrUpdate(_response);
+        });
+    }
+
+    protected processCreateOrUpdate(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * 分页获取所有用户
+     * @param permission (optional) 权限
+     * @param role (optional) 检索角色Id列表
+     * @param isEmailConfirmed (optional) 是否已验证邮箱
+     * @param isActive (optional) 是否已激活
+     * @param filterText (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getPaged(permission: string[] | null | undefined, role: number[] | null | undefined, isEmailConfirmed: boolean | null | undefined, isActive: boolean | null | undefined, filterText: string | null | undefined, sorting: string | null | undefined, maxResultCount: number | null | undefined, skipCount: number | null | undefined): Promise<PagedResultDtoOfUserListDto> {
+        let url_ = this.baseUrl + "/api/services/app/User/GetPaged?";
+        if (permission !== undefined)
+            permission && permission.forEach(item => { url_ += "Permission=" + encodeURIComponent("" + item) + "&"; });
+        if (role !== undefined)
+            role && role.forEach(item => { url_ += "Role=" + encodeURIComponent("" + item) + "&"; });
+        if (isEmailConfirmed !== undefined)
+            url_ += "IsEmailConfirmed=" + encodeURIComponent("" + isEmailConfirmed) + "&"; 
+        if (isActive !== undefined)
+            url_ += "IsActive=" + encodeURIComponent("" + isActive) + "&"; 
+        if (filterText !== undefined)
+            url_ += "FilterText=" + encodeURIComponent("" + filterText) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
                 "Accept": "application/json"
             }
         };
 
         return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processCreate(_response);
+            return this.processGetPaged(_response);
         });
     }
 
-    protected processCreate(response: AxiosResponse): Promise<UserDto> {
+    protected processGetPaged(response: AxiosResponse): Promise<PagedResultDtoOfUserListDto> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -979,21 +4283,64 @@ export class UserServiceProxy {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = resultData200 ? UserDto.fromJS(resultData200) : new UserDto();
+            result200 = resultData200 ? PagedResultDtoOfUserListDto.fromJS(resultData200) : new PagedResultDtoOfUserListDto();
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<UserDto>(<any>null);
+        return Promise.resolve<PagedResultDtoOfUserListDto>(<any>null);
+    }
+
+    /**
+     * 用户的权限编辑
+     * @param id (optional) 
+     * @return Success
+     */
+    getPermissionsTreeForEdit(id: number | null | undefined): Promise<GetUserPermissionsTreeForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/User/GetPermissionsTreeForEdit?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetPermissionsTreeForEdit(_response);
+        });
+    }
+
+    protected processGetPermissionsTreeForEdit(response: AxiosResponse): Promise<GetUserPermissionsTreeForEditOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? GetUserPermissionsTreeForEditOutput.fromJS(resultData200) : new GetUserPermissionsTreeForEditOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<GetUserPermissionsTreeForEditOutput>(<any>null);
     }
 
     /**
      * @param input (optional) 
      * @return Success
      */
-    update(input: UserDto | null | undefined): Promise<UserDto> {
-        let url_ = this.baseUrl + "/api/services/app/User/Update";
+    updatePermissions(input: UpdateUserPermissionsInput | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/User/UpdatePermissions";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(input);
@@ -1004,16 +4351,15 @@ export class UserServiceProxy {
             url: url_,
             headers: {
                 "Content-Type": "application/json", 
-                "Accept": "application/json"
             }
         };
 
         return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processUpdate(_response);
+            return this.processUpdatePermissions(_response);
         });
     }
 
-    protected processUpdate(response: AxiosResponse): Promise<UserDto> {
+    protected processUpdatePermissions(response: AxiosResponse): Promise<void> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -1021,15 +4367,12 @@ export class UserServiceProxy {
         };
         if (status === 200) {
             const _responseText = response.data;
-            let result200: any = null;
-            let resultData200  = _responseText;
-            result200 = resultData200 ? UserDto.fromJS(resultData200) : new UserDto();
-            return result200;
+            return Promise.resolve<void>(<any>null);
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<UserDto>(<any>null);
+        return Promise.resolve<void>(<any>null);
     }
 
     /**
@@ -1071,50 +4414,11 @@ export class UserServiceProxy {
     }
 
     /**
-     * @return Success
-     */
-    getRoles(): Promise<ListResultDtoOfRoleDto> {
-        let url_ = this.baseUrl + "/api/services/app/User/GetRoles";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <AxiosRequestConfig>{
-            method: "GET",
-            url: url_,
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processGetRoles(_response);
-        });
-    }
-
-    protected processGetRoles(response: AxiosResponse): Promise<ListResultDtoOfRoleDto> {
-        const status = response.status;
-        let _headers: any = {}; 
-        if (response.headers && response.headers.forEach) { 
-            response.headers.forEach((v: any, k: any) => _headers[k] = v);
-        };
-        if (status === 200) {
-            const _responseText = response.data;
-            let result200: any = null;
-            let resultData200  = _responseText;
-            result200 = resultData200 ? ListResultDtoOfRoleDto.fromJS(resultData200) : new ListResultDtoOfRoleDto();
-            return result200;
-        } else if (status !== 200 && status !== 204) {
-            const _responseText = response.data;
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-        }
-        return Promise.resolve<ListResultDtoOfRoleDto>(<any>null);
-    }
-
-    /**
      * @param input (optional) 
      * @return Success
      */
-    changeLanguage(input: ChangeUserLanguageDto | null | undefined): Promise<void> {
-        let url_ = this.baseUrl + "/api/services/app/User/ChangeLanguage";
+    resetSpecificPermissions(input: EntityDtoOfInt64 | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/User/ResetSpecificPermissions";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(input);
@@ -1129,11 +4433,94 @@ export class UserServiceProxy {
         };
 
         return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processChangeLanguage(_response);
+            return this.processResetSpecificPermissions(_response);
         });
     }
 
-    protected processChangeLanguage(response: AxiosResponse): Promise<void> {
+    protected processResetSpecificPermissions(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * 修改用户信息
+     * @param id (optional) 
+     * @return Success
+     */
+    getForEditTree(id: number | null | undefined): Promise<GetUserForEditTreeOutput> {
+        let url_ = this.baseUrl + "/api/services/app/User/GetForEditTree?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGetForEditTree(_response);
+        });
+    }
+
+    protected processGetForEditTree(response: AxiosResponse): Promise<GetUserForEditTreeOutput> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? GetUserForEditTreeOutput.fromJS(resultData200) : new GetUserForEditTreeOutput();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<GetUserForEditTreeOutput>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    unlock(input: EntityDtoOfInt64 | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/User/Unlock";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processUnlock(_response);
+        });
+    }
+
+    protected processUnlock(response: AxiosResponse): Promise<void> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -1153,51 +4540,7 @@ export class UserServiceProxy {
      * @param input (optional) 
      * @return Success
      */
-    changePassword(input: ChangePasswordDto | null | undefined): Promise<boolean> {
-        let url_ = this.baseUrl + "/api/services/app/User/ChangePassword";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(input);
-
-        let options_ = <AxiosRequestConfig>{
-            data: content_,
-            method: "POST",
-            url: url_,
-            headers: {
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            }
-        };
-
-        return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processChangePassword(_response);
-        });
-    }
-
-    protected processChangePassword(response: AxiosResponse): Promise<boolean> {
-        const status = response.status;
-        let _headers: any = {}; 
-        if (response.headers && response.headers.forEach) { 
-            response.headers.forEach((v: any, k: any) => _headers[k] = v);
-        };
-        if (status === 200) {
-            const _responseText = response.data;
-            let result200: any = null;
-            let resultData200  = _responseText;
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
-            return result200;
-        } else if (status !== 200 && status !== 204) {
-            const _responseText = response.data;
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-        }
-        return Promise.resolve<boolean>(<any>null);
-    }
-
-    /**
-     * @param input (optional) 
-     * @return Success
-     */
-    resetPassword(input: ResetPasswordDto | null | undefined): Promise<boolean> {
+    resetPassword(input: NullableIdDtoOfInt64 | null | undefined): Promise<string> {
         let url_ = this.baseUrl + "/api/services/app/User/ResetPassword";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1218,7 +4561,7 @@ export class UserServiceProxy {
         });
     }
 
-    protected processResetPassword(response: AxiosResponse): Promise<boolean> {
+    protected processResetPassword(response: AxiosResponse): Promise<string> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -1234,17 +4577,66 @@ export class UserServiceProxy {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<boolean>(<any>null);
+        return Promise.resolve<string>(<any>null);
     }
 
     /**
-     * @param id (optional) 
+     * 批量删除用户
+     * @param ids (optional) 用户Id列表
      * @return Success
      */
-    get(id: number | null | undefined): Promise<UserDto> {
-        let url_ = this.baseUrl + "/api/services/app/User/Get?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+    batchDelete(ids: number[] | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/services/app/User/BatchDelete";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(ids);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json", 
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processBatchDelete(_response);
+        });
+    }
+
+    protected processBatchDelete(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+}
+
+export class UserLoginServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getRecentUserLoginAttempts(): Promise<ListResultDtoOfUserLoginAttemptDto> {
+        let url_ = this.baseUrl + "/api/services/app/UserLogin/GetRecentUserLoginAttempts";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = <AxiosRequestConfig>{
@@ -1256,11 +4648,11 @@ export class UserServiceProxy {
         };
 
         return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processGet(_response);
+            return this.processGetRecentUserLoginAttempts(_response);
         });
     }
 
-    protected processGet(response: AxiosResponse): Promise<UserDto> {
+    protected processGetRecentUserLoginAttempts(response: AxiosResponse): Promise<ListResultDtoOfUserLoginAttemptDto> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -1270,32 +4662,86 @@ export class UserServiceProxy {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = resultData200 ? UserDto.fromJS(resultData200) : new UserDto();
+            result200 = resultData200 ? ListResultDtoOfUserLoginAttemptDto.fromJS(resultData200) : new ListResultDtoOfUserLoginAttemptDto();
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<UserDto>(<any>null);
+        return Promise.resolve<ListResultDtoOfUserLoginAttemptDto>(<any>null);
+    }
+}
+
+export class VerificationServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
     }
 
     /**
-     * @param keyword (optional) 
-     * @param isActive (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
+     * @param name (optional) 
+     * @param t (optional) 
+     * @param tid (optional) 
      * @return Success
      */
-    getAll(keyword: string | null | undefined, isActive: boolean | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Promise<PagedResultDtoOfUserDto> {
-        let url_ = this.baseUrl + "/api/services/app/User/GetAll?";
-        if (keyword !== undefined)
-            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&"; 
-        if (isActive !== undefined)
-            url_ += "IsActive=" + encodeURIComponent("" + isActive) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+    generateCaptcha(name: string | null | undefined, t: T | null | undefined, tid: number | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/Verification/GenerateCaptcha?";
+        if (name !== undefined)
+            url_ += "name=" + encodeURIComponent("" + name) + "&"; 
+        if (t !== undefined)
+            url_ += "t=" + encodeURIComponent("" + t) + "&"; 
+        if (tid !== undefined)
+            url_ += "tid=" + encodeURIComponent("" + tid) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processGenerateCaptcha(_response);
+        });
+    }
+
+    protected processGenerateCaptcha(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+}
+
+export class WebSiteLogServiceProxy {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getLatestWebLogs(): Promise<GetLatestWebLogsOutput> {
+        let url_ = this.baseUrl + "/api/services/app/WebSiteLog/GetLatestWebLogs";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = <AxiosRequestConfig>{
@@ -1307,11 +4753,11 @@ export class UserServiceProxy {
         };
 
         return this.instance.request(options_).then((_response: AxiosResponse) => {
-            return this.processGetAll(_response);
+            return this.processGetLatestWebLogs(_response);
         });
     }
 
-    protected processGetAll(response: AxiosResponse): Promise<PagedResultDtoOfUserDto> {
+    protected processGetLatestWebLogs(response: AxiosResponse): Promise<GetLatestWebLogsOutput> {
         const status = response.status;
         let _headers: any = {}; 
         if (response.headers && response.headers.forEach) { 
@@ -1321,13 +4767,52 @@ export class UserServiceProxy {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = resultData200 ? PagedResultDtoOfUserDto.fromJS(resultData200) : new PagedResultDtoOfUserDto();
+            result200 = resultData200 ? GetLatestWebLogsOutput.fromJS(resultData200) : new GetLatestWebLogsOutput();
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<PagedResultDtoOfUserDto>(<any>null);
+        return Promise.resolve<GetLatestWebLogsOutput>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    downloadWebLogs(): Promise<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/WebSiteLog/DownloadWebLogs";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "POST",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.instance.request(options_).then((_response: AxiosResponse) => {
+            return this.processDownloadWebLogs(_response);
+        });
+    }
+
+    protected processDownloadWebLogs(response: AxiosResponse): Promise<FileDto> {
+        const status = response.status;
+        let _headers: any = {}; 
+        if (response.headers && response.headers.forEach) { 
+            response.headers.forEach((v: any, k: any) => _headers[k] = v);
+        };
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = resultData200 ? FileDto.fromJS(resultData200) : new FileDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<FileDto>(<any>null);
     }
 }
 
@@ -1421,13 +4906,55 @@ export interface IIsTenantAvailableOutput {
     tenantId: number | undefined;
 }
 
+export class ResolveTenantIdInput implements IResolveTenantIdInput {
+    c: string | undefined;
+
+    constructor(data?: IResolveTenantIdInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.c = data["c"];
+        }
+    }
+
+    static fromJS(data: any): ResolveTenantIdInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResolveTenantIdInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["c"] = this.c;
+        return data; 
+    }
+
+    clone(): ResolveTenantIdInput {
+        const json = this.toJSON();
+        let result = new ResolveTenantIdInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IResolveTenantIdInput {
+    c: string | undefined;
+}
+
 export class RegisterInput implements IRegisterInput {
-    name: string;
-    surname: string;
     userName: string;
     emailAddress: string;
     password: string;
-    captchaResponse: string | undefined;
+    /** 验证码 */
+    verificationCode: string | undefined;
 
     constructor(data?: IRegisterInput) {
         if (data) {
@@ -1440,12 +4967,10 @@ export class RegisterInput implements IRegisterInput {
 
     init(data?: any) {
         if (data) {
-            this.name = data["name"];
-            this.surname = data["surname"];
             this.userName = data["userName"];
             this.emailAddress = data["emailAddress"];
             this.password = data["password"];
-            this.captchaResponse = data["captchaResponse"];
+            this.verificationCode = data["verificationCode"];
         }
     }
 
@@ -1458,12 +4983,10 @@ export class RegisterInput implements IRegisterInput {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["surname"] = this.surname;
         data["userName"] = this.userName;
         data["emailAddress"] = this.emailAddress;
         data["password"] = this.password;
-        data["captchaResponse"] = this.captchaResponse;
+        data["verificationCode"] = this.verificationCode;
         return data; 
     }
 
@@ -1476,12 +4999,11 @@ export class RegisterInput implements IRegisterInput {
 }
 
 export interface IRegisterInput {
-    name: string;
-    surname: string;
     userName: string;
     emailAddress: string;
     password: string;
-    captchaResponse: string | undefined;
+    /** 验证码 */
+    verificationCode: string | undefined;
 }
 
 export class RegisterOutput implements IRegisterOutput {
@@ -1527,10 +5049,10 @@ export interface IRegisterOutput {
     canLogin: boolean | undefined;
 }
 
-export class ChangeUiThemeInput implements IChangeUiThemeInput {
-    theme: string;
+export class SendPasswordResetCodeInput implements ISendPasswordResetCodeInput {
+    emailAddress: string;
 
-    constructor(data?: IChangeUiThemeInput) {
+    constructor(data?: ISendPasswordResetCodeInput) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1541,43 +5063,43 @@ export class ChangeUiThemeInput implements IChangeUiThemeInput {
 
     init(data?: any) {
         if (data) {
-            this.theme = data["theme"];
+            this.emailAddress = data["emailAddress"];
         }
     }
 
-    static fromJS(data: any): ChangeUiThemeInput {
+    static fromJS(data: any): SendPasswordResetCodeInput {
         data = typeof data === 'object' ? data : {};
-        let result = new ChangeUiThemeInput();
+        let result = new SendPasswordResetCodeInput();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["theme"] = this.theme;
+        data["emailAddress"] = this.emailAddress;
         return data; 
     }
 
-    clone(): ChangeUiThemeInput {
+    clone(): SendPasswordResetCodeInput {
         const json = this.toJSON();
-        let result = new ChangeUiThemeInput();
+        let result = new SendPasswordResetCodeInput();
         result.init(json);
         return result;
     }
 }
 
-export interface IChangeUiThemeInput {
-    theme: string;
+export interface ISendPasswordResetCodeInput {
+    emailAddress: string;
 }
 
-export class CreateRoleDto implements ICreateRoleDto {
-    name: string;
-    displayName: string;
-    normalizedName: string | undefined;
-    description: string | undefined;
-    permissions: string[] | undefined;
+export class ResetPasswordInput implements IResetPasswordInput {
+    userId: number | undefined;
+    resetCode: string;
+    password: string;
+    returnUrl: string | undefined;
+    singleSignIn: string | undefined;
 
-    constructor(data?: ICreateRoleDto) {
+    constructor(data?: IResetPasswordInput) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1588,64 +5110,464 @@ export class CreateRoleDto implements ICreateRoleDto {
 
     init(data?: any) {
         if (data) {
-            this.name = data["name"];
-            this.displayName = data["displayName"];
-            this.normalizedName = data["normalizedName"];
-            this.description = data["description"];
-            if (data["permissions"] && data["permissions"].constructor === Array) {
-                this.permissions = [] as any;
-                for (let item of data["permissions"])
-                    this.permissions.push(item);
-            }
+            this.userId = data["userId"];
+            this.resetCode = data["resetCode"];
+            this.password = data["password"];
+            this.returnUrl = data["returnUrl"];
+            this.singleSignIn = data["singleSignIn"];
         }
     }
 
-    static fromJS(data: any): CreateRoleDto {
+    static fromJS(data: any): ResetPasswordInput {
         data = typeof data === 'object' ? data : {};
-        let result = new CreateRoleDto();
+        let result = new ResetPasswordInput();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["displayName"] = this.displayName;
-        data["normalizedName"] = this.normalizedName;
-        data["description"] = this.description;
-        if (this.permissions && this.permissions.constructor === Array) {
-            data["permissions"] = [];
-            for (let item of this.permissions)
-                data["permissions"].push(item);
-        }
+        data["userId"] = this.userId;
+        data["resetCode"] = this.resetCode;
+        data["password"] = this.password;
+        data["returnUrl"] = this.returnUrl;
+        data["singleSignIn"] = this.singleSignIn;
         return data; 
     }
 
-    clone(): CreateRoleDto {
+    clone(): ResetPasswordInput {
         const json = this.toJSON();
-        let result = new CreateRoleDto();
+        let result = new ResetPasswordInput();
         result.init(json);
         return result;
     }
 }
 
-export interface ICreateRoleDto {
-    name: string;
-    displayName: string;
-    normalizedName: string | undefined;
-    description: string | undefined;
-    permissions: string[] | undefined;
+export interface IResetPasswordInput {
+    userId: number | undefined;
+    resetCode: string;
+    password: string;
+    returnUrl: string | undefined;
+    singleSignIn: string | undefined;
 }
 
-export class RoleDto implements IRoleDto {
-    name: string;
-    displayName: string;
-    normalizedName: string | undefined;
-    description: string | undefined;
-    permissions: string[] | undefined;
+export class ResetPasswordOutput implements IResetPasswordOutput {
+    canLogin: boolean | undefined;
+    userName: string | undefined;
+
+    constructor(data?: IResetPasswordOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.canLogin = data["canLogin"];
+            this.userName = data["userName"];
+        }
+    }
+
+    static fromJS(data: any): ResetPasswordOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResetPasswordOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["canLogin"] = this.canLogin;
+        data["userName"] = this.userName;
+        return data; 
+    }
+
+    clone(): ResetPasswordOutput {
+        const json = this.toJSON();
+        let result = new ResetPasswordOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IResetPasswordOutput {
+    canLogin: boolean | undefined;
+    userName: string | undefined;
+}
+
+export class SendEmailActivationLinkInput implements ISendEmailActivationLinkInput {
+    emailAddress: string;
+
+    constructor(data?: ISendEmailActivationLinkInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.emailAddress = data["emailAddress"];
+        }
+    }
+
+    static fromJS(data: any): SendEmailActivationLinkInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new SendEmailActivationLinkInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["emailAddress"] = this.emailAddress;
+        return data; 
+    }
+
+    clone(): SendEmailActivationLinkInput {
+        const json = this.toJSON();
+        let result = new SendEmailActivationLinkInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISendEmailActivationLinkInput {
+    emailAddress: string;
+}
+
+export class ActivateEmailInput implements IActivateEmailInput {
+    userId: number | undefined;
+    confirmationCode: string | undefined;
+    /** Encrypted values for {TenantId}, {UserId} and {ConfirmationCode} */
+    c: string | undefined;
+
+    constructor(data?: IActivateEmailInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.userId = data["userId"];
+            this.confirmationCode = data["confirmationCode"];
+            this.c = data["c"];
+        }
+    }
+
+    static fromJS(data: any): ActivateEmailInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new ActivateEmailInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId;
+        data["confirmationCode"] = this.confirmationCode;
+        data["c"] = this.c;
+        return data; 
+    }
+
+    clone(): ActivateEmailInput {
+        const json = this.toJSON();
+        let result = new ActivateEmailInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IActivateEmailInput {
+    userId: number | undefined;
+    confirmationCode: string | undefined;
+    /** Encrypted values for {TenantId}, {UserId} and {ConfirmationCode} */
+    c: string | undefined;
+}
+
+export class ImpersonateInput implements IImpersonateInput {
+    tenantId: number | undefined;
+    userId: number | undefined;
+
+    constructor(data?: IImpersonateInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenantId = data["tenantId"];
+            this.userId = data["userId"];
+        }
+    }
+
+    static fromJS(data: any): ImpersonateInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new ImpersonateInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["userId"] = this.userId;
+        return data; 
+    }
+
+    clone(): ImpersonateInput {
+        const json = this.toJSON();
+        let result = new ImpersonateInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IImpersonateInput {
+    tenantId: number | undefined;
+    userId: number | undefined;
+}
+
+export class ImpersonateOutput implements IImpersonateOutput {
+    impersonationToken: string | undefined;
+    tenancyName: string | undefined;
+
+    constructor(data?: IImpersonateOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.impersonationToken = data["impersonationToken"];
+            this.tenancyName = data["tenancyName"];
+        }
+    }
+
+    static fromJS(data: any): ImpersonateOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new ImpersonateOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["impersonationToken"] = this.impersonationToken;
+        data["tenancyName"] = this.tenancyName;
+        return data; 
+    }
+
+    clone(): ImpersonateOutput {
+        const json = this.toJSON();
+        let result = new ImpersonateOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IImpersonateOutput {
+    impersonationToken: string | undefined;
+    tenancyName: string | undefined;
+}
+
+export class SwitchToLinkedAccountInput implements ISwitchToLinkedAccountInput {
+    targetTenantId: number | undefined;
+    targetUserId: number | undefined;
+
+    constructor(data?: ISwitchToLinkedAccountInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.targetTenantId = data["targetTenantId"];
+            this.targetUserId = data["targetUserId"];
+        }
+    }
+
+    static fromJS(data: any): SwitchToLinkedAccountInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new SwitchToLinkedAccountInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["targetTenantId"] = this.targetTenantId;
+        data["targetUserId"] = this.targetUserId;
+        return data; 
+    }
+
+    clone(): SwitchToLinkedAccountInput {
+        const json = this.toJSON();
+        let result = new SwitchToLinkedAccountInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISwitchToLinkedAccountInput {
+    targetTenantId: number | undefined;
+    targetUserId: number | undefined;
+}
+
+export class SwitchToLinkedAccountOutput implements ISwitchToLinkedAccountOutput {
+    switchAccountToken: string | undefined;
+    tenancyName: string | undefined;
+
+    constructor(data?: ISwitchToLinkedAccountOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.switchAccountToken = data["switchAccountToken"];
+            this.tenancyName = data["tenancyName"];
+        }
+    }
+
+    static fromJS(data: any): SwitchToLinkedAccountOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new SwitchToLinkedAccountOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["switchAccountToken"] = this.switchAccountToken;
+        data["tenancyName"] = this.tenancyName;
+        return data; 
+    }
+
+    clone(): SwitchToLinkedAccountOutput {
+        const json = this.toJSON();
+        let result = new SwitchToLinkedAccountOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISwitchToLinkedAccountOutput {
+    switchAccountToken: string | undefined;
+    tenancyName: string | undefined;
+}
+
+export class PagedResultDtoOfAuditLogListDto implements IPagedResultDtoOfAuditLogListDto {
+    totalCount: number | undefined;
+    items: AuditLogListDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfAuditLogListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(AuditLogListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfAuditLogListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfAuditLogListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PagedResultDtoOfAuditLogListDto {
+        const json = this.toJSON();
+        let result = new PagedResultDtoOfAuditLogListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPagedResultDtoOfAuditLogListDto {
+    totalCount: number | undefined;
+    items: AuditLogListDto[] | undefined;
+}
+
+export class AuditLogListDto implements IAuditLogListDto {
+    /** 用户Id */
+    userId: number | undefined;
+    /** 用户名 */
+    userName: string | undefined;
+    /** 模拟租户Id */
+    impersonatorTenantId: number | undefined;
+    /** 模拟用户Id */
+    impersonatorUserId: number | undefined;
+    /** 服务名称 */
+    serviceName: string | undefined;
+    /** 方法名称 */
+    methodName: string | undefined;
+    /** 参数 */
+    parameters: string | undefined;
+    /** 执行时间 */
+    executionTime: moment.Moment | undefined;
+    /** 持续时间 */
+    executionDuration: number | undefined;
+    /** 客户端ip地址 */
+    clientIpAddress: string | undefined;
+    /** 客户端 */
+    clientName: string | undefined;
+    /** 浏览器信息 */
+    browserInfo: string | undefined;
+    /** 异常 */
+    exception: string | undefined;
+    customData: string | undefined;
     id: number | undefined;
 
-    constructor(data?: IRoleDto) {
+    constructor(data?: IAuditLogListDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1656,22 +5578,576 @@ export class RoleDto implements IRoleDto {
 
     init(data?: any) {
         if (data) {
-            this.name = data["name"];
-            this.displayName = data["displayName"];
-            this.normalizedName = data["normalizedName"];
-            this.description = data["description"];
-            if (data["permissions"] && data["permissions"].constructor === Array) {
-                this.permissions = [] as any;
-                for (let item of data["permissions"])
-                    this.permissions.push(item);
-            }
+            this.userId = data["userId"];
+            this.userName = data["userName"];
+            this.impersonatorTenantId = data["impersonatorTenantId"];
+            this.impersonatorUserId = data["impersonatorUserId"];
+            this.serviceName = data["serviceName"];
+            this.methodName = data["methodName"];
+            this.parameters = data["parameters"];
+            this.executionTime = data["executionTime"] ? moment(data["executionTime"].toString()) : <any>undefined;
+            this.executionDuration = data["executionDuration"];
+            this.clientIpAddress = data["clientIpAddress"];
+            this.clientName = data["clientName"];
+            this.browserInfo = data["browserInfo"];
+            this.exception = data["exception"];
+            this.customData = data["customData"];
             this.id = data["id"];
         }
     }
 
-    static fromJS(data: any): RoleDto {
+    static fromJS(data: any): AuditLogListDto {
         data = typeof data === 'object' ? data : {};
-        let result = new RoleDto();
+        let result = new AuditLogListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId;
+        data["userName"] = this.userName;
+        data["impersonatorTenantId"] = this.impersonatorTenantId;
+        data["impersonatorUserId"] = this.impersonatorUserId;
+        data["serviceName"] = this.serviceName;
+        data["methodName"] = this.methodName;
+        data["parameters"] = this.parameters;
+        data["executionTime"] = this.executionTime ? this.executionTime.toISOString() : <any>undefined;
+        data["executionDuration"] = this.executionDuration;
+        data["clientIpAddress"] = this.clientIpAddress;
+        data["clientName"] = this.clientName;
+        data["browserInfo"] = this.browserInfo;
+        data["exception"] = this.exception;
+        data["customData"] = this.customData;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): AuditLogListDto {
+        const json = this.toJSON();
+        let result = new AuditLogListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAuditLogListDto {
+    /** 用户Id */
+    userId: number | undefined;
+    /** 用户名 */
+    userName: string | undefined;
+    /** 模拟租户Id */
+    impersonatorTenantId: number | undefined;
+    /** 模拟用户Id */
+    impersonatorUserId: number | undefined;
+    /** 服务名称 */
+    serviceName: string | undefined;
+    /** 方法名称 */
+    methodName: string | undefined;
+    /** 参数 */
+    parameters: string | undefined;
+    /** 执行时间 */
+    executionTime: moment.Moment | undefined;
+    /** 持续时间 */
+    executionDuration: number | undefined;
+    /** 客户端ip地址 */
+    clientIpAddress: string | undefined;
+    /** 客户端 */
+    clientName: string | undefined;
+    /** 浏览器信息 */
+    browserInfo: string | undefined;
+    /** 异常 */
+    exception: string | undefined;
+    customData: string | undefined;
+    id: number | undefined;
+}
+
+export class ListResultDtoOfSubscribableEditionComboboxItemDto implements IListResultDtoOfSubscribableEditionComboboxItemDto {
+    items: SubscribableEditionComboboxItemDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfSubscribableEditionComboboxItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(SubscribableEditionComboboxItemDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfSubscribableEditionComboboxItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfSubscribableEditionComboboxItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfSubscribableEditionComboboxItemDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfSubscribableEditionComboboxItemDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfSubscribableEditionComboboxItemDto {
+    items: SubscribableEditionComboboxItemDto[] | undefined;
+}
+
+export class SubscribableEditionComboboxItemDto implements ISubscribableEditionComboboxItemDto {
+    isFree: boolean | undefined;
+    value: number | undefined;
+    displayText: string | undefined;
+    isSelected: boolean | undefined;
+
+    constructor(data?: ISubscribableEditionComboboxItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.isFree = data["isFree"];
+            this.value = data["value"];
+            this.displayText = data["displayText"];
+            this.isSelected = data["isSelected"];
+        }
+    }
+
+    static fromJS(data: any): SubscribableEditionComboboxItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SubscribableEditionComboboxItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isFree"] = this.isFree;
+        data["value"] = this.value;
+        data["displayText"] = this.displayText;
+        data["isSelected"] = this.isSelected;
+        return data; 
+    }
+
+    clone(): SubscribableEditionComboboxItemDto {
+        const json = this.toJSON();
+        let result = new SubscribableEditionComboboxItemDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISubscribableEditionComboboxItemDto {
+    isFree: boolean | undefined;
+    value: number | undefined;
+    displayText: string | undefined;
+    isSelected: boolean | undefined;
+}
+
+export class CommonLookupFindUsersInput implements ICommonLookupFindUsersInput {
+    tenantId: number | undefined;
+    maxResultCount: number | undefined;
+    skipCount: number | undefined;
+    filterText: string | undefined;
+
+    constructor(data?: ICommonLookupFindUsersInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenantId = data["tenantId"];
+            this.maxResultCount = data["maxResultCount"];
+            this.skipCount = data["skipCount"];
+            this.filterText = data["filterText"];
+        }
+    }
+
+    static fromJS(data: any): CommonLookupFindUsersInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new CommonLookupFindUsersInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["maxResultCount"] = this.maxResultCount;
+        data["skipCount"] = this.skipCount;
+        data["filterText"] = this.filterText;
+        return data; 
+    }
+
+    clone(): CommonLookupFindUsersInput {
+        const json = this.toJSON();
+        let result = new CommonLookupFindUsersInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICommonLookupFindUsersInput {
+    tenantId: number | undefined;
+    maxResultCount: number | undefined;
+    skipCount: number | undefined;
+    filterText: string | undefined;
+}
+
+export class PagedResultDtoOfNameValueDto implements IPagedResultDtoOfNameValueDto {
+    totalCount: number | undefined;
+    items: NameValueDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfNameValueDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(NameValueDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfNameValueDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfNameValueDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PagedResultDtoOfNameValueDto {
+        const json = this.toJSON();
+        let result = new PagedResultDtoOfNameValueDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPagedResultDtoOfNameValueDto {
+    totalCount: number | undefined;
+    items: NameValueDto[] | undefined;
+}
+
+export class NameValueDto implements INameValueDto {
+    name: string | undefined;
+    value: string | undefined;
+
+    constructor(data?: INameValueDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+            this.value = data["value"];
+        }
+    }
+
+    static fromJS(data: any): NameValueDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new NameValueDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["value"] = this.value;
+        return data; 
+    }
+
+    clone(): NameValueDto {
+        const json = this.toJSON();
+        let result = new NameValueDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface INameValueDto {
+    name: string | undefined;
+    value: string | undefined;
+}
+
+export class GetDefaultEditionNameOutput implements IGetDefaultEditionNameOutput {
+    name: string | undefined;
+
+    constructor(data?: IGetDefaultEditionNameOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+        }
+    }
+
+    static fromJS(data: any): GetDefaultEditionNameOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetDefaultEditionNameOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data; 
+    }
+
+    clone(): GetDefaultEditionNameOutput {
+        const json = this.toJSON();
+        let result = new GetDefaultEditionNameOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetDefaultEditionNameOutput {
+    name: string | undefined;
+}
+
+export class ListResultDtoOfComboboxItemDtoTOfInt32 implements IListResultDtoOfComboboxItemDtoTOfInt32 {
+    items: ComboboxItemDtoTOfInt32[] | undefined;
+
+    constructor(data?: IListResultDtoOfComboboxItemDtoTOfInt32) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(ComboboxItemDtoTOfInt32.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfComboboxItemDtoTOfInt32 {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfComboboxItemDtoTOfInt32();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfComboboxItemDtoTOfInt32 {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfComboboxItemDtoTOfInt32();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfComboboxItemDtoTOfInt32 {
+    items: ComboboxItemDtoTOfInt32[] | undefined;
+}
+
+export class ComboboxItemDtoTOfInt32 implements IComboboxItemDtoTOfInt32 {
+    value: number | undefined;
+    displayText: string | undefined;
+    isSelected: boolean | undefined;
+
+    constructor(data?: IComboboxItemDtoTOfInt32) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.value = data["value"];
+            this.displayText = data["displayText"];
+            this.isSelected = data["isSelected"];
+        }
+    }
+
+    static fromJS(data: any): ComboboxItemDtoTOfInt32 {
+        data = typeof data === 'object' ? data : {};
+        let result = new ComboboxItemDtoTOfInt32();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["value"] = this.value;
+        data["displayText"] = this.displayText;
+        data["isSelected"] = this.isSelected;
+        return data; 
+    }
+
+    clone(): ComboboxItemDtoTOfInt32 {
+        const json = this.toJSON();
+        let result = new ComboboxItemDtoTOfInt32();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IComboboxItemDtoTOfInt32 {
+    value: number | undefined;
+    displayText: string | undefined;
+    isSelected: boolean | undefined;
+}
+
+export class ListResultDtoOfEditionListDto implements IListResultDtoOfEditionListDto {
+    items: EditionListDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfEditionListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(EditionListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfEditionListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfEditionListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfEditionListDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfEditionListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfEditionListDto {
+    items: EditionListDto[] | undefined;
+}
+
+export class EditionListDto implements IEditionListDto {
+    name: string | undefined;
+    displayName: string | undefined;
+    creationTime: moment.Moment | undefined;
+    id: number | undefined;
+
+    constructor(data?: IEditionListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+            this.displayName = data["displayName"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): EditionListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EditionListDto();
         result.init(data);
         return result;
     }
@@ -1680,32 +6156,3421 @@ export class RoleDto implements IRoleDto {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
         data["displayName"] = this.displayName;
-        data["normalizedName"] = this.normalizedName;
-        data["description"] = this.description;
-        if (this.permissions && this.permissions.constructor === Array) {
-            data["permissions"] = [];
-            for (let item of this.permissions)
-                data["permissions"].push(item);
-        }
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["id"] = this.id;
         return data; 
     }
 
-    clone(): RoleDto {
+    clone(): EditionListDto {
         const json = this.toJSON();
-        let result = new RoleDto();
+        let result = new EditionListDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IRoleDto {
-    name: string;
-    displayName: string;
-    normalizedName: string | undefined;
-    description: string | undefined;
-    permissions: string[] | undefined;
+export interface IEditionListDto {
+    name: string | undefined;
+    displayName: string | undefined;
+    creationTime: moment.Moment | undefined;
     id: number | undefined;
+}
+
+export class GetEditionEditOutput implements IGetEditionEditOutput {
+    edition: EditionEditDto | undefined;
+    featureValues: NameValueDto[] | undefined;
+    features: FlatFeatureDto[] | undefined;
+
+    constructor(data?: IGetEditionEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.edition = data["edition"] ? EditionEditDto.fromJS(data["edition"]) : <any>undefined;
+            if (data["featureValues"] && data["featureValues"].constructor === Array) {
+                this.featureValues = [] as any;
+                for (let item of data["featureValues"])
+                    this.featureValues.push(NameValueDto.fromJS(item));
+            }
+            if (data["features"] && data["features"].constructor === Array) {
+                this.features = [] as any;
+                for (let item of data["features"])
+                    this.features.push(FlatFeatureDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): GetEditionEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetEditionEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["edition"] = this.edition ? this.edition.toJSON() : <any>undefined;
+        if (this.featureValues && this.featureValues.constructor === Array) {
+            data["featureValues"] = [];
+            for (let item of this.featureValues)
+                data["featureValues"].push(item.toJSON());
+        }
+        if (this.features && this.features.constructor === Array) {
+            data["features"] = [];
+            for (let item of this.features)
+                data["features"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): GetEditionEditOutput {
+        const json = this.toJSON();
+        let result = new GetEditionEditOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetEditionEditOutput {
+    edition: EditionEditDto | undefined;
+    featureValues: NameValueDto[] | undefined;
+    features: FlatFeatureDto[] | undefined;
+}
+
+export class EditionEditDto implements IEditionEditDto {
+    id: number | undefined;
+    displayName: string;
+    monthlyPrice: number | undefined;
+    annualPrice: number | undefined;
+    trialDayCount: number | undefined;
+    waitingDayAfterExpire: number | undefined;
+    expiringEditionId: number | undefined;
+
+    constructor(data?: IEditionEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.displayName = data["displayName"];
+            this.monthlyPrice = data["monthlyPrice"];
+            this.annualPrice = data["annualPrice"];
+            this.trialDayCount = data["trialDayCount"];
+            this.waitingDayAfterExpire = data["waitingDayAfterExpire"];
+            this.expiringEditionId = data["expiringEditionId"];
+        }
+    }
+
+    static fromJS(data: any): EditionEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EditionEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        data["monthlyPrice"] = this.monthlyPrice;
+        data["annualPrice"] = this.annualPrice;
+        data["trialDayCount"] = this.trialDayCount;
+        data["waitingDayAfterExpire"] = this.waitingDayAfterExpire;
+        data["expiringEditionId"] = this.expiringEditionId;
+        return data; 
+    }
+
+    clone(): EditionEditDto {
+        const json = this.toJSON();
+        let result = new EditionEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEditionEditDto {
+    id: number | undefined;
+    displayName: string;
+    monthlyPrice: number | undefined;
+    annualPrice: number | undefined;
+    trialDayCount: number | undefined;
+    waitingDayAfterExpire: number | undefined;
+    expiringEditionId: number | undefined;
+}
+
+export class FlatFeatureDto implements IFlatFeatureDto {
+    parentName: string | undefined;
+    name: string | undefined;
+    displayName: string | undefined;
+    description: string | undefined;
+    defaultValue: string | undefined;
+    inputType: FeatureInputTypeDto | undefined;
+
+    constructor(data?: IFlatFeatureDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.parentName = data["parentName"];
+            this.name = data["name"];
+            this.displayName = data["displayName"];
+            this.description = data["description"];
+            this.defaultValue = data["defaultValue"];
+            this.inputType = data["inputType"] ? FeatureInputTypeDto.fromJS(data["inputType"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): FlatFeatureDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FlatFeatureDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["parentName"] = this.parentName;
+        data["name"] = this.name;
+        data["displayName"] = this.displayName;
+        data["description"] = this.description;
+        data["defaultValue"] = this.defaultValue;
+        data["inputType"] = this.inputType ? this.inputType.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): FlatFeatureDto {
+        const json = this.toJSON();
+        let result = new FlatFeatureDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFlatFeatureDto {
+    parentName: string | undefined;
+    name: string | undefined;
+    displayName: string | undefined;
+    description: string | undefined;
+    defaultValue: string | undefined;
+    inputType: FeatureInputTypeDto | undefined;
+}
+
+export class FeatureInputTypeDto implements IFeatureInputTypeDto {
+    name: string | undefined;
+    attributes: { [key: string] : any; } | undefined;
+    validator: IValueValidator | undefined;
+    itemSource: LocalizableComboboxItemSourceDto | undefined;
+
+    constructor(data?: IFeatureInputTypeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+            if (data["attributes"]) {
+                this.attributes = {} as any;
+                for (let key in data["attributes"]) {
+                    if (data["attributes"].hasOwnProperty(key))
+                        this.attributes[key] = data["attributes"][key];
+                }
+            }
+            this.validator = data["validator"] ? IValueValidator.fromJS(data["validator"]) : <any>undefined;
+            this.itemSource = data["itemSource"] ? LocalizableComboboxItemSourceDto.fromJS(data["itemSource"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): FeatureInputTypeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FeatureInputTypeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        if (this.attributes) {
+            data["attributes"] = {};
+            for (let key in this.attributes) {
+                if (this.attributes.hasOwnProperty(key))
+                    data["attributes"][key] = this.attributes[key];
+            }
+        }
+        data["validator"] = this.validator ? this.validator.toJSON() : <any>undefined;
+        data["itemSource"] = this.itemSource ? this.itemSource.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): FeatureInputTypeDto {
+        const json = this.toJSON();
+        let result = new FeatureInputTypeDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFeatureInputTypeDto {
+    name: string | undefined;
+    attributes: { [key: string] : any; } | undefined;
+    validator: IValueValidator | undefined;
+    itemSource: LocalizableComboboxItemSourceDto | undefined;
+}
+
+export class IValueValidator implements IIValueValidator {
+    name: string | undefined;
+    attributes: { [key: string] : any; } | undefined;
+
+    constructor(data?: IIValueValidator) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+            if (data["attributes"]) {
+                this.attributes = {} as any;
+                for (let key in data["attributes"]) {
+                    if (data["attributes"].hasOwnProperty(key))
+                        this.attributes[key] = data["attributes"][key];
+                }
+            }
+        }
+    }
+
+    static fromJS(data: any): IValueValidator {
+        data = typeof data === 'object' ? data : {};
+        let result = new IValueValidator();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        if (this.attributes) {
+            data["attributes"] = {};
+            for (let key in this.attributes) {
+                if (this.attributes.hasOwnProperty(key))
+                    data["attributes"][key] = this.attributes[key];
+            }
+        }
+        return data; 
+    }
+
+    clone(): IValueValidator {
+        const json = this.toJSON();
+        let result = new IValueValidator();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IIValueValidator {
+    name: string | undefined;
+    attributes: { [key: string] : any; } | undefined;
+}
+
+export class LocalizableComboboxItemSourceDto implements ILocalizableComboboxItemSourceDto {
+    items: LocalizableComboboxItemDto[] | undefined;
+
+    constructor(data?: ILocalizableComboboxItemSourceDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(LocalizableComboboxItemDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): LocalizableComboboxItemSourceDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new LocalizableComboboxItemSourceDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): LocalizableComboboxItemSourceDto {
+        const json = this.toJSON();
+        let result = new LocalizableComboboxItemSourceDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ILocalizableComboboxItemSourceDto {
+    items: LocalizableComboboxItemDto[] | undefined;
+}
+
+export class LocalizableComboboxItemDto implements ILocalizableComboboxItemDto {
+    value: string | undefined;
+    displayText: string | undefined;
+
+    constructor(data?: ILocalizableComboboxItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.value = data["value"];
+            this.displayText = data["displayText"];
+        }
+    }
+
+    static fromJS(data: any): LocalizableComboboxItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new LocalizableComboboxItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["value"] = this.value;
+        data["displayText"] = this.displayText;
+        return data; 
+    }
+
+    clone(): LocalizableComboboxItemDto {
+        const json = this.toJSON();
+        let result = new LocalizableComboboxItemDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ILocalizableComboboxItemDto {
+    value: string | undefined;
+    displayText: string | undefined;
+}
+
+export class CreateOrUpdateEditionDto implements ICreateOrUpdateEditionDto {
+    edition: EditionEditDto;
+    featureValues: NameValueDto[];
+
+    constructor(data?: ICreateOrUpdateEditionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.edition = new EditionEditDto();
+            this.featureValues = [];
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.edition = data["edition"] ? EditionEditDto.fromJS(data["edition"]) : new EditionEditDto();
+            if (data["featureValues"] && data["featureValues"].constructor === Array) {
+                this.featureValues = [] as any;
+                for (let item of data["featureValues"])
+                    this.featureValues.push(NameValueDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): CreateOrUpdateEditionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrUpdateEditionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["edition"] = this.edition ? this.edition.toJSON() : <any>undefined;
+        if (this.featureValues && this.featureValues.constructor === Array) {
+            data["featureValues"] = [];
+            for (let item of this.featureValues)
+                data["featureValues"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): CreateOrUpdateEditionDto {
+        const json = this.toJSON();
+        let result = new CreateOrUpdateEditionDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateOrUpdateEditionDto {
+    edition: EditionEditDto;
+    featureValues: NameValueDto[];
+}
+
+export class ListResultDtoOfHostCacheDto implements IListResultDtoOfHostCacheDto {
+    items: HostCacheDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfHostCacheDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(HostCacheDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfHostCacheDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfHostCacheDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfHostCacheDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfHostCacheDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfHostCacheDto {
+    items: HostCacheDto[] | undefined;
+}
+
+export class HostCacheDto implements IHostCacheDto {
+    name: string | undefined;
+
+    constructor(data?: IHostCacheDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+        }
+    }
+
+    static fromJS(data: any): HostCacheDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new HostCacheDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data; 
+    }
+
+    clone(): HostCacheDto {
+        const json = this.toJSON();
+        let result = new HostCacheDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IHostCacheDto {
+    name: string | undefined;
+}
+
+export class EntityDtoOfString implements IEntityDtoOfString {
+    id: string | undefined;
+
+    constructor(data?: IEntityDtoOfString) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): EntityDtoOfString {
+        data = typeof data === 'object' ? data : {};
+        let result = new EntityDtoOfString();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): EntityDtoOfString {
+        const json = this.toJSON();
+        let result = new EntityDtoOfString();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEntityDtoOfString {
+    id: string | undefined;
+}
+
+export class HostSettingsEditDto implements IHostSettingsEditDto {
+    /** 基本设置 */
+    general: GeneralSettingsEditDto;
+    /** 用户管理设置 */
+    userManagement: HostUserManagementSettingsEditDto;
+    /** 邮箱设置 */
+    email: EmailSettingsEditDto;
+    /** 租户设置 */
+    tenantManagement: TenantManagementSettingsEditDto;
+    /** 安全设置 */
+    security: SecuritySettingsEditDto;
+    /** 发票管理 */
+    billing: HostBillingSettingsEditDto | undefined;
+
+    constructor(data?: IHostSettingsEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.general = new GeneralSettingsEditDto();
+            this.userManagement = new HostUserManagementSettingsEditDto();
+            this.email = new EmailSettingsEditDto();
+            this.tenantManagement = new TenantManagementSettingsEditDto();
+            this.security = new SecuritySettingsEditDto();
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.general = data["general"] ? GeneralSettingsEditDto.fromJS(data["general"]) : new GeneralSettingsEditDto();
+            this.userManagement = data["userManagement"] ? HostUserManagementSettingsEditDto.fromJS(data["userManagement"]) : new HostUserManagementSettingsEditDto();
+            this.email = data["email"] ? EmailSettingsEditDto.fromJS(data["email"]) : new EmailSettingsEditDto();
+            this.tenantManagement = data["tenantManagement"] ? TenantManagementSettingsEditDto.fromJS(data["tenantManagement"]) : new TenantManagementSettingsEditDto();
+            this.security = data["security"] ? SecuritySettingsEditDto.fromJS(data["security"]) : new SecuritySettingsEditDto();
+            this.billing = data["billing"] ? HostBillingSettingsEditDto.fromJS(data["billing"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): HostSettingsEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new HostSettingsEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["general"] = this.general ? this.general.toJSON() : <any>undefined;
+        data["userManagement"] = this.userManagement ? this.userManagement.toJSON() : <any>undefined;
+        data["email"] = this.email ? this.email.toJSON() : <any>undefined;
+        data["tenantManagement"] = this.tenantManagement ? this.tenantManagement.toJSON() : <any>undefined;
+        data["security"] = this.security ? this.security.toJSON() : <any>undefined;
+        data["billing"] = this.billing ? this.billing.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): HostSettingsEditDto {
+        const json = this.toJSON();
+        let result = new HostSettingsEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IHostSettingsEditDto {
+    /** 基本设置 */
+    general: GeneralSettingsEditDto;
+    /** 用户管理设置 */
+    userManagement: HostUserManagementSettingsEditDto;
+    /** 邮箱设置 */
+    email: EmailSettingsEditDto;
+    /** 租户设置 */
+    tenantManagement: TenantManagementSettingsEditDto;
+    /** 安全设置 */
+    security: SecuritySettingsEditDto;
+    /** 发票管理 */
+    billing: HostBillingSettingsEditDto | undefined;
+}
+
+export class GeneralSettingsEditDto implements IGeneralSettingsEditDto {
+    /** 时区 */
+    timezone: string | undefined;
+    /** 这个字段只用于比较用户的时区与默认时区 */
+    timezoneForComparison: string | undefined;
+
+    constructor(data?: IGeneralSettingsEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.timezone = data["timezone"];
+            this.timezoneForComparison = data["timezoneForComparison"];
+        }
+    }
+
+    static fromJS(data: any): GeneralSettingsEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GeneralSettingsEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["timezone"] = this.timezone;
+        data["timezoneForComparison"] = this.timezoneForComparison;
+        return data; 
+    }
+
+    clone(): GeneralSettingsEditDto {
+        const json = this.toJSON();
+        let result = new GeneralSettingsEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGeneralSettingsEditDto {
+    /** 时区 */
+    timezone: string | undefined;
+    /** 这个字段只用于比较用户的时区与默认时区 */
+    timezoneForComparison: string | undefined;
+}
+
+export class HostUserManagementSettingsEditDto implements IHostUserManagementSettingsEditDto {
+    /** 是否必须验证邮箱才能登陆 */
+    isEmailConfirmationRequiredForLogin: boolean | undefined;
+    /** 宿主用户登陆使用验证码 */
+    useCaptchaOnUserLogin: boolean | undefined;
+    /** 宿主用户登陆验证码类型 */
+    captchaOnUserLoginType: HostUserManagementSettingsEditDtoCaptchaOnUserLoginType | undefined;
+    /** 宿主用户登陆验证码长度 */
+    captchaOnUserLoginLength: number | undefined;
+
+    constructor(data?: IHostUserManagementSettingsEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.isEmailConfirmationRequiredForLogin = data["isEmailConfirmationRequiredForLogin"];
+            this.useCaptchaOnUserLogin = data["useCaptchaOnUserLogin"];
+            this.captchaOnUserLoginType = data["captchaOnUserLoginType"];
+            this.captchaOnUserLoginLength = data["captchaOnUserLoginLength"];
+        }
+    }
+
+    static fromJS(data: any): HostUserManagementSettingsEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new HostUserManagementSettingsEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isEmailConfirmationRequiredForLogin"] = this.isEmailConfirmationRequiredForLogin;
+        data["useCaptchaOnUserLogin"] = this.useCaptchaOnUserLogin;
+        data["captchaOnUserLoginType"] = this.captchaOnUserLoginType;
+        data["captchaOnUserLoginLength"] = this.captchaOnUserLoginLength;
+        return data; 
+    }
+
+    clone(): HostUserManagementSettingsEditDto {
+        const json = this.toJSON();
+        let result = new HostUserManagementSettingsEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IHostUserManagementSettingsEditDto {
+    /** 是否必须验证邮箱才能登陆 */
+    isEmailConfirmationRequiredForLogin: boolean | undefined;
+    /** 宿主用户登陆使用验证码 */
+    useCaptchaOnUserLogin: boolean | undefined;
+    /** 宿主用户登陆验证码类型 */
+    captchaOnUserLoginType: HostUserManagementSettingsEditDtoCaptchaOnUserLoginType | undefined;
+    /** 宿主用户登陆验证码长度 */
+    captchaOnUserLoginLength: number | undefined;
+}
+
+export class EmailSettingsEditDto implements IEmailSettingsEditDto {
+    /** 默认发件人邮箱地址 */
+    defaultFromAddress: string | undefined;
+    /** 邮箱显示名称 */
+    defaultFromDisplayName: string | undefined;
+    /** 发件人邮箱SMTP服务器Host */
+    smtpHost: string | undefined;
+    /** 发件人邮箱SMTP服务器端口 */
+    smtpPort: number | undefined;
+    /** 发件人校验名称 */
+    smtpUserName: string | undefined;
+    /** 发件人校验密码 */
+    smtpPassword: string | undefined;
+    /** 发件人 */
+    smtpDomain: string | undefined;
+    /** 使用ssl */
+    smtpEnableSsl: boolean | undefined;
+    /** 使用默认凭据 */
+    smtpUseDefaultCredentials: boolean | undefined;
+
+    constructor(data?: IEmailSettingsEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.defaultFromAddress = data["defaultFromAddress"];
+            this.defaultFromDisplayName = data["defaultFromDisplayName"];
+            this.smtpHost = data["smtpHost"];
+            this.smtpPort = data["smtpPort"];
+            this.smtpUserName = data["smtpUserName"];
+            this.smtpPassword = data["smtpPassword"];
+            this.smtpDomain = data["smtpDomain"];
+            this.smtpEnableSsl = data["smtpEnableSsl"];
+            this.smtpUseDefaultCredentials = data["smtpUseDefaultCredentials"];
+        }
+    }
+
+    static fromJS(data: any): EmailSettingsEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EmailSettingsEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["defaultFromAddress"] = this.defaultFromAddress;
+        data["defaultFromDisplayName"] = this.defaultFromDisplayName;
+        data["smtpHost"] = this.smtpHost;
+        data["smtpPort"] = this.smtpPort;
+        data["smtpUserName"] = this.smtpUserName;
+        data["smtpPassword"] = this.smtpPassword;
+        data["smtpDomain"] = this.smtpDomain;
+        data["smtpEnableSsl"] = this.smtpEnableSsl;
+        data["smtpUseDefaultCredentials"] = this.smtpUseDefaultCredentials;
+        return data; 
+    }
+
+    clone(): EmailSettingsEditDto {
+        const json = this.toJSON();
+        let result = new EmailSettingsEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEmailSettingsEditDto {
+    /** 默认发件人邮箱地址 */
+    defaultFromAddress: string | undefined;
+    /** 邮箱显示名称 */
+    defaultFromDisplayName: string | undefined;
+    /** 发件人邮箱SMTP服务器Host */
+    smtpHost: string | undefined;
+    /** 发件人邮箱SMTP服务器端口 */
+    smtpPort: number | undefined;
+    /** 发件人校验名称 */
+    smtpUserName: string | undefined;
+    /** 发件人校验密码 */
+    smtpPassword: string | undefined;
+    /** 发件人 */
+    smtpDomain: string | undefined;
+    /** 使用ssl */
+    smtpEnableSsl: boolean | undefined;
+    /** 使用默认凭据 */
+    smtpUseDefaultCredentials: boolean | undefined;
+}
+
+export class TenantManagementSettingsEditDto implements ITenantManagementSettingsEditDto {
+    /** 允许注册 */
+    allowSelfRegistration: boolean | undefined;
+    /** 注册租户默认激活 */
+    isNewRegisteredTenantActiveByDefault: boolean | undefined;
+    /** 宿主租户注册使用验证码 */
+    useCaptchaOnTenantRegistration: boolean | undefined;
+    /** 宿主租户注册验证码类型 */
+    captchaOnTenantRegistrationType: TenantManagementSettingsEditDtoCaptchaOnTenantRegistrationType | undefined;
+    /** 宿主租户注册验证码长度 */
+    captchaOnTenantRegistrationLength: number | undefined;
+    /** 默认版本id */
+    defaultEditionId: number | undefined;
+
+    constructor(data?: ITenantManagementSettingsEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.allowSelfRegistration = data["allowSelfRegistration"];
+            this.isNewRegisteredTenantActiveByDefault = data["isNewRegisteredTenantActiveByDefault"];
+            this.useCaptchaOnTenantRegistration = data["useCaptchaOnTenantRegistration"];
+            this.captchaOnTenantRegistrationType = data["captchaOnTenantRegistrationType"];
+            this.captchaOnTenantRegistrationLength = data["captchaOnTenantRegistrationLength"];
+            this.defaultEditionId = data["defaultEditionId"];
+        }
+    }
+
+    static fromJS(data: any): TenantManagementSettingsEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TenantManagementSettingsEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["allowSelfRegistration"] = this.allowSelfRegistration;
+        data["isNewRegisteredTenantActiveByDefault"] = this.isNewRegisteredTenantActiveByDefault;
+        data["useCaptchaOnTenantRegistration"] = this.useCaptchaOnTenantRegistration;
+        data["captchaOnTenantRegistrationType"] = this.captchaOnTenantRegistrationType;
+        data["captchaOnTenantRegistrationLength"] = this.captchaOnTenantRegistrationLength;
+        data["defaultEditionId"] = this.defaultEditionId;
+        return data; 
+    }
+
+    clone(): TenantManagementSettingsEditDto {
+        const json = this.toJSON();
+        let result = new TenantManagementSettingsEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITenantManagementSettingsEditDto {
+    /** 允许注册 */
+    allowSelfRegistration: boolean | undefined;
+    /** 注册租户默认激活 */
+    isNewRegisteredTenantActiveByDefault: boolean | undefined;
+    /** 宿主租户注册使用验证码 */
+    useCaptchaOnTenantRegistration: boolean | undefined;
+    /** 宿主租户注册验证码类型 */
+    captchaOnTenantRegistrationType: TenantManagementSettingsEditDtoCaptchaOnTenantRegistrationType | undefined;
+    /** 宿主租户注册验证码长度 */
+    captchaOnTenantRegistrationLength: number | undefined;
+    /** 默认版本id */
+    defaultEditionId: number | undefined;
+}
+
+export class SecuritySettingsEditDto implements ISecuritySettingsEditDto {
+    /** 使用默认密码校验设置 */
+    useDefaultPasswordComplexitySettings: boolean | undefined;
+    /** 密码校验规则 */
+    passwordComplexity: PasswordComplexitySetting | undefined;
+    /** 默认密码校验规则 */
+    defaultPasswordComplexity: PasswordComplexitySetting | undefined;
+    /** 用户锁定设置 */
+    userLockOut: UserLockOutSettingsEditDto | undefined;
+    /** 双重校验登陆设置 */
+    twoFactorLogin: TwoFactorLoginSettingsEditDto | undefined;
+
+    constructor(data?: ISecuritySettingsEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.useDefaultPasswordComplexitySettings = data["useDefaultPasswordComplexitySettings"];
+            this.passwordComplexity = data["passwordComplexity"] ? PasswordComplexitySetting.fromJS(data["passwordComplexity"]) : <any>undefined;
+            this.defaultPasswordComplexity = data["defaultPasswordComplexity"] ? PasswordComplexitySetting.fromJS(data["defaultPasswordComplexity"]) : <any>undefined;
+            this.userLockOut = data["userLockOut"] ? UserLockOutSettingsEditDto.fromJS(data["userLockOut"]) : <any>undefined;
+            this.twoFactorLogin = data["twoFactorLogin"] ? TwoFactorLoginSettingsEditDto.fromJS(data["twoFactorLogin"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): SecuritySettingsEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SecuritySettingsEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["useDefaultPasswordComplexitySettings"] = this.useDefaultPasswordComplexitySettings;
+        data["passwordComplexity"] = this.passwordComplexity ? this.passwordComplexity.toJSON() : <any>undefined;
+        data["defaultPasswordComplexity"] = this.defaultPasswordComplexity ? this.defaultPasswordComplexity.toJSON() : <any>undefined;
+        data["userLockOut"] = this.userLockOut ? this.userLockOut.toJSON() : <any>undefined;
+        data["twoFactorLogin"] = this.twoFactorLogin ? this.twoFactorLogin.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): SecuritySettingsEditDto {
+        const json = this.toJSON();
+        let result = new SecuritySettingsEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISecuritySettingsEditDto {
+    /** 使用默认密码校验设置 */
+    useDefaultPasswordComplexitySettings: boolean | undefined;
+    /** 密码校验规则 */
+    passwordComplexity: PasswordComplexitySetting | undefined;
+    /** 默认密码校验规则 */
+    defaultPasswordComplexity: PasswordComplexitySetting | undefined;
+    /** 用户锁定设置 */
+    userLockOut: UserLockOutSettingsEditDto | undefined;
+    /** 双重校验登陆设置 */
+    twoFactorLogin: TwoFactorLoginSettingsEditDto | undefined;
+}
+
+export class HostBillingSettingsEditDto implements IHostBillingSettingsEditDto {
+    legalName: string | undefined;
+    address: string | undefined;
+
+    constructor(data?: IHostBillingSettingsEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.legalName = data["legalName"];
+            this.address = data["address"];
+        }
+    }
+
+    static fromJS(data: any): HostBillingSettingsEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new HostBillingSettingsEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["legalName"] = this.legalName;
+        data["address"] = this.address;
+        return data; 
+    }
+
+    clone(): HostBillingSettingsEditDto {
+        const json = this.toJSON();
+        let result = new HostBillingSettingsEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IHostBillingSettingsEditDto {
+    legalName: string | undefined;
+    address: string | undefined;
+}
+
+export class PasswordComplexitySetting implements IPasswordComplexitySetting {
+    requireDigit: boolean | undefined;
+    requireLowercase: boolean | undefined;
+    requireNonAlphanumeric: boolean | undefined;
+    requireUppercase: boolean | undefined;
+    requiredLength: number | undefined;
+
+    constructor(data?: IPasswordComplexitySetting) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.requireDigit = data["requireDigit"];
+            this.requireLowercase = data["requireLowercase"];
+            this.requireNonAlphanumeric = data["requireNonAlphanumeric"];
+            this.requireUppercase = data["requireUppercase"];
+            this.requiredLength = data["requiredLength"];
+        }
+    }
+
+    static fromJS(data: any): PasswordComplexitySetting {
+        data = typeof data === 'object' ? data : {};
+        let result = new PasswordComplexitySetting();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["requireDigit"] = this.requireDigit;
+        data["requireLowercase"] = this.requireLowercase;
+        data["requireNonAlphanumeric"] = this.requireNonAlphanumeric;
+        data["requireUppercase"] = this.requireUppercase;
+        data["requiredLength"] = this.requiredLength;
+        return data; 
+    }
+
+    clone(): PasswordComplexitySetting {
+        const json = this.toJSON();
+        let result = new PasswordComplexitySetting();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPasswordComplexitySetting {
+    requireDigit: boolean | undefined;
+    requireLowercase: boolean | undefined;
+    requireNonAlphanumeric: boolean | undefined;
+    requireUppercase: boolean | undefined;
+    requiredLength: number | undefined;
+}
+
+export class UserLockOutSettingsEditDto implements IUserLockOutSettingsEditDto {
+    /** 是否启用 */
+    isEnabled: boolean | undefined;
+    /** 登陆校验错误锁定账户最大次数 */
+    maxFailedAccessAttemptsBeforeLockout: number | undefined;
+    /** 默认锁定时间 */
+    defaultAccountLockoutSeconds: number | undefined;
+
+    constructor(data?: IUserLockOutSettingsEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.isEnabled = data["isEnabled"];
+            this.maxFailedAccessAttemptsBeforeLockout = data["maxFailedAccessAttemptsBeforeLockout"];
+            this.defaultAccountLockoutSeconds = data["defaultAccountLockoutSeconds"];
+        }
+    }
+
+    static fromJS(data: any): UserLockOutSettingsEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserLockOutSettingsEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isEnabled"] = this.isEnabled;
+        data["maxFailedAccessAttemptsBeforeLockout"] = this.maxFailedAccessAttemptsBeforeLockout;
+        data["defaultAccountLockoutSeconds"] = this.defaultAccountLockoutSeconds;
+        return data; 
+    }
+
+    clone(): UserLockOutSettingsEditDto {
+        const json = this.toJSON();
+        let result = new UserLockOutSettingsEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserLockOutSettingsEditDto {
+    /** 是否启用 */
+    isEnabled: boolean | undefined;
+    /** 登陆校验错误锁定账户最大次数 */
+    maxFailedAccessAttemptsBeforeLockout: number | undefined;
+    /** 默认锁定时间 */
+    defaultAccountLockoutSeconds: number | undefined;
+}
+
+export class TwoFactorLoginSettingsEditDto implements ITwoFactorLoginSettingsEditDto {
+    isEnabledForApplication: boolean | undefined;
+    /** 是否启用 */
+    isEnabled: boolean | undefined;
+    /** 邮箱启用 */
+    isEmailProviderEnabled: boolean | undefined;
+    /** 短信启用 */
+    isSmsProviderEnabled: boolean | undefined;
+    /** 浏览器‘记住我’启用 */
+    isRememberBrowserEnabled: boolean | undefined;
+    /** google校验启用 */
+    isGoogleAuthenticatorEnabled: boolean | undefined;
+
+    constructor(data?: ITwoFactorLoginSettingsEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.isEnabledForApplication = data["isEnabledForApplication"];
+            this.isEnabled = data["isEnabled"];
+            this.isEmailProviderEnabled = data["isEmailProviderEnabled"];
+            this.isSmsProviderEnabled = data["isSmsProviderEnabled"];
+            this.isRememberBrowserEnabled = data["isRememberBrowserEnabled"];
+            this.isGoogleAuthenticatorEnabled = data["isGoogleAuthenticatorEnabled"];
+        }
+    }
+
+    static fromJS(data: any): TwoFactorLoginSettingsEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TwoFactorLoginSettingsEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isEnabledForApplication"] = this.isEnabledForApplication;
+        data["isEnabled"] = this.isEnabled;
+        data["isEmailProviderEnabled"] = this.isEmailProviderEnabled;
+        data["isSmsProviderEnabled"] = this.isSmsProviderEnabled;
+        data["isRememberBrowserEnabled"] = this.isRememberBrowserEnabled;
+        data["isGoogleAuthenticatorEnabled"] = this.isGoogleAuthenticatorEnabled;
+        return data; 
+    }
+
+    clone(): TwoFactorLoginSettingsEditDto {
+        const json = this.toJSON();
+        let result = new TwoFactorLoginSettingsEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITwoFactorLoginSettingsEditDto {
+    isEnabledForApplication: boolean | undefined;
+    /** 是否启用 */
+    isEnabled: boolean | undefined;
+    /** 邮箱启用 */
+    isEmailProviderEnabled: boolean | undefined;
+    /** 短信启用 */
+    isSmsProviderEnabled: boolean | undefined;
+    /** 浏览器‘记住我’启用 */
+    isRememberBrowserEnabled: boolean | undefined;
+    /** google校验启用 */
+    isGoogleAuthenticatorEnabled: boolean | undefined;
+}
+
+export class SendTestEmailInput implements ISendTestEmailInput {
+    /** 邮箱地址 */
+    emailAddress: string;
+
+    constructor(data?: ISendTestEmailInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.emailAddress = data["emailAddress"];
+        }
+    }
+
+    static fromJS(data: any): SendTestEmailInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new SendTestEmailInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["emailAddress"] = this.emailAddress;
+        return data; 
+    }
+
+    clone(): SendTestEmailInput {
+        const json = this.toJSON();
+        let result = new SendTestEmailInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISendTestEmailInput {
+    /** 邮箱地址 */
+    emailAddress: string;
+}
+
+export class GetLanguagesOutput implements IGetLanguagesOutput {
+    /** 默认语言名称 */
+    defaultLanguageName: string | undefined;
+    items: LanguageListDto[] | undefined;
+
+    constructor(data?: IGetLanguagesOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.defaultLanguageName = data["defaultLanguageName"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(LanguageListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): GetLanguagesOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetLanguagesOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["defaultLanguageName"] = this.defaultLanguageName;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): GetLanguagesOutput {
+        const json = this.toJSON();
+        let result = new GetLanguagesOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetLanguagesOutput {
+    /** 默认语言名称 */
+    defaultLanguageName: string | undefined;
+    items: LanguageListDto[] | undefined;
+}
+
+export class LanguageListDto implements ILanguageListDto {
+    tenantId: number | undefined;
+    /** 名称 */
+    name: string | undefined;
+    /** 显示名称 */
+    displayName: string | undefined;
+    /** 图标 */
+    icon: string | undefined;
+    isDisabled: boolean | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ILanguageListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenantId = data["tenantId"];
+            this.name = data["name"];
+            this.displayName = data["displayName"];
+            this.icon = data["icon"];
+            this.isDisabled = data["isDisabled"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): LanguageListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new LanguageListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["name"] = this.name;
+        data["displayName"] = this.displayName;
+        data["icon"] = this.icon;
+        data["isDisabled"] = this.isDisabled;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): LanguageListDto {
+        const json = this.toJSON();
+        let result = new LanguageListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ILanguageListDto {
+    tenantId: number | undefined;
+    /** 名称 */
+    name: string | undefined;
+    /** 显示名称 */
+    displayName: string | undefined;
+    /** 图标 */
+    icon: string | undefined;
+    isDisabled: boolean | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class CreateOrUpdateLanguageInput implements ICreateOrUpdateLanguageInput {
+    language: LanguageEditDto;
+
+    constructor(data?: ICreateOrUpdateLanguageInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.language = new LanguageEditDto();
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.language = data["language"] ? LanguageEditDto.fromJS(data["language"]) : new LanguageEditDto();
+        }
+    }
+
+    static fromJS(data: any): CreateOrUpdateLanguageInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrUpdateLanguageInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["language"] = this.language ? this.language.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): CreateOrUpdateLanguageInput {
+        const json = this.toJSON();
+        let result = new CreateOrUpdateLanguageInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateOrUpdateLanguageInput {
+    language: LanguageEditDto;
+}
+
+export class LanguageEditDto implements ILanguageEditDto {
+    id: number | undefined;
+    name: string;
+    icon: string | undefined;
+    isEnabled: boolean | undefined;
+
+    constructor(data?: ILanguageEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.name = data["name"];
+            this.icon = data["icon"];
+            this.isEnabled = data["isEnabled"];
+        }
+    }
+
+    static fromJS(data: any): LanguageEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new LanguageEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["icon"] = this.icon;
+        data["isEnabled"] = this.isEnabled;
+        return data; 
+    }
+
+    clone(): LanguageEditDto {
+        const json = this.toJSON();
+        let result = new LanguageEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ILanguageEditDto {
+    id: number | undefined;
+    name: string;
+    icon: string | undefined;
+    isEnabled: boolean | undefined;
+}
+
+export class GetLanguageForEditOutput implements IGetLanguageForEditOutput {
+    /** 编辑的语言信息 */
+    language: LanguageEditDto | undefined;
+    /** 所有的语言名称 */
+    languageNames: ComboboxItemDto[] | undefined;
+    /** 所有的国旗 */
+    flags: ComboboxItemDto[] | undefined;
+
+    constructor(data?: IGetLanguageForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.language = data["language"] ? LanguageEditDto.fromJS(data["language"]) : <any>undefined;
+            if (data["languageNames"] && data["languageNames"].constructor === Array) {
+                this.languageNames = [] as any;
+                for (let item of data["languageNames"])
+                    this.languageNames.push(ComboboxItemDto.fromJS(item));
+            }
+            if (data["flags"] && data["flags"].constructor === Array) {
+                this.flags = [] as any;
+                for (let item of data["flags"])
+                    this.flags.push(ComboboxItemDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): GetLanguageForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetLanguageForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["language"] = this.language ? this.language.toJSON() : <any>undefined;
+        if (this.languageNames && this.languageNames.constructor === Array) {
+            data["languageNames"] = [];
+            for (let item of this.languageNames)
+                data["languageNames"].push(item.toJSON());
+        }
+        if (this.flags && this.flags.constructor === Array) {
+            data["flags"] = [];
+            for (let item of this.flags)
+                data["flags"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): GetLanguageForEditOutput {
+        const json = this.toJSON();
+        let result = new GetLanguageForEditOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetLanguageForEditOutput {
+    /** 编辑的语言信息 */
+    language: LanguageEditDto | undefined;
+    /** 所有的语言名称 */
+    languageNames: ComboboxItemDto[] | undefined;
+    /** 所有的国旗 */
+    flags: ComboboxItemDto[] | undefined;
+}
+
+export class ComboboxItemDto implements IComboboxItemDto {
+    value: string | undefined;
+    displayText: string | undefined;
+    isSelected: boolean | undefined;
+
+    constructor(data?: IComboboxItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.value = data["value"];
+            this.displayText = data["displayText"];
+            this.isSelected = data["isSelected"];
+        }
+    }
+
+    static fromJS(data: any): ComboboxItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ComboboxItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["value"] = this.value;
+        data["displayText"] = this.displayText;
+        data["isSelected"] = this.isSelected;
+        return data; 
+    }
+
+    clone(): ComboboxItemDto {
+        const json = this.toJSON();
+        let result = new ComboboxItemDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IComboboxItemDto {
+    value: string | undefined;
+    displayText: string | undefined;
+    isSelected: boolean | undefined;
+}
+
+export class SetDefaultLanguageInput implements ISetDefaultLanguageInput {
+    name: string;
+
+    constructor(data?: ISetDefaultLanguageInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+        }
+    }
+
+    static fromJS(data: any): SetDefaultLanguageInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new SetDefaultLanguageInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data; 
+    }
+
+    clone(): SetDefaultLanguageInput {
+        const json = this.toJSON();
+        let result = new SetDefaultLanguageInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISetDefaultLanguageInput {
+    name: string;
+}
+
+export class PagedResultDtoOfLanguageTextListDto implements IPagedResultDtoOfLanguageTextListDto {
+    totalCount: number | undefined;
+    items: LanguageTextListDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfLanguageTextListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(LanguageTextListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfLanguageTextListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfLanguageTextListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PagedResultDtoOfLanguageTextListDto {
+        const json = this.toJSON();
+        let result = new PagedResultDtoOfLanguageTextListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPagedResultDtoOfLanguageTextListDto {
+    totalCount: number | undefined;
+    items: LanguageTextListDto[] | undefined;
+}
+
+export class LanguageTextListDto implements ILanguageTextListDto {
+    /** 键 */
+    key: string | undefined;
+    /** 原始值 */
+    baseValue: string | undefined;
+    /** 目标值 */
+    targetValue: string | undefined;
+
+    constructor(data?: ILanguageTextListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.key = data["key"];
+            this.baseValue = data["baseValue"];
+            this.targetValue = data["targetValue"];
+        }
+    }
+
+    static fromJS(data: any): LanguageTextListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new LanguageTextListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["key"] = this.key;
+        data["baseValue"] = this.baseValue;
+        data["targetValue"] = this.targetValue;
+        return data; 
+    }
+
+    clone(): LanguageTextListDto {
+        const json = this.toJSON();
+        let result = new LanguageTextListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ILanguageTextListDto {
+    /** 键 */
+    key: string | undefined;
+    /** 原始值 */
+    baseValue: string | undefined;
+    /** 目标值 */
+    targetValue: string | undefined;
+}
+
+/** 更新语言输入信息 */
+export class UpdateLanguageTextInput implements IUpdateLanguageTextInput {
+    languageName: string;
+    sourceName: string;
+    /** 键 */
+    key: string;
+    /** 值 */
+    value: string;
+
+    constructor(data?: IUpdateLanguageTextInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.languageName = data["languageName"];
+            this.sourceName = data["sourceName"];
+            this.key = data["key"];
+            this.value = data["value"];
+        }
+    }
+
+    static fromJS(data: any): UpdateLanguageTextInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateLanguageTextInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["languageName"] = this.languageName;
+        data["sourceName"] = this.sourceName;
+        data["key"] = this.key;
+        data["value"] = this.value;
+        return data; 
+    }
+
+    clone(): UpdateLanguageTextInput {
+        const json = this.toJSON();
+        let result = new UpdateLanguageTextInput();
+        result.init(json);
+        return result;
+    }
+}
+
+/** 更新语言输入信息 */
+export interface IUpdateLanguageTextInput {
+    languageName: string;
+    sourceName: string;
+    /** 键 */
+    key: string;
+    /** 值 */
+    value: string;
+}
+
+export class GetNotificationsOutput implements IGetNotificationsOutput {
+    /** 未阅读消息数量 */
+    unreadCount: number | undefined;
+    totalCount: number | undefined;
+    items: UserNotification[] | undefined;
+
+    constructor(data?: IGetNotificationsOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.unreadCount = data["unreadCount"];
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(UserNotification.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): GetNotificationsOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetNotificationsOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["unreadCount"] = this.unreadCount;
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): GetNotificationsOutput {
+        const json = this.toJSON();
+        let result = new GetNotificationsOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetNotificationsOutput {
+    /** 未阅读消息数量 */
+    unreadCount: number | undefined;
+    totalCount: number | undefined;
+    items: UserNotification[] | undefined;
+}
+
+export class UserNotification implements IUserNotification {
+    tenantId: number | undefined;
+    userId: number | undefined;
+    state: UserNotificationState | undefined;
+    notification: TenantNotification | undefined;
+    id: string | undefined;
+
+    constructor(data?: IUserNotification) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenantId = data["tenantId"];
+            this.userId = data["userId"];
+            this.state = data["state"];
+            this.notification = data["notification"] ? TenantNotification.fromJS(data["notification"]) : <any>undefined;
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): UserNotification {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserNotification();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["userId"] = this.userId;
+        data["state"] = this.state;
+        data["notification"] = this.notification ? this.notification.toJSON() : <any>undefined;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): UserNotification {
+        const json = this.toJSON();
+        let result = new UserNotification();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserNotification {
+    tenantId: number | undefined;
+    userId: number | undefined;
+    state: UserNotificationState | undefined;
+    notification: TenantNotification | undefined;
+    id: string | undefined;
+}
+
+export class TenantNotification implements ITenantNotification {
+    tenantId: number | undefined;
+    notificationName: string | undefined;
+    data: NotificationData | undefined;
+    entityType: string | undefined;
+    entityTypeName: string | undefined;
+    entityId: any | undefined;
+    severity: TenantNotificationSeverity | undefined;
+    creationTime: moment.Moment | undefined;
+    id: string | undefined;
+
+    constructor(data?: ITenantNotification) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenantId = data["tenantId"];
+            this.notificationName = data["notificationName"];
+            this.data = data["data"] ? NotificationData.fromJS(data["data"]) : <any>undefined;
+            this.entityType = data["entityType"];
+            this.entityTypeName = data["entityTypeName"];
+            this.entityId = data["entityId"];
+            this.severity = data["severity"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TenantNotification {
+        data = typeof data === 'object' ? data : {};
+        let result = new TenantNotification();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["notificationName"] = this.notificationName;
+        data["data"] = this.data ? this.data.toJSON() : <any>undefined;
+        data["entityType"] = this.entityType;
+        data["entityTypeName"] = this.entityTypeName;
+        data["entityId"] = this.entityId;
+        data["severity"] = this.severity;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TenantNotification {
+        const json = this.toJSON();
+        let result = new TenantNotification();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITenantNotification {
+    tenantId: number | undefined;
+    notificationName: string | undefined;
+    data: NotificationData | undefined;
+    entityType: string | undefined;
+    entityTypeName: string | undefined;
+    entityId: any | undefined;
+    severity: TenantNotificationSeverity | undefined;
+    creationTime: moment.Moment | undefined;
+    id: string | undefined;
+}
+
+export class NotificationData implements INotificationData {
+    type: string | undefined;
+    properties: { [key: string] : any; } | undefined;
+
+    constructor(data?: INotificationData) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.type = data["type"];
+            if (data["properties"]) {
+                this.properties = {} as any;
+                for (let key in data["properties"]) {
+                    if (data["properties"].hasOwnProperty(key))
+                        this.properties[key] = data["properties"][key];
+                }
+            }
+        }
+    }
+
+    static fromJS(data: any): NotificationData {
+        data = typeof data === 'object' ? data : {};
+        let result = new NotificationData();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["type"] = this.type;
+        if (this.properties) {
+            data["properties"] = {};
+            for (let key in this.properties) {
+                if (this.properties.hasOwnProperty(key))
+                    data["properties"][key] = this.properties[key];
+            }
+        }
+        return data; 
+    }
+
+    clone(): NotificationData {
+        const json = this.toJSON();
+        let result = new NotificationData();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface INotificationData {
+    type: string | undefined;
+    properties: { [key: string] : any; } | undefined;
+}
+
+export class EntityDtoOfGuid implements IEntityDtoOfGuid {
+    id: string | undefined;
+
+    constructor(data?: IEntityDtoOfGuid) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): EntityDtoOfGuid {
+        data = typeof data === 'object' ? data : {};
+        let result = new EntityDtoOfGuid();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): EntityDtoOfGuid {
+        const json = this.toJSON();
+        let result = new EntityDtoOfGuid();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEntityDtoOfGuid {
+    id: string | undefined;
+}
+
+export class GetNotificationSettingsOutput implements IGetNotificationSettingsOutput {
+    receiveNotifications: boolean | undefined;
+    notifications: NotificationSubscriptionWithDisplayNameDto[] | undefined;
+
+    constructor(data?: IGetNotificationSettingsOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.receiveNotifications = data["receiveNotifications"];
+            if (data["notifications"] && data["notifications"].constructor === Array) {
+                this.notifications = [] as any;
+                for (let item of data["notifications"])
+                    this.notifications.push(NotificationSubscriptionWithDisplayNameDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): GetNotificationSettingsOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetNotificationSettingsOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["receiveNotifications"] = this.receiveNotifications;
+        if (this.notifications && this.notifications.constructor === Array) {
+            data["notifications"] = [];
+            for (let item of this.notifications)
+                data["notifications"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): GetNotificationSettingsOutput {
+        const json = this.toJSON();
+        let result = new GetNotificationSettingsOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetNotificationSettingsOutput {
+    receiveNotifications: boolean | undefined;
+    notifications: NotificationSubscriptionWithDisplayNameDto[] | undefined;
+}
+
+export class NotificationSubscriptionWithDisplayNameDto implements INotificationSubscriptionWithDisplayNameDto {
+    displayName: string | undefined;
+    description: string | undefined;
+    name: string;
+    isSubscribed: boolean | undefined;
+
+    constructor(data?: INotificationSubscriptionWithDisplayNameDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.displayName = data["displayName"];
+            this.description = data["description"];
+            this.name = data["name"];
+            this.isSubscribed = data["isSubscribed"];
+        }
+    }
+
+    static fromJS(data: any): NotificationSubscriptionWithDisplayNameDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new NotificationSubscriptionWithDisplayNameDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["displayName"] = this.displayName;
+        data["description"] = this.description;
+        data["name"] = this.name;
+        data["isSubscribed"] = this.isSubscribed;
+        return data; 
+    }
+
+    clone(): NotificationSubscriptionWithDisplayNameDto {
+        const json = this.toJSON();
+        let result = new NotificationSubscriptionWithDisplayNameDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface INotificationSubscriptionWithDisplayNameDto {
+    displayName: string | undefined;
+    description: string | undefined;
+    name: string;
+    isSubscribed: boolean | undefined;
+}
+
+export class UpdateNotificationSettingsInput implements IUpdateNotificationSettingsInput {
+    receiveNotifications: boolean | undefined;
+    notifications: NotificationSubscriptionDto[] | undefined;
+
+    constructor(data?: IUpdateNotificationSettingsInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.receiveNotifications = data["receiveNotifications"];
+            if (data["notifications"] && data["notifications"].constructor === Array) {
+                this.notifications = [] as any;
+                for (let item of data["notifications"])
+                    this.notifications.push(NotificationSubscriptionDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): UpdateNotificationSettingsInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateNotificationSettingsInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["receiveNotifications"] = this.receiveNotifications;
+        if (this.notifications && this.notifications.constructor === Array) {
+            data["notifications"] = [];
+            for (let item of this.notifications)
+                data["notifications"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): UpdateNotificationSettingsInput {
+        const json = this.toJSON();
+        let result = new UpdateNotificationSettingsInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUpdateNotificationSettingsInput {
+    receiveNotifications: boolean | undefined;
+    notifications: NotificationSubscriptionDto[] | undefined;
+}
+
+export class NotificationSubscriptionDto implements INotificationSubscriptionDto {
+    name: string;
+    isSubscribed: boolean | undefined;
+
+    constructor(data?: INotificationSubscriptionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+            this.isSubscribed = data["isSubscribed"];
+        }
+    }
+
+    static fromJS(data: any): NotificationSubscriptionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new NotificationSubscriptionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["isSubscribed"] = this.isSubscribed;
+        return data; 
+    }
+
+    clone(): NotificationSubscriptionDto {
+        const json = this.toJSON();
+        let result = new NotificationSubscriptionDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface INotificationSubscriptionDto {
+    name: string;
+    isSubscribed: boolean | undefined;
+}
+
+export class ListResultDtoOfOrganizationUnitListDto implements IListResultDtoOfOrganizationUnitListDto {
+    items: OrganizationUnitListDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfOrganizationUnitListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(OrganizationUnitListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfOrganizationUnitListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfOrganizationUnitListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfOrganizationUnitListDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfOrganizationUnitListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfOrganizationUnitListDto {
+    items: OrganizationUnitListDto[] | undefined;
+}
+
+/** 组织机构列表Dto */
+export class OrganizationUnitListDto implements IOrganizationUnitListDto {
+    parentId: number | undefined;
+    code: string | undefined;
+    displayName: string | undefined;
+    memberCount: number | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IOrganizationUnitListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.parentId = data["parentId"];
+            this.code = data["code"];
+            this.displayName = data["displayName"];
+            this.memberCount = data["memberCount"];
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): OrganizationUnitListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OrganizationUnitListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["parentId"] = this.parentId;
+        data["code"] = this.code;
+        data["displayName"] = this.displayName;
+        data["memberCount"] = this.memberCount;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): OrganizationUnitListDto {
+        const json = this.toJSON();
+        let result = new OrganizationUnitListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+/** 组织机构列表Dto */
+export interface IOrganizationUnitListDto {
+    parentId: number | undefined;
+    code: string | undefined;
+    displayName: string | undefined;
+    memberCount: number | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class CreateOrganizationUnitInput implements ICreateOrganizationUnitInput {
+    parentId: number | undefined;
+    displayName: string;
+
+    constructor(data?: ICreateOrganizationUnitInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.parentId = data["parentId"];
+            this.displayName = data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrganizationUnitInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrganizationUnitInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["parentId"] = this.parentId;
+        data["displayName"] = this.displayName;
+        return data; 
+    }
+
+    clone(): CreateOrganizationUnitInput {
+        const json = this.toJSON();
+        let result = new CreateOrganizationUnitInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateOrganizationUnitInput {
+    parentId: number | undefined;
+    displayName: string;
+}
+
+export class UpdateOrganizationUnitInput implements IUpdateOrganizationUnitInput {
+    id: number | undefined;
+    displayName: string;
+
+    constructor(data?: IUpdateOrganizationUnitInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.displayName = data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): UpdateOrganizationUnitInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateOrganizationUnitInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data; 
+    }
+
+    clone(): UpdateOrganizationUnitInput {
+        const json = this.toJSON();
+        let result = new UpdateOrganizationUnitInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUpdateOrganizationUnitInput {
+    id: number | undefined;
+    displayName: string;
+}
+
+export class MoveOrganizationUnitInput implements IMoveOrganizationUnitInput {
+    id: number | undefined;
+    newParentId: number | undefined;
+
+    constructor(data?: IMoveOrganizationUnitInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.newParentId = data["newParentId"];
+        }
+    }
+
+    static fromJS(data: any): MoveOrganizationUnitInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new MoveOrganizationUnitInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["newParentId"] = this.newParentId;
+        return data; 
+    }
+
+    clone(): MoveOrganizationUnitInput {
+        const json = this.toJSON();
+        let result = new MoveOrganizationUnitInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMoveOrganizationUnitInput {
+    id: number | undefined;
+    newParentId: number | undefined;
+}
+
+export class PagedResultDtoOfOrganizationUnitUserListDto implements IPagedResultDtoOfOrganizationUnitUserListDto {
+    totalCount: number | undefined;
+    items: OrganizationUnitUserListDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfOrganizationUnitUserListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(OrganizationUnitUserListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfOrganizationUnitUserListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfOrganizationUnitUserListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PagedResultDtoOfOrganizationUnitUserListDto {
+        const json = this.toJSON();
+        let result = new PagedResultDtoOfOrganizationUnitUserListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPagedResultDtoOfOrganizationUnitUserListDto {
+    totalCount: number | undefined;
+    items: OrganizationUnitUserListDto[] | undefined;
+}
+
+export class OrganizationUnitUserListDto implements IOrganizationUnitUserListDto {
+    userName: string | undefined;
+    addedTime: moment.Moment | undefined;
+    id: number | undefined;
+
+    constructor(data?: IOrganizationUnitUserListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.userName = data["userName"];
+            this.addedTime = data["addedTime"] ? moment(data["addedTime"].toString()) : <any>undefined;
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): OrganizationUnitUserListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OrganizationUnitUserListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userName"] = this.userName;
+        data["addedTime"] = this.addedTime ? this.addedTime.toISOString() : <any>undefined;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): OrganizationUnitUserListDto {
+        const json = this.toJSON();
+        let result = new OrganizationUnitUserListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IOrganizationUnitUserListDto {
+    userName: string | undefined;
+    addedTime: moment.Moment | undefined;
+    id: number | undefined;
+}
+
+export class UsersToOrganizationUnitInput implements IUsersToOrganizationUnitInput {
+    userIds: number[] | undefined;
+    organizationUnitId: number | undefined;
+
+    constructor(data?: IUsersToOrganizationUnitInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["userIds"] && data["userIds"].constructor === Array) {
+                this.userIds = [] as any;
+                for (let item of data["userIds"])
+                    this.userIds.push(item);
+            }
+            this.organizationUnitId = data["organizationUnitId"];
+        }
+    }
+
+    static fromJS(data: any): UsersToOrganizationUnitInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new UsersToOrganizationUnitInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.userIds && this.userIds.constructor === Array) {
+            data["userIds"] = [];
+            for (let item of this.userIds)
+                data["userIds"].push(item);
+        }
+        data["organizationUnitId"] = this.organizationUnitId;
+        return data; 
+    }
+
+    clone(): UsersToOrganizationUnitInput {
+        const json = this.toJSON();
+        let result = new UsersToOrganizationUnitInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUsersToOrganizationUnitInput {
+    userIds: number[] | undefined;
+    organizationUnitId: number | undefined;
+}
+
+export class UserToOrganizationUnitInput implements IUserToOrganizationUnitInput {
+    userId: number | undefined;
+    organizationUnitId: number | undefined;
+
+    constructor(data?: IUserToOrganizationUnitInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.userId = data["userId"];
+            this.organizationUnitId = data["organizationUnitId"];
+        }
+    }
+
+    static fromJS(data: any): UserToOrganizationUnitInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserToOrganizationUnitInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId;
+        data["organizationUnitId"] = this.organizationUnitId;
+        return data; 
+    }
+
+    clone(): UserToOrganizationUnitInput {
+        const json = this.toJSON();
+        let result = new UserToOrganizationUnitInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserToOrganizationUnitInput {
+    userId: number | undefined;
+    organizationUnitId: number | undefined;
+}
+
+export class FindUsersInput implements IFindUsersInput {
+    organizationUnitId: number | undefined;
+    maxResultCount: number | undefined;
+    skipCount: number | undefined;
+    filterText: string | undefined;
+
+    constructor(data?: IFindUsersInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.organizationUnitId = data["organizationUnitId"];
+            this.maxResultCount = data["maxResultCount"];
+            this.skipCount = data["skipCount"];
+            this.filterText = data["filterText"];
+        }
+    }
+
+    static fromJS(data: any): FindUsersInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new FindUsersInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["organizationUnitId"] = this.organizationUnitId;
+        data["maxResultCount"] = this.maxResultCount;
+        data["skipCount"] = this.skipCount;
+        data["filterText"] = this.filterText;
+        return data; 
+    }
+
+    clone(): FindUsersInput {
+        const json = this.toJSON();
+        let result = new FindUsersInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFindUsersInput {
+    organizationUnitId: number | undefined;
+    maxResultCount: number | undefined;
+    skipCount: number | undefined;
+    filterText: string | undefined;
+}
+
+export class ListResultDtoOfFlatPermissionWithLevelDto implements IListResultDtoOfFlatPermissionWithLevelDto {
+    items: FlatPermissionWithLevelDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfFlatPermissionWithLevelDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(FlatPermissionWithLevelDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfFlatPermissionWithLevelDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfFlatPermissionWithLevelDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfFlatPermissionWithLevelDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfFlatPermissionWithLevelDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfFlatPermissionWithLevelDto {
+    items: FlatPermissionWithLevelDto[] | undefined;
+}
+
+export class FlatPermissionWithLevelDto implements IFlatPermissionWithLevelDto {
+    level: number | undefined;
+    parentName: string | undefined;
+    name: string | undefined;
+    displayName: string | undefined;
+    description: string | undefined;
+    isGrantedByDefault: boolean | undefined;
+
+    constructor(data?: IFlatPermissionWithLevelDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.level = data["level"];
+            this.parentName = data["parentName"];
+            this.name = data["name"];
+            this.displayName = data["displayName"];
+            this.description = data["description"];
+            this.isGrantedByDefault = data["isGrantedByDefault"];
+        }
+    }
+
+    static fromJS(data: any): FlatPermissionWithLevelDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FlatPermissionWithLevelDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["level"] = this.level;
+        data["parentName"] = this.parentName;
+        data["name"] = this.name;
+        data["displayName"] = this.displayName;
+        data["description"] = this.description;
+        data["isGrantedByDefault"] = this.isGrantedByDefault;
+        return data; 
+    }
+
+    clone(): FlatPermissionWithLevelDto {
+        const json = this.toJSON();
+        let result = new FlatPermissionWithLevelDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFlatPermissionWithLevelDto {
+    level: number | undefined;
+    parentName: string | undefined;
+    name: string | undefined;
+    displayName: string | undefined;
+    description: string | undefined;
+    isGrantedByDefault: boolean | undefined;
+}
+
+export class ListResultDtoOfTreePermissionDto implements IListResultDtoOfTreePermissionDto {
+    items: TreePermissionDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfTreePermissionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(TreePermissionDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfTreePermissionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfTreePermissionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfTreePermissionDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfTreePermissionDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfTreePermissionDto {
+    items: TreePermissionDto[] | undefined;
+}
+
+export class TreePermissionDto implements ITreePermissionDto {
+    parentName: string | undefined;
+    name: string | undefined;
+    displayName: string | undefined;
+    description: string | undefined;
+    children: TreePermissionDto[] | undefined;
+    checked: boolean | undefined;
+
+    constructor(data?: ITreePermissionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.parentName = data["parentName"];
+            this.name = data["name"];
+            this.displayName = data["displayName"];
+            this.description = data["description"];
+            if (data["children"] && data["children"].constructor === Array) {
+                this.children = [] as any;
+                for (let item of data["children"])
+                    this.children.push(TreePermissionDto.fromJS(item));
+            }
+            this.checked = data["checked"];
+        }
+    }
+
+    static fromJS(data: any): TreePermissionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TreePermissionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["parentName"] = this.parentName;
+        data["name"] = this.name;
+        data["displayName"] = this.displayName;
+        data["description"] = this.description;
+        if (this.children && this.children.constructor === Array) {
+            data["children"] = [];
+            for (let item of this.children)
+                data["children"].push(item.toJSON());
+        }
+        data["checked"] = this.checked;
+        return data; 
+    }
+
+    clone(): TreePermissionDto {
+        const json = this.toJSON();
+        let result = new TreePermissionDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITreePermissionDto {
+    parentName: string | undefined;
+    name: string | undefined;
+    displayName: string | undefined;
+    description: string | undefined;
+    children: TreePermissionDto[] | undefined;
+    checked: boolean | undefined;
+}
+
+export class CurrentUserProfileEditDto implements ICurrentUserProfileEditDto {
+    userName: string;
+    fullName: string;
+    emailAddress: string;
+    phoneNumber: string | undefined;
+    isPhoneNumberConfirmed: boolean | undefined;
+
+    constructor(data?: ICurrentUserProfileEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.userName = data["userName"];
+            this.fullName = data["fullName"];
+            this.emailAddress = data["emailAddress"];
+            this.phoneNumber = data["phoneNumber"];
+            this.isPhoneNumberConfirmed = data["isPhoneNumberConfirmed"];
+        }
+    }
+
+    static fromJS(data: any): CurrentUserProfileEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CurrentUserProfileEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userName"] = this.userName;
+        data["fullName"] = this.fullName;
+        data["emailAddress"] = this.emailAddress;
+        data["phoneNumber"] = this.phoneNumber;
+        data["isPhoneNumberConfirmed"] = this.isPhoneNumberConfirmed;
+        return data; 
+    }
+
+    clone(): CurrentUserProfileEditDto {
+        const json = this.toJSON();
+        let result = new CurrentUserProfileEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICurrentUserProfileEditDto {
+    userName: string;
+    fullName: string;
+    emailAddress: string;
+    phoneNumber: string | undefined;
+    isPhoneNumberConfirmed: boolean | undefined;
+}
+
+export class ChangePasswordInput implements IChangePasswordInput {
+    currentPassword: string;
+    newPassword: string;
+
+    constructor(data?: IChangePasswordInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.currentPassword = data["currentPassword"];
+            this.newPassword = data["newPassword"];
+        }
+    }
+
+    static fromJS(data: any): ChangePasswordInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new ChangePasswordInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["currentPassword"] = this.currentPassword;
+        data["newPassword"] = this.newPassword;
+        return data; 
+    }
+
+    clone(): ChangePasswordInput {
+        const json = this.toJSON();
+        let result = new ChangePasswordInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IChangePasswordInput {
+    currentPassword: string;
+    newPassword: string;
+}
+
+export class ChangeUserLanguageDto implements IChangeUserLanguageDto {
+    languageName: string;
+
+    constructor(data?: IChangeUserLanguageDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.languageName = data["languageName"];
+        }
+    }
+
+    static fromJS(data: any): ChangeUserLanguageDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ChangeUserLanguageDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["languageName"] = this.languageName;
+        return data; 
+    }
+
+    clone(): ChangeUserLanguageDto {
+        const json = this.toJSON();
+        let result = new ChangeUserLanguageDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IChangeUserLanguageDto {
+    languageName: string;
+}
+
+/** 用户头像输出 */
+export class GetProfilePictureOutputDto implements IGetProfilePictureOutputDto {
+    profilePicture: string | undefined;
+
+    constructor(data?: IGetProfilePictureOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.profilePicture = data["profilePicture"];
+        }
+    }
+
+    static fromJS(data: any): GetProfilePictureOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetProfilePictureOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["profilePicture"] = this.profilePicture;
+        return data; 
+    }
+
+    clone(): GetProfilePictureOutputDto {
+        const json = this.toJSON();
+        let result = new GetProfilePictureOutputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+/** 用户头像输出 */
+export interface IGetProfilePictureOutputDto {
+    profilePicture: string | undefined;
 }
 
 export class ListResultDtoOfRoleListDto implements IListResultDtoOfRoleListDto {
@@ -1822,10 +9687,11 @@ export interface IRoleListDto {
     id: number | undefined;
 }
 
-export class ListResultDtoOfPermissionDto implements IListResultDtoOfPermissionDto {
-    items: PermissionDto[] | undefined;
+export class PagedResultDtoOfRoleListDto implements IPagedResultDtoOfRoleListDto {
+    totalCount: number | undefined;
+    items: RoleListDto[] | undefined;
 
-    constructor(data?: IListResultDtoOfPermissionDto) {
+    constructor(data?: IPagedResultDtoOfRoleListDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1836,23 +9702,25 @@ export class ListResultDtoOfPermissionDto implements IListResultDtoOfPermissionD
 
     init(data?: any) {
         if (data) {
+            this.totalCount = data["totalCount"];
             if (data["items"] && data["items"].constructor === Array) {
                 this.items = [] as any;
                 for (let item of data["items"])
-                    this.items.push(PermissionDto.fromJS(item));
+                    this.items.push(RoleListDto.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): ListResultDtoOfPermissionDto {
+    static fromJS(data: any): PagedResultDtoOfRoleListDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ListResultDtoOfPermissionDto();
+        let result = new PagedResultDtoOfRoleListDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
         if (this.items && this.items.constructor === Array) {
             data["items"] = [];
             for (let item of this.items)
@@ -1861,71 +9729,17 @@ export class ListResultDtoOfPermissionDto implements IListResultDtoOfPermissionD
         return data; 
     }
 
-    clone(): ListResultDtoOfPermissionDto {
+    clone(): PagedResultDtoOfRoleListDto {
         const json = this.toJSON();
-        let result = new ListResultDtoOfPermissionDto();
+        let result = new PagedResultDtoOfRoleListDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IListResultDtoOfPermissionDto {
-    items: PermissionDto[] | undefined;
-}
-
-export class PermissionDto implements IPermissionDto {
-    name: string | undefined;
-    displayName: string | undefined;
-    description: string | undefined;
-    id: number | undefined;
-
-    constructor(data?: IPermissionDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.name = data["name"];
-            this.displayName = data["displayName"];
-            this.description = data["description"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): PermissionDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PermissionDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["displayName"] = this.displayName;
-        data["description"] = this.description;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): PermissionDto {
-        const json = this.toJSON();
-        let result = new PermissionDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPermissionDto {
-    name: string | undefined;
-    displayName: string | undefined;
-    description: string | undefined;
-    id: number | undefined;
+export interface IPagedResultDtoOfRoleListDto {
+    totalCount: number | undefined;
+    items: RoleListDto[] | undefined;
 }
 
 export class GetRoleForEditOutput implements IGetRoleForEditOutput {
@@ -1996,11 +9810,9 @@ export interface IGetRoleForEditOutput {
 }
 
 export class RoleEditDto implements IRoleEditDto {
-    name: string;
-    displayName: string;
-    description: string | undefined;
-    isStatic: boolean | undefined;
     id: number | undefined;
+    displayName: string;
+    isDefault: boolean | undefined;
 
     constructor(data?: IRoleEditDto) {
         if (data) {
@@ -2013,11 +9825,9 @@ export class RoleEditDto implements IRoleEditDto {
 
     init(data?: any) {
         if (data) {
-            this.name = data["name"];
-            this.displayName = data["displayName"];
-            this.description = data["description"];
-            this.isStatic = data["isStatic"];
             this.id = data["id"];
+            this.displayName = data["displayName"];
+            this.isDefault = data["isDefault"];
         }
     }
 
@@ -2030,11 +9840,9 @@ export class RoleEditDto implements IRoleEditDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["displayName"] = this.displayName;
-        data["description"] = this.description;
-        data["isStatic"] = this.isStatic;
         data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        data["isDefault"] = this.isDefault;
         return data; 
     }
 
@@ -2047,17 +9855,17 @@ export class RoleEditDto implements IRoleEditDto {
 }
 
 export interface IRoleEditDto {
-    name: string;
-    displayName: string;
-    description: string | undefined;
-    isStatic: boolean | undefined;
     id: number | undefined;
+    displayName: string;
+    isDefault: boolean | undefined;
 }
 
 export class FlatPermissionDto implements IFlatPermissionDto {
+    parentName: string | undefined;
     name: string | undefined;
     displayName: string | undefined;
     description: string | undefined;
+    isGrantedByDefault: boolean | undefined;
 
     constructor(data?: IFlatPermissionDto) {
         if (data) {
@@ -2070,9 +9878,11 @@ export class FlatPermissionDto implements IFlatPermissionDto {
 
     init(data?: any) {
         if (data) {
+            this.parentName = data["parentName"];
             this.name = data["name"];
             this.displayName = data["displayName"];
             this.description = data["description"];
+            this.isGrantedByDefault = data["isGrantedByDefault"];
         }
     }
 
@@ -2085,9 +9895,11 @@ export class FlatPermissionDto implements IFlatPermissionDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["parentName"] = this.parentName;
         data["name"] = this.name;
         data["displayName"] = this.displayName;
         data["description"] = this.description;
+        data["isGrantedByDefault"] = this.isGrantedByDefault;
         return data; 
     }
 
@@ -2100,70 +9912,134 @@ export class FlatPermissionDto implements IFlatPermissionDto {
 }
 
 export interface IFlatPermissionDto {
+    parentName: string | undefined;
     name: string | undefined;
     displayName: string | undefined;
     description: string | undefined;
+    isGrantedByDefault: boolean | undefined;
 }
 
-export class PagedResultDtoOfRoleDto implements IPagedResultDtoOfRoleDto {
-    totalCount: number | undefined;
-    items: RoleDto[] | undefined;
+export class CreateOrUpdateRoleInput implements ICreateOrUpdateRoleInput {
+    role: RoleEditDto;
+    grantedPermissionNames: string[];
 
-    constructor(data?: IPagedResultDtoOfRoleDto) {
+    constructor(data?: ICreateOrUpdateRoleInput) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
         }
+        if (!data) {
+            this.role = new RoleEditDto();
+            this.grantedPermissionNames = [];
+        }
     }
 
     init(data?: any) {
         if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items.push(RoleDto.fromJS(item));
+            this.role = data["role"] ? RoleEditDto.fromJS(data["role"]) : new RoleEditDto();
+            if (data["grantedPermissionNames"] && data["grantedPermissionNames"].constructor === Array) {
+                this.grantedPermissionNames = [] as any;
+                for (let item of data["grantedPermissionNames"])
+                    this.grantedPermissionNames.push(item);
             }
         }
     }
 
-    static fromJS(data: any): PagedResultDtoOfRoleDto {
+    static fromJS(data: any): CreateOrUpdateRoleInput {
         data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfRoleDto();
+        let result = new CreateOrUpdateRoleInput();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
+        data["role"] = this.role ? this.role.toJSON() : <any>undefined;
+        if (this.grantedPermissionNames && this.grantedPermissionNames.constructor === Array) {
+            data["grantedPermissionNames"] = [];
+            for (let item of this.grantedPermissionNames)
+                data["grantedPermissionNames"].push(item);
         }
         return data; 
     }
 
-    clone(): PagedResultDtoOfRoleDto {
+    clone(): CreateOrUpdateRoleInput {
         const json = this.toJSON();
-        let result = new PagedResultDtoOfRoleDto();
+        let result = new CreateOrUpdateRoleInput();
         result.init(json);
         return result;
     }
 }
 
-export interface IPagedResultDtoOfRoleDto {
-    totalCount: number | undefined;
-    items: RoleDto[] | undefined;
+export interface ICreateOrUpdateRoleInput {
+    role: RoleEditDto;
+    grantedPermissionNames: string[];
+}
+
+export class UpdateRolePermissionsInput implements IUpdateRolePermissionsInput {
+    roleId: number | undefined;
+    grantedPermissionNames: string[];
+
+    constructor(data?: IUpdateRolePermissionsInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.grantedPermissionNames = [];
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.roleId = data["roleId"];
+            if (data["grantedPermissionNames"] && data["grantedPermissionNames"].constructor === Array) {
+                this.grantedPermissionNames = [] as any;
+                for (let item of data["grantedPermissionNames"])
+                    this.grantedPermissionNames.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): UpdateRolePermissionsInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateRolePermissionsInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["roleId"] = this.roleId;
+        if (this.grantedPermissionNames && this.grantedPermissionNames.constructor === Array) {
+            data["grantedPermissionNames"] = [];
+            for (let item of this.grantedPermissionNames)
+                data["grantedPermissionNames"].push(item);
+        }
+        return data; 
+    }
+
+    clone(): UpdateRolePermissionsInput {
+        const json = this.toJSON();
+        let result = new UpdateRolePermissionsInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUpdateRolePermissionsInput {
+    roleId: number | undefined;
+    grantedPermissionNames: string[];
 }
 
 export class GetCurrentLoginInformationsOutput implements IGetCurrentLoginInformationsOutput {
-    application: ApplicationInfoDto | undefined;
     user: UserLoginInfoDto | undefined;
     tenant: TenantLoginInfoDto | undefined;
+    application: ApplicationInfoDto | undefined;
 
     constructor(data?: IGetCurrentLoginInformationsOutput) {
         if (data) {
@@ -2176,9 +10052,9 @@ export class GetCurrentLoginInformationsOutput implements IGetCurrentLoginInform
 
     init(data?: any) {
         if (data) {
-            this.application = data["application"] ? ApplicationInfoDto.fromJS(data["application"]) : <any>undefined;
             this.user = data["user"] ? UserLoginInfoDto.fromJS(data["user"]) : <any>undefined;
             this.tenant = data["tenant"] ? TenantLoginInfoDto.fromJS(data["tenant"]) : <any>undefined;
+            this.application = data["application"] ? ApplicationInfoDto.fromJS(data["application"]) : <any>undefined;
         }
     }
 
@@ -2191,9 +10067,9 @@ export class GetCurrentLoginInformationsOutput implements IGetCurrentLoginInform
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["application"] = this.application ? this.application.toJSON() : <any>undefined;
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         data["tenant"] = this.tenant ? this.tenant.toJSON() : <any>undefined;
+        data["application"] = this.application ? this.application.toJSON() : <any>undefined;
         return data; 
     }
 
@@ -2206,9 +10082,131 @@ export class GetCurrentLoginInformationsOutput implements IGetCurrentLoginInform
 }
 
 export interface IGetCurrentLoginInformationsOutput {
-    application: ApplicationInfoDto | undefined;
     user: UserLoginInfoDto | undefined;
     tenant: TenantLoginInfoDto | undefined;
+    application: ApplicationInfoDto | undefined;
+}
+
+export class UserLoginInfoDto implements IUserLoginInfoDto {
+    name: string | undefined;
+    surname: string | undefined;
+    userName: string | undefined;
+    emailAddress: string | undefined;
+    id: number | undefined;
+
+    constructor(data?: IUserLoginInfoDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+            this.surname = data["surname"];
+            this.userName = data["userName"];
+            this.emailAddress = data["emailAddress"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): UserLoginInfoDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserLoginInfoDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["surname"] = this.surname;
+        data["userName"] = this.userName;
+        data["emailAddress"] = this.emailAddress;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): UserLoginInfoDto {
+        const json = this.toJSON();
+        let result = new UserLoginInfoDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserLoginInfoDto {
+    name: string | undefined;
+    surname: string | undefined;
+    userName: string | undefined;
+    emailAddress: string | undefined;
+    id: number | undefined;
+}
+
+export class TenantLoginInfoDto implements ITenantLoginInfoDto {
+    tenancyName: string | undefined;
+    name: string | undefined;
+    logoId: string | undefined;
+    creationTime: moment.Moment | undefined;
+    creationTimeString: string | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITenantLoginInfoDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenancyName = data["tenancyName"];
+            this.name = data["name"];
+            this.logoId = data["logoId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creationTimeString = data["creationTimeString"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TenantLoginInfoDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TenantLoginInfoDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenancyName"] = this.tenancyName;
+        data["name"] = this.name;
+        data["logoId"] = this.logoId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creationTimeString"] = this.creationTimeString;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TenantLoginInfoDto {
+        const json = this.toJSON();
+        let result = new TenantLoginInfoDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITenantLoginInfoDto {
+    tenancyName: string | undefined;
+    name: string | undefined;
+    logoId: string | undefined;
+    creationTime: moment.Moment | undefined;
+    creationTimeString: string | undefined;
+    id: number | undefined;
 }
 
 export class ApplicationInfoDto implements IApplicationInfoDto {
@@ -2274,14 +10272,762 @@ export interface IApplicationInfoDto {
     features: { [key: string] : boolean; } | undefined;
 }
 
-export class UserLoginInfoDto implements IUserLoginInfoDto {
-    name: string | undefined;
-    surname: string | undefined;
-    userName: string | undefined;
-    emailAddress: string | undefined;
-    id: number | undefined;
+export class UpdateUserSignInTokenOutput implements IUpdateUserSignInTokenOutput {
+    signInToken: string | undefined;
+    encodedUserId: string | undefined;
+    encodedTenantId: string | undefined;
 
-    constructor(data?: IUserLoginInfoDto) {
+    constructor(data?: IUpdateUserSignInTokenOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.signInToken = data["signInToken"];
+            this.encodedUserId = data["encodedUserId"];
+            this.encodedTenantId = data["encodedTenantId"];
+        }
+    }
+
+    static fromJS(data: any): UpdateUserSignInTokenOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateUserSignInTokenOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["signInToken"] = this.signInToken;
+        data["encodedUserId"] = this.encodedUserId;
+        data["encodedTenantId"] = this.encodedTenantId;
+        return data; 
+    }
+
+    clone(): UpdateUserSignInTokenOutput {
+        const json = this.toJSON();
+        let result = new UpdateUserSignInTokenOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUpdateUserSignInTokenOutput {
+    signInToken: string | undefined;
+    encodedUserId: string | undefined;
+    encodedTenantId: string | undefined;
+}
+
+export class AbpUserConfigurationDto implements IAbpUserConfigurationDto {
+    multiTenancy: AbpMultiTenancyConfigDto | undefined;
+    session: AbpUserSessionConfigDto | undefined;
+    localization: AbpUserLocalizationConfigDto | undefined;
+    features: AbpUserFeatureConfigDto | undefined;
+    auth: AbpUserAuthConfigDto | undefined;
+    nav: AbpUserNavConfigDto | undefined;
+    setting: AbpUserSettingConfigDto | undefined;
+    clock: AbpUserClockConfigDto | undefined;
+    timing: AbpUserTimingConfigDto | undefined;
+    security: AbpUserSecurityConfigDto | undefined;
+    custom: { [key: string] : any; } | undefined;
+
+    constructor(data?: IAbpUserConfigurationDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.multiTenancy = data["multiTenancy"] ? AbpMultiTenancyConfigDto.fromJS(data["multiTenancy"]) : <any>undefined;
+            this.session = data["session"] ? AbpUserSessionConfigDto.fromJS(data["session"]) : <any>undefined;
+            this.localization = data["localization"] ? AbpUserLocalizationConfigDto.fromJS(data["localization"]) : <any>undefined;
+            this.features = data["features"] ? AbpUserFeatureConfigDto.fromJS(data["features"]) : <any>undefined;
+            this.auth = data["auth"] ? AbpUserAuthConfigDto.fromJS(data["auth"]) : <any>undefined;
+            this.nav = data["nav"] ? AbpUserNavConfigDto.fromJS(data["nav"]) : <any>undefined;
+            this.setting = data["setting"] ? AbpUserSettingConfigDto.fromJS(data["setting"]) : <any>undefined;
+            this.clock = data["clock"] ? AbpUserClockConfigDto.fromJS(data["clock"]) : <any>undefined;
+            this.timing = data["timing"] ? AbpUserTimingConfigDto.fromJS(data["timing"]) : <any>undefined;
+            this.security = data["security"] ? AbpUserSecurityConfigDto.fromJS(data["security"]) : <any>undefined;
+            if (data["custom"]) {
+                this.custom = {} as any;
+                for (let key in data["custom"]) {
+                    if (data["custom"].hasOwnProperty(key))
+                        this.custom[key] = data["custom"][key];
+                }
+            }
+        }
+    }
+
+    static fromJS(data: any): AbpUserConfigurationDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserConfigurationDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["multiTenancy"] = this.multiTenancy ? this.multiTenancy.toJSON() : <any>undefined;
+        data["session"] = this.session ? this.session.toJSON() : <any>undefined;
+        data["localization"] = this.localization ? this.localization.toJSON() : <any>undefined;
+        data["features"] = this.features ? this.features.toJSON() : <any>undefined;
+        data["auth"] = this.auth ? this.auth.toJSON() : <any>undefined;
+        data["nav"] = this.nav ? this.nav.toJSON() : <any>undefined;
+        data["setting"] = this.setting ? this.setting.toJSON() : <any>undefined;
+        data["clock"] = this.clock ? this.clock.toJSON() : <any>undefined;
+        data["timing"] = this.timing ? this.timing.toJSON() : <any>undefined;
+        data["security"] = this.security ? this.security.toJSON() : <any>undefined;
+        if (this.custom) {
+            data["custom"] = {};
+            for (let key in this.custom) {
+                if (this.custom.hasOwnProperty(key))
+                    data["custom"][key] = this.custom[key];
+            }
+        }
+        return data; 
+    }
+
+    clone(): AbpUserConfigurationDto {
+        const json = this.toJSON();
+        let result = new AbpUserConfigurationDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserConfigurationDto {
+    multiTenancy: AbpMultiTenancyConfigDto | undefined;
+    session: AbpUserSessionConfigDto | undefined;
+    localization: AbpUserLocalizationConfigDto | undefined;
+    features: AbpUserFeatureConfigDto | undefined;
+    auth: AbpUserAuthConfigDto | undefined;
+    nav: AbpUserNavConfigDto | undefined;
+    setting: AbpUserSettingConfigDto | undefined;
+    clock: AbpUserClockConfigDto | undefined;
+    timing: AbpUserTimingConfigDto | undefined;
+    security: AbpUserSecurityConfigDto | undefined;
+    custom: { [key: string] : any; } | undefined;
+}
+
+export class AbpMultiTenancyConfigDto implements IAbpMultiTenancyConfigDto {
+    isEnabled: boolean | undefined;
+    sides: AbpMultiTenancySidesConfigDto | undefined;
+
+    constructor(data?: IAbpMultiTenancyConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.isEnabled = data["isEnabled"];
+            this.sides = data["sides"] ? AbpMultiTenancySidesConfigDto.fromJS(data["sides"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): AbpMultiTenancyConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpMultiTenancyConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isEnabled"] = this.isEnabled;
+        data["sides"] = this.sides ? this.sides.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): AbpMultiTenancyConfigDto {
+        const json = this.toJSON();
+        let result = new AbpMultiTenancyConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpMultiTenancyConfigDto {
+    isEnabled: boolean | undefined;
+    sides: AbpMultiTenancySidesConfigDto | undefined;
+}
+
+export class AbpUserSessionConfigDto implements IAbpUserSessionConfigDto {
+    userId: number | undefined;
+    tenantId: number | undefined;
+    impersonatorUserId: number | undefined;
+    impersonatorTenantId: number | undefined;
+    multiTenancySide: AbpUserSessionConfigDtoMultiTenancySide | undefined;
+
+    constructor(data?: IAbpUserSessionConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.userId = data["userId"];
+            this.tenantId = data["tenantId"];
+            this.impersonatorUserId = data["impersonatorUserId"];
+            this.impersonatorTenantId = data["impersonatorTenantId"];
+            this.multiTenancySide = data["multiTenancySide"];
+        }
+    }
+
+    static fromJS(data: any): AbpUserSessionConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserSessionConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId;
+        data["tenantId"] = this.tenantId;
+        data["impersonatorUserId"] = this.impersonatorUserId;
+        data["impersonatorTenantId"] = this.impersonatorTenantId;
+        data["multiTenancySide"] = this.multiTenancySide;
+        return data; 
+    }
+
+    clone(): AbpUserSessionConfigDto {
+        const json = this.toJSON();
+        let result = new AbpUserSessionConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserSessionConfigDto {
+    userId: number | undefined;
+    tenantId: number | undefined;
+    impersonatorUserId: number | undefined;
+    impersonatorTenantId: number | undefined;
+    multiTenancySide: AbpUserSessionConfigDtoMultiTenancySide | undefined;
+}
+
+export class AbpUserLocalizationConfigDto implements IAbpUserLocalizationConfigDto {
+    currentCulture: AbpUserCurrentCultureConfigDto | undefined;
+    languages: LanguageInfo[] | undefined;
+    currentLanguage: LanguageInfo | undefined;
+    sources: AbpLocalizationSourceDto[] | undefined;
+    values: { [key: string] : { [key: string] : string; }; } | undefined;
+
+    constructor(data?: IAbpUserLocalizationConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.currentCulture = data["currentCulture"] ? AbpUserCurrentCultureConfigDto.fromJS(data["currentCulture"]) : <any>undefined;
+            if (data["languages"] && data["languages"].constructor === Array) {
+                this.languages = [] as any;
+                for (let item of data["languages"])
+                    this.languages.push(LanguageInfo.fromJS(item));
+            }
+            this.currentLanguage = data["currentLanguage"] ? LanguageInfo.fromJS(data["currentLanguage"]) : <any>undefined;
+            if (data["sources"] && data["sources"].constructor === Array) {
+                this.sources = [] as any;
+                for (let item of data["sources"])
+                    this.sources.push(AbpLocalizationSourceDto.fromJS(item));
+            }
+            if (data["values"]) {
+                this.values = {} as any;
+                for (let key in data["values"]) {
+                    if (data["values"].hasOwnProperty(key))
+                        this.values[key] = data["values"][key] !== undefined ? data["values"][key] : {};
+                }
+            }
+        }
+    }
+
+    static fromJS(data: any): AbpUserLocalizationConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserLocalizationConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["currentCulture"] = this.currentCulture ? this.currentCulture.toJSON() : <any>undefined;
+        if (this.languages && this.languages.constructor === Array) {
+            data["languages"] = [];
+            for (let item of this.languages)
+                data["languages"].push(item.toJSON());
+        }
+        data["currentLanguage"] = this.currentLanguage ? this.currentLanguage.toJSON() : <any>undefined;
+        if (this.sources && this.sources.constructor === Array) {
+            data["sources"] = [];
+            for (let item of this.sources)
+                data["sources"].push(item.toJSON());
+        }
+        if (this.values) {
+            data["values"] = {};
+            for (let key in this.values) {
+                if (this.values.hasOwnProperty(key))
+                    data["values"][key] = this.values[key];
+            }
+        }
+        return data; 
+    }
+
+    clone(): AbpUserLocalizationConfigDto {
+        const json = this.toJSON();
+        let result = new AbpUserLocalizationConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserLocalizationConfigDto {
+    currentCulture: AbpUserCurrentCultureConfigDto | undefined;
+    languages: LanguageInfo[] | undefined;
+    currentLanguage: LanguageInfo | undefined;
+    sources: AbpLocalizationSourceDto[] | undefined;
+    values: { [key: string] : { [key: string] : string; }; } | undefined;
+}
+
+export class AbpUserFeatureConfigDto implements IAbpUserFeatureConfigDto {
+    allFeatures: { [key: string] : AbpStringValueDto; } | undefined;
+
+    constructor(data?: IAbpUserFeatureConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["allFeatures"]) {
+                this.allFeatures = {} as any;
+                for (let key in data["allFeatures"]) {
+                    if (data["allFeatures"].hasOwnProperty(key))
+                        this.allFeatures[key] = data["allFeatures"][key] ? AbpStringValueDto.fromJS(data["allFeatures"][key]) : new AbpStringValueDto();
+                }
+            }
+        }
+    }
+
+    static fromJS(data: any): AbpUserFeatureConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserFeatureConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.allFeatures) {
+            data["allFeatures"] = {};
+            for (let key in this.allFeatures) {
+                if (this.allFeatures.hasOwnProperty(key))
+                    data["allFeatures"][key] = this.allFeatures[key] ? this.allFeatures[key].toJSON() : <any>undefined;
+            }
+        }
+        return data; 
+    }
+
+    clone(): AbpUserFeatureConfigDto {
+        const json = this.toJSON();
+        let result = new AbpUserFeatureConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserFeatureConfigDto {
+    allFeatures: { [key: string] : AbpStringValueDto; } | undefined;
+}
+
+export class AbpUserAuthConfigDto implements IAbpUserAuthConfigDto {
+    allPermissions: { [key: string] : string; } | undefined;
+    grantedPermissions: { [key: string] : string; } | undefined;
+
+    constructor(data?: IAbpUserAuthConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["allPermissions"]) {
+                this.allPermissions = {} as any;
+                for (let key in data["allPermissions"]) {
+                    if (data["allPermissions"].hasOwnProperty(key))
+                        this.allPermissions[key] = data["allPermissions"][key];
+                }
+            }
+            if (data["grantedPermissions"]) {
+                this.grantedPermissions = {} as any;
+                for (let key in data["grantedPermissions"]) {
+                    if (data["grantedPermissions"].hasOwnProperty(key))
+                        this.grantedPermissions[key] = data["grantedPermissions"][key];
+                }
+            }
+        }
+    }
+
+    static fromJS(data: any): AbpUserAuthConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserAuthConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.allPermissions) {
+            data["allPermissions"] = {};
+            for (let key in this.allPermissions) {
+                if (this.allPermissions.hasOwnProperty(key))
+                    data["allPermissions"][key] = this.allPermissions[key];
+            }
+        }
+        if (this.grantedPermissions) {
+            data["grantedPermissions"] = {};
+            for (let key in this.grantedPermissions) {
+                if (this.grantedPermissions.hasOwnProperty(key))
+                    data["grantedPermissions"][key] = this.grantedPermissions[key];
+            }
+        }
+        return data; 
+    }
+
+    clone(): AbpUserAuthConfigDto {
+        const json = this.toJSON();
+        let result = new AbpUserAuthConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserAuthConfigDto {
+    allPermissions: { [key: string] : string; } | undefined;
+    grantedPermissions: { [key: string] : string; } | undefined;
+}
+
+export class AbpUserNavConfigDto implements IAbpUserNavConfigDto {
+    menus: { [key: string] : UserMenu; } | undefined;
+
+    constructor(data?: IAbpUserNavConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["menus"]) {
+                this.menus = {} as any;
+                for (let key in data["menus"]) {
+                    if (data["menus"].hasOwnProperty(key))
+                        this.menus[key] = data["menus"][key] ? UserMenu.fromJS(data["menus"][key]) : new UserMenu();
+                }
+            }
+        }
+    }
+
+    static fromJS(data: any): AbpUserNavConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserNavConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.menus) {
+            data["menus"] = {};
+            for (let key in this.menus) {
+                if (this.menus.hasOwnProperty(key))
+                    data["menus"][key] = this.menus[key] ? this.menus[key].toJSON() : <any>undefined;
+            }
+        }
+        return data; 
+    }
+
+    clone(): AbpUserNavConfigDto {
+        const json = this.toJSON();
+        let result = new AbpUserNavConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserNavConfigDto {
+    menus: { [key: string] : UserMenu; } | undefined;
+}
+
+export class AbpUserSettingConfigDto implements IAbpUserSettingConfigDto {
+    values: { [key: string] : string; } | undefined;
+
+    constructor(data?: IAbpUserSettingConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["values"]) {
+                this.values = {} as any;
+                for (let key in data["values"]) {
+                    if (data["values"].hasOwnProperty(key))
+                        this.values[key] = data["values"][key];
+                }
+            }
+        }
+    }
+
+    static fromJS(data: any): AbpUserSettingConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserSettingConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.values) {
+            data["values"] = {};
+            for (let key in this.values) {
+                if (this.values.hasOwnProperty(key))
+                    data["values"][key] = this.values[key];
+            }
+        }
+        return data; 
+    }
+
+    clone(): AbpUserSettingConfigDto {
+        const json = this.toJSON();
+        let result = new AbpUserSettingConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserSettingConfigDto {
+    values: { [key: string] : string; } | undefined;
+}
+
+export class AbpUserClockConfigDto implements IAbpUserClockConfigDto {
+    provider: string | undefined;
+
+    constructor(data?: IAbpUserClockConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.provider = data["provider"];
+        }
+    }
+
+    static fromJS(data: any): AbpUserClockConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserClockConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["provider"] = this.provider;
+        return data; 
+    }
+
+    clone(): AbpUserClockConfigDto {
+        const json = this.toJSON();
+        let result = new AbpUserClockConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserClockConfigDto {
+    provider: string | undefined;
+}
+
+export class AbpUserTimingConfigDto implements IAbpUserTimingConfigDto {
+    timeZoneInfo: AbpUserTimeZoneConfigDto | undefined;
+
+    constructor(data?: IAbpUserTimingConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.timeZoneInfo = data["timeZoneInfo"] ? AbpUserTimeZoneConfigDto.fromJS(data["timeZoneInfo"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): AbpUserTimingConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserTimingConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["timeZoneInfo"] = this.timeZoneInfo ? this.timeZoneInfo.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): AbpUserTimingConfigDto {
+        const json = this.toJSON();
+        let result = new AbpUserTimingConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserTimingConfigDto {
+    timeZoneInfo: AbpUserTimeZoneConfigDto | undefined;
+}
+
+export class AbpUserSecurityConfigDto implements IAbpUserSecurityConfigDto {
+    antiForgery: AbpUserAntiForgeryConfigDto | undefined;
+
+    constructor(data?: IAbpUserSecurityConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.antiForgery = data["antiForgery"] ? AbpUserAntiForgeryConfigDto.fromJS(data["antiForgery"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): AbpUserSecurityConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserSecurityConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["antiForgery"] = this.antiForgery ? this.antiForgery.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): AbpUserSecurityConfigDto {
+        const json = this.toJSON();
+        let result = new AbpUserSecurityConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserSecurityConfigDto {
+    antiForgery: AbpUserAntiForgeryConfigDto | undefined;
+}
+
+export class AbpMultiTenancySidesConfigDto implements IAbpMultiTenancySidesConfigDto {
+    host: AbpMultiTenancySidesConfigDtoHost | undefined;
+    tenant: AbpMultiTenancySidesConfigDtoTenant | undefined;
+
+    constructor(data?: IAbpMultiTenancySidesConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.host = data["host"];
+            this.tenant = data["tenant"];
+        }
+    }
+
+    static fromJS(data: any): AbpMultiTenancySidesConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpMultiTenancySidesConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["host"] = this.host;
+        data["tenant"] = this.tenant;
+        return data; 
+    }
+
+    clone(): AbpMultiTenancySidesConfigDto {
+        const json = this.toJSON();
+        let result = new AbpMultiTenancySidesConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpMultiTenancySidesConfigDto {
+    host: AbpMultiTenancySidesConfigDtoHost | undefined;
+    tenant: AbpMultiTenancySidesConfigDtoTenant | undefined;
+}
+
+export class AbpUserCurrentCultureConfigDto implements IAbpUserCurrentCultureConfigDto {
+    name: string | undefined;
+    displayName: string | undefined;
+
+    constructor(data?: IAbpUserCurrentCultureConfigDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2293,16 +11039,13 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
     init(data?: any) {
         if (data) {
             this.name = data["name"];
-            this.surname = data["surname"];
-            this.userName = data["userName"];
-            this.emailAddress = data["emailAddress"];
-            this.id = data["id"];
+            this.displayName = data["displayName"];
         }
     }
 
-    static fromJS(data: any): UserLoginInfoDto {
+    static fromJS(data: any): AbpUserCurrentCultureConfigDto {
         data = typeof data === 'object' ? data : {};
-        let result = new UserLoginInfoDto();
+        let result = new AbpUserCurrentCultureConfigDto();
         result.init(data);
         return result;
     }
@@ -2310,35 +11053,32 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
-        data["surname"] = this.surname;
-        data["userName"] = this.userName;
-        data["emailAddress"] = this.emailAddress;
-        data["id"] = this.id;
+        data["displayName"] = this.displayName;
         return data; 
     }
 
-    clone(): UserLoginInfoDto {
+    clone(): AbpUserCurrentCultureConfigDto {
         const json = this.toJSON();
-        let result = new UserLoginInfoDto();
+        let result = new AbpUserCurrentCultureConfigDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IUserLoginInfoDto {
+export interface IAbpUserCurrentCultureConfigDto {
     name: string | undefined;
-    surname: string | undefined;
-    userName: string | undefined;
-    emailAddress: string | undefined;
-    id: number | undefined;
+    displayName: string | undefined;
 }
 
-export class TenantLoginInfoDto implements ITenantLoginInfoDto {
-    tenancyName: string | undefined;
+export class LanguageInfo implements ILanguageInfo {
     name: string | undefined;
-    id: number | undefined;
+    displayName: string | undefined;
+    icon: string | undefined;
+    isDefault: boolean | undefined;
+    isDisabled: boolean | undefined;
+    isRightToLeft: boolean | undefined;
 
-    constructor(data?: ITenantLoginInfoDto) {
+    constructor(data?: ILanguageInfo) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2349,49 +11089,55 @@ export class TenantLoginInfoDto implements ITenantLoginInfoDto {
 
     init(data?: any) {
         if (data) {
-            this.tenancyName = data["tenancyName"];
             this.name = data["name"];
-            this.id = data["id"];
+            this.displayName = data["displayName"];
+            this.icon = data["icon"];
+            this.isDefault = data["isDefault"];
+            this.isDisabled = data["isDisabled"];
+            this.isRightToLeft = data["isRightToLeft"];
         }
     }
 
-    static fromJS(data: any): TenantLoginInfoDto {
+    static fromJS(data: any): LanguageInfo {
         data = typeof data === 'object' ? data : {};
-        let result = new TenantLoginInfoDto();
+        let result = new LanguageInfo();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["tenancyName"] = this.tenancyName;
         data["name"] = this.name;
-        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        data["icon"] = this.icon;
+        data["isDefault"] = this.isDefault;
+        data["isDisabled"] = this.isDisabled;
+        data["isRightToLeft"] = this.isRightToLeft;
         return data; 
     }
 
-    clone(): TenantLoginInfoDto {
+    clone(): LanguageInfo {
         const json = this.toJSON();
-        let result = new TenantLoginInfoDto();
+        let result = new LanguageInfo();
         result.init(json);
         return result;
     }
 }
 
-export interface ITenantLoginInfoDto {
-    tenancyName: string | undefined;
+export interface ILanguageInfo {
     name: string | undefined;
-    id: number | undefined;
+    displayName: string | undefined;
+    icon: string | undefined;
+    isDefault: boolean | undefined;
+    isDisabled: boolean | undefined;
+    isRightToLeft: boolean | undefined;
 }
 
-export class CreateTenantDto implements ICreateTenantDto {
-    tenancyName: string;
-    name: string;
-    adminEmailAddress: string;
-    connectionString: string | undefined;
-    isActive: boolean | undefined;
+export class AbpLocalizationSourceDto implements IAbpLocalizationSourceDto {
+    name: string | undefined;
+    type: string | undefined;
 
-    constructor(data?: ICreateTenantDto) {
+    constructor(data?: IAbpLocalizationSourceDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2402,54 +11148,42 @@ export class CreateTenantDto implements ICreateTenantDto {
 
     init(data?: any) {
         if (data) {
-            this.tenancyName = data["tenancyName"];
             this.name = data["name"];
-            this.adminEmailAddress = data["adminEmailAddress"];
-            this.connectionString = data["connectionString"];
-            this.isActive = data["isActive"];
+            this.type = data["type"];
         }
     }
 
-    static fromJS(data: any): CreateTenantDto {
+    static fromJS(data: any): AbpLocalizationSourceDto {
         data = typeof data === 'object' ? data : {};
-        let result = new CreateTenantDto();
+        let result = new AbpLocalizationSourceDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["tenancyName"] = this.tenancyName;
         data["name"] = this.name;
-        data["adminEmailAddress"] = this.adminEmailAddress;
-        data["connectionString"] = this.connectionString;
-        data["isActive"] = this.isActive;
+        data["type"] = this.type;
         return data; 
     }
 
-    clone(): CreateTenantDto {
+    clone(): AbpLocalizationSourceDto {
         const json = this.toJSON();
-        let result = new CreateTenantDto();
+        let result = new AbpLocalizationSourceDto();
         result.init(json);
         return result;
     }
 }
 
-export interface ICreateTenantDto {
-    tenancyName: string;
-    name: string;
-    adminEmailAddress: string;
-    connectionString: string | undefined;
-    isActive: boolean | undefined;
+export interface IAbpLocalizationSourceDto {
+    name: string | undefined;
+    type: string | undefined;
 }
 
-export class TenantDto implements ITenantDto {
-    tenancyName: string;
-    name: string;
-    isActive: boolean | undefined;
-    id: number | undefined;
+export class AbpStringValueDto implements IAbpStringValueDto {
+    value: string | undefined;
 
-    constructor(data?: ITenantDto) {
+    constructor(data?: IAbpStringValueDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2460,49 +11194,382 @@ export class TenantDto implements ITenantDto {
 
     init(data?: any) {
         if (data) {
-            this.tenancyName = data["tenancyName"];
-            this.name = data["name"];
-            this.isActive = data["isActive"];
-            this.id = data["id"];
+            this.value = data["value"];
         }
     }
 
-    static fromJS(data: any): TenantDto {
+    static fromJS(data: any): AbpStringValueDto {
         data = typeof data === 'object' ? data : {};
-        let result = new TenantDto();
+        let result = new AbpStringValueDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["tenancyName"] = this.tenancyName;
-        data["name"] = this.name;
-        data["isActive"] = this.isActive;
-        data["id"] = this.id;
+        data["value"] = this.value;
         return data; 
     }
 
-    clone(): TenantDto {
+    clone(): AbpStringValueDto {
         const json = this.toJSON();
-        let result = new TenantDto();
+        let result = new AbpStringValueDto();
         result.init(json);
         return result;
     }
 }
 
-export interface ITenantDto {
-    tenancyName: string;
-    name: string;
-    isActive: boolean | undefined;
-    id: number | undefined;
+export interface IAbpStringValueDto {
+    value: string | undefined;
 }
 
-export class PagedResultDtoOfTenantDto implements IPagedResultDtoOfTenantDto {
+export class UserMenu implements IUserMenu {
+    name: string | undefined;
+    displayName: string | undefined;
+    customData: any | undefined;
+    items: UserMenuItem[] | undefined;
+
+    constructor(data?: IUserMenu) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+            this.displayName = data["displayName"];
+            this.customData = data["customData"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(UserMenuItem.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): UserMenu {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserMenu();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["displayName"] = this.displayName;
+        data["customData"] = this.customData;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): UserMenu {
+        const json = this.toJSON();
+        let result = new UserMenu();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserMenu {
+    name: string | undefined;
+    displayName: string | undefined;
+    customData: any | undefined;
+    items: UserMenuItem[] | undefined;
+}
+
+export class AbpUserTimeZoneConfigDto implements IAbpUserTimeZoneConfigDto {
+    windows: AbpUserWindowsTimeZoneConfigDto | undefined;
+    iana: AbpUserIanaTimeZoneConfigDto | undefined;
+
+    constructor(data?: IAbpUserTimeZoneConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.windows = data["windows"] ? AbpUserWindowsTimeZoneConfigDto.fromJS(data["windows"]) : <any>undefined;
+            this.iana = data["iana"] ? AbpUserIanaTimeZoneConfigDto.fromJS(data["iana"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): AbpUserTimeZoneConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserTimeZoneConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["windows"] = this.windows ? this.windows.toJSON() : <any>undefined;
+        data["iana"] = this.iana ? this.iana.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): AbpUserTimeZoneConfigDto {
+        const json = this.toJSON();
+        let result = new AbpUserTimeZoneConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserTimeZoneConfigDto {
+    windows: AbpUserWindowsTimeZoneConfigDto | undefined;
+    iana: AbpUserIanaTimeZoneConfigDto | undefined;
+}
+
+export class AbpUserAntiForgeryConfigDto implements IAbpUserAntiForgeryConfigDto {
+    tokenCookieName: string | undefined;
+    tokenHeaderName: string | undefined;
+
+    constructor(data?: IAbpUserAntiForgeryConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tokenCookieName = data["tokenCookieName"];
+            this.tokenHeaderName = data["tokenHeaderName"];
+        }
+    }
+
+    static fromJS(data: any): AbpUserAntiForgeryConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserAntiForgeryConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tokenCookieName"] = this.tokenCookieName;
+        data["tokenHeaderName"] = this.tokenHeaderName;
+        return data; 
+    }
+
+    clone(): AbpUserAntiForgeryConfigDto {
+        const json = this.toJSON();
+        let result = new AbpUserAntiForgeryConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserAntiForgeryConfigDto {
+    tokenCookieName: string | undefined;
+    tokenHeaderName: string | undefined;
+}
+
+export class UserMenuItem implements IUserMenuItem {
+    name: string | undefined;
+    icon: string | undefined;
+    displayName: string | undefined;
+    order: number | undefined;
+    url: string | undefined;
+    customData: any | undefined;
+    target: string | undefined;
+    isEnabled: boolean | undefined;
+    isVisible: boolean | undefined;
+    items: UserMenuItem[] | undefined;
+
+    constructor(data?: IUserMenuItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+            this.icon = data["icon"];
+            this.displayName = data["displayName"];
+            this.order = data["order"];
+            this.url = data["url"];
+            this.customData = data["customData"];
+            this.target = data["target"];
+            this.isEnabled = data["isEnabled"];
+            this.isVisible = data["isVisible"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(UserMenuItem.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): UserMenuItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserMenuItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["icon"] = this.icon;
+        data["displayName"] = this.displayName;
+        data["order"] = this.order;
+        data["url"] = this.url;
+        data["customData"] = this.customData;
+        data["target"] = this.target;
+        data["isEnabled"] = this.isEnabled;
+        data["isVisible"] = this.isVisible;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): UserMenuItem {
+        const json = this.toJSON();
+        let result = new UserMenuItem();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserMenuItem {
+    name: string | undefined;
+    icon: string | undefined;
+    displayName: string | undefined;
+    order: number | undefined;
+    url: string | undefined;
+    customData: any | undefined;
+    target: string | undefined;
+    isEnabled: boolean | undefined;
+    isVisible: boolean | undefined;
+    items: UserMenuItem[] | undefined;
+}
+
+export class AbpUserWindowsTimeZoneConfigDto implements IAbpUserWindowsTimeZoneConfigDto {
+    timeZoneId: string | undefined;
+    baseUtcOffsetInMilliseconds: number | undefined;
+    currentUtcOffsetInMilliseconds: number | undefined;
+    isDaylightSavingTimeNow: boolean | undefined;
+
+    constructor(data?: IAbpUserWindowsTimeZoneConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.timeZoneId = data["timeZoneId"];
+            this.baseUtcOffsetInMilliseconds = data["baseUtcOffsetInMilliseconds"];
+            this.currentUtcOffsetInMilliseconds = data["currentUtcOffsetInMilliseconds"];
+            this.isDaylightSavingTimeNow = data["isDaylightSavingTimeNow"];
+        }
+    }
+
+    static fromJS(data: any): AbpUserWindowsTimeZoneConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserWindowsTimeZoneConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["timeZoneId"] = this.timeZoneId;
+        data["baseUtcOffsetInMilliseconds"] = this.baseUtcOffsetInMilliseconds;
+        data["currentUtcOffsetInMilliseconds"] = this.currentUtcOffsetInMilliseconds;
+        data["isDaylightSavingTimeNow"] = this.isDaylightSavingTimeNow;
+        return data; 
+    }
+
+    clone(): AbpUserWindowsTimeZoneConfigDto {
+        const json = this.toJSON();
+        let result = new AbpUserWindowsTimeZoneConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserWindowsTimeZoneConfigDto {
+    timeZoneId: string | undefined;
+    baseUtcOffsetInMilliseconds: number | undefined;
+    currentUtcOffsetInMilliseconds: number | undefined;
+    isDaylightSavingTimeNow: boolean | undefined;
+}
+
+export class AbpUserIanaTimeZoneConfigDto implements IAbpUserIanaTimeZoneConfigDto {
+    timeZoneId: string | undefined;
+
+    constructor(data?: IAbpUserIanaTimeZoneConfigDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.timeZoneId = data["timeZoneId"];
+        }
+    }
+
+    static fromJS(data: any): AbpUserIanaTimeZoneConfigDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AbpUserIanaTimeZoneConfigDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["timeZoneId"] = this.timeZoneId;
+        return data; 
+    }
+
+    clone(): AbpUserIanaTimeZoneConfigDto {
+        const json = this.toJSON();
+        let result = new AbpUserIanaTimeZoneConfigDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAbpUserIanaTimeZoneConfigDto {
+    timeZoneId: string | undefined;
+}
+
+export class PagedResultDtoOfTenantListDto implements IPagedResultDtoOfTenantListDto {
     totalCount: number | undefined;
-    items: TenantDto[] | undefined;
+    items: TenantListDto[] | undefined;
 
-    constructor(data?: IPagedResultDtoOfTenantDto) {
+    constructor(data?: IPagedResultDtoOfTenantListDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2517,14 +11584,14 @@ export class PagedResultDtoOfTenantDto implements IPagedResultDtoOfTenantDto {
             if (data["items"] && data["items"].constructor === Array) {
                 this.items = [] as any;
                 for (let item of data["items"])
-                    this.items.push(TenantDto.fromJS(item));
+                    this.items.push(TenantListDto.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): PagedResultDtoOfTenantDto {
+    static fromJS(data: any): PagedResultDtoOfTenantListDto {
         data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfTenantDto();
+        let result = new PagedResultDtoOfTenantListDto();
         result.init(data);
         return result;
     }
@@ -2540,23 +11607,885 @@ export class PagedResultDtoOfTenantDto implements IPagedResultDtoOfTenantDto {
         return data; 
     }
 
-    clone(): PagedResultDtoOfTenantDto {
+    clone(): PagedResultDtoOfTenantListDto {
         const json = this.toJSON();
-        let result = new PagedResultDtoOfTenantDto();
+        let result = new PagedResultDtoOfTenantListDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IPagedResultDtoOfTenantDto {
+export interface IPagedResultDtoOfTenantListDto {
     totalCount: number | undefined;
-    items: TenantDto[] | undefined;
+    items: TenantListDto[] | undefined;
+}
+
+export class TenantListDto implements ITenantListDto {
+    tenancyName: string | undefined;
+    name: string | undefined;
+    editionDisplayName: string | undefined;
+    connectionString: string | undefined;
+    isActive: boolean | undefined;
+    creationTime: moment.Moment | undefined;
+    subscriptionEndUtc: moment.Moment | undefined;
+    editionId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITenantListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenancyName = data["tenancyName"];
+            this.name = data["name"];
+            this.editionDisplayName = data["editionDisplayName"];
+            this.connectionString = data["connectionString"];
+            this.isActive = data["isActive"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.subscriptionEndUtc = data["subscriptionEndUtc"] ? moment(data["subscriptionEndUtc"].toString()) : <any>undefined;
+            this.editionId = data["editionId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TenantListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TenantListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenancyName"] = this.tenancyName;
+        data["name"] = this.name;
+        data["editionDisplayName"] = this.editionDisplayName;
+        data["connectionString"] = this.connectionString;
+        data["isActive"] = this.isActive;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["subscriptionEndUtc"] = this.subscriptionEndUtc ? this.subscriptionEndUtc.toISOString() : <any>undefined;
+        data["editionId"] = this.editionId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TenantListDto {
+        const json = this.toJSON();
+        let result = new TenantListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITenantListDto {
+    tenancyName: string | undefined;
+    name: string | undefined;
+    editionDisplayName: string | undefined;
+    connectionString: string | undefined;
+    isActive: boolean | undefined;
+    creationTime: moment.Moment | undefined;
+    subscriptionEndUtc: moment.Moment | undefined;
+    editionId: number | undefined;
+    id: number | undefined;
+}
+
+export class CreateTenantInput implements ICreateTenantInput {
+    tenancyName: string;
+    name: string;
+    adminEmailAddress: string;
+    adminPassword: string | undefined;
+    connectionString: string | undefined;
+    shouldChangePasswordOnNextLogin: boolean | undefined;
+    sendActivationEmail: boolean | undefined;
+    editionId: number | undefined;
+    isActive: boolean | undefined;
+    subscriptionEndUtc: moment.Moment | undefined;
+    isInTrialPeriod: boolean | undefined;
+
+    constructor(data?: ICreateTenantInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenancyName = data["tenancyName"];
+            this.name = data["name"];
+            this.adminEmailAddress = data["adminEmailAddress"];
+            this.adminPassword = data["adminPassword"];
+            this.connectionString = data["connectionString"];
+            this.shouldChangePasswordOnNextLogin = data["shouldChangePasswordOnNextLogin"];
+            this.sendActivationEmail = data["sendActivationEmail"];
+            this.editionId = data["editionId"];
+            this.isActive = data["isActive"];
+            this.subscriptionEndUtc = data["subscriptionEndUtc"] ? moment(data["subscriptionEndUtc"].toString()) : <any>undefined;
+            this.isInTrialPeriod = data["isInTrialPeriod"];
+        }
+    }
+
+    static fromJS(data: any): CreateTenantInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateTenantInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenancyName"] = this.tenancyName;
+        data["name"] = this.name;
+        data["adminEmailAddress"] = this.adminEmailAddress;
+        data["adminPassword"] = this.adminPassword;
+        data["connectionString"] = this.connectionString;
+        data["shouldChangePasswordOnNextLogin"] = this.shouldChangePasswordOnNextLogin;
+        data["sendActivationEmail"] = this.sendActivationEmail;
+        data["editionId"] = this.editionId;
+        data["isActive"] = this.isActive;
+        data["subscriptionEndUtc"] = this.subscriptionEndUtc ? this.subscriptionEndUtc.toISOString() : <any>undefined;
+        data["isInTrialPeriod"] = this.isInTrialPeriod;
+        return data; 
+    }
+
+    clone(): CreateTenantInput {
+        const json = this.toJSON();
+        let result = new CreateTenantInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateTenantInput {
+    tenancyName: string;
+    name: string;
+    adminEmailAddress: string;
+    adminPassword: string | undefined;
+    connectionString: string | undefined;
+    shouldChangePasswordOnNextLogin: boolean | undefined;
+    sendActivationEmail: boolean | undefined;
+    editionId: number | undefined;
+    isActive: boolean | undefined;
+    subscriptionEndUtc: moment.Moment | undefined;
+    isInTrialPeriod: boolean | undefined;
+}
+
+export class TenantEditDto implements ITenantEditDto {
+    tenancyName: string;
+    name: string;
+    connectionString: string | undefined;
+    editionId: number | undefined;
+    isActive: boolean | undefined;
+    subscriptionEndUtc: moment.Moment | undefined;
+    isInTrialPeriod: boolean | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITenantEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenancyName = data["tenancyName"];
+            this.name = data["name"];
+            this.connectionString = data["connectionString"];
+            this.editionId = data["editionId"];
+            this.isActive = data["isActive"];
+            this.subscriptionEndUtc = data["subscriptionEndUtc"] ? moment(data["subscriptionEndUtc"].toString()) : <any>undefined;
+            this.isInTrialPeriod = data["isInTrialPeriod"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TenantEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TenantEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenancyName"] = this.tenancyName;
+        data["name"] = this.name;
+        data["connectionString"] = this.connectionString;
+        data["editionId"] = this.editionId;
+        data["isActive"] = this.isActive;
+        data["subscriptionEndUtc"] = this.subscriptionEndUtc ? this.subscriptionEndUtc.toISOString() : <any>undefined;
+        data["isInTrialPeriod"] = this.isInTrialPeriod;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TenantEditDto {
+        const json = this.toJSON();
+        let result = new TenantEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITenantEditDto {
+    tenancyName: string;
+    name: string;
+    connectionString: string | undefined;
+    editionId: number | undefined;
+    isActive: boolean | undefined;
+    subscriptionEndUtc: moment.Moment | undefined;
+    isInTrialPeriod: boolean | undefined;
+    id: number | undefined;
+}
+
+export class EntityDto implements IEntityDto {
+    id: number | undefined;
+
+    constructor(data?: IEntityDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): EntityDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EntityDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): EntityDto {
+        const json = this.toJSON();
+        let result = new EntityDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEntityDto {
+    id: number | undefined;
+}
+
+export class GetTenantFeaturesEditOutput implements IGetTenantFeaturesEditOutput {
+    featureValues: NameValueDto[] | undefined;
+    features: FlatFeatureDto[] | undefined;
+
+    constructor(data?: IGetTenantFeaturesEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["featureValues"] && data["featureValues"].constructor === Array) {
+                this.featureValues = [] as any;
+                for (let item of data["featureValues"])
+                    this.featureValues.push(NameValueDto.fromJS(item));
+            }
+            if (data["features"] && data["features"].constructor === Array) {
+                this.features = [] as any;
+                for (let item of data["features"])
+                    this.features.push(FlatFeatureDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): GetTenantFeaturesEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetTenantFeaturesEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.featureValues && this.featureValues.constructor === Array) {
+            data["featureValues"] = [];
+            for (let item of this.featureValues)
+                data["featureValues"].push(item.toJSON());
+        }
+        if (this.features && this.features.constructor === Array) {
+            data["features"] = [];
+            for (let item of this.features)
+                data["features"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): GetTenantFeaturesEditOutput {
+        const json = this.toJSON();
+        let result = new GetTenantFeaturesEditOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetTenantFeaturesEditOutput {
+    featureValues: NameValueDto[] | undefined;
+    features: FlatFeatureDto[] | undefined;
+}
+
+export class UpdateTenantFeaturesInput implements IUpdateTenantFeaturesInput {
+    id: number | undefined;
+    featureValues: NameValueDto[];
+
+    constructor(data?: IUpdateTenantFeaturesInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.featureValues = [];
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            if (data["featureValues"] && data["featureValues"].constructor === Array) {
+                this.featureValues = [] as any;
+                for (let item of data["featureValues"])
+                    this.featureValues.push(NameValueDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): UpdateTenantFeaturesInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateTenantFeaturesInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        if (this.featureValues && this.featureValues.constructor === Array) {
+            data["featureValues"] = [];
+            for (let item of this.featureValues)
+                data["featureValues"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): UpdateTenantFeaturesInput {
+        const json = this.toJSON();
+        let result = new UpdateTenantFeaturesInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUpdateTenantFeaturesInput {
+    id: number | undefined;
+    featureValues: NameValueDto[];
+}
+
+/** 创建租户的DTO信息 */
+export class CreateTenantDto implements ICreateTenantDto {
+    /** 全局唯一的租户Id */
+    tenancyName: string;
+    /** 租户名称 */
+    name: string;
+    userName: string | undefined;
+    adminEmailAddress: string;
+    connectionString: string | undefined;
+    isActive: boolean | undefined;
+    /** 验证码 */
+    verificationCode: string | undefined;
+    /** 租户管理员密码 */
+    tenantAdminPassword: string | undefined;
+
+    constructor(data?: ICreateTenantDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenancyName = data["tenancyName"];
+            this.name = data["name"];
+            this.userName = data["userName"];
+            this.adminEmailAddress = data["adminEmailAddress"];
+            this.connectionString = data["connectionString"];
+            this.isActive = data["isActive"];
+            this.verificationCode = data["verificationCode"];
+            this.tenantAdminPassword = data["tenantAdminPassword"];
+        }
+    }
+
+    static fromJS(data: any): CreateTenantDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateTenantDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenancyName"] = this.tenancyName;
+        data["name"] = this.name;
+        data["userName"] = this.userName;
+        data["adminEmailAddress"] = this.adminEmailAddress;
+        data["connectionString"] = this.connectionString;
+        data["isActive"] = this.isActive;
+        data["verificationCode"] = this.verificationCode;
+        data["tenantAdminPassword"] = this.tenantAdminPassword;
+        return data; 
+    }
+
+    clone(): CreateTenantDto {
+        const json = this.toJSON();
+        let result = new CreateTenantDto();
+        result.init(json);
+        return result;
+    }
+}
+
+/** 创建租户的DTO信息 */
+export interface ICreateTenantDto {
+    /** 全局唯一的租户Id */
+    tenancyName: string;
+    /** 租户名称 */
+    name: string;
+    userName: string | undefined;
+    adminEmailAddress: string;
+    connectionString: string | undefined;
+    isActive: boolean | undefined;
+    /** 验证码 */
+    verificationCode: string | undefined;
+    /** 租户管理员密码 */
+    tenantAdminPassword: string | undefined;
+}
+
+export class RegisterTenantResultDto implements IRegisterTenantResultDto {
+    /** 租户Id */
+    tenantId: number | undefined;
+    /** 租户是否激活 */
+    isActive: boolean | undefined;
+    /** 租户启用了用户登陆验证码 */
+    useCaptchaOnUserLogin: boolean | undefined;
+
+    constructor(data?: IRegisterTenantResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenantId = data["tenantId"];
+            this.isActive = data["isActive"];
+            this.useCaptchaOnUserLogin = data["useCaptchaOnUserLogin"];
+        }
+    }
+
+    static fromJS(data: any): RegisterTenantResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RegisterTenantResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["isActive"] = this.isActive;
+        data["useCaptchaOnUserLogin"] = this.useCaptchaOnUserLogin;
+        return data; 
+    }
+
+    clone(): RegisterTenantResultDto {
+        const json = this.toJSON();
+        let result = new RegisterTenantResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRegisterTenantResultDto {
+    /** 租户Id */
+    tenantId: number | undefined;
+    /** 租户是否激活 */
+    isActive: boolean | undefined;
+    /** 租户启用了用户登陆验证码 */
+    useCaptchaOnUserLogin: boolean | undefined;
+}
+
+export class TenantSettingsEditDto implements ITenantSettingsEditDto {
+    general: GeneralSettingsEditDto | undefined;
+    userManagement: TenantUserManagementSettingsEditDto;
+    email: EmailSettingsEditDto | undefined;
+    ldap: LdapSettingsEditDto | undefined;
+    security: SecuritySettingsEditDto;
+    billing: TenantBillingSettingsEditDto | undefined;
+
+    constructor(data?: ITenantSettingsEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.userManagement = new TenantUserManagementSettingsEditDto();
+            this.security = new SecuritySettingsEditDto();
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.general = data["general"] ? GeneralSettingsEditDto.fromJS(data["general"]) : <any>undefined;
+            this.userManagement = data["userManagement"] ? TenantUserManagementSettingsEditDto.fromJS(data["userManagement"]) : new TenantUserManagementSettingsEditDto();
+            this.email = data["email"] ? EmailSettingsEditDto.fromJS(data["email"]) : <any>undefined;
+            this.ldap = data["ldap"] ? LdapSettingsEditDto.fromJS(data["ldap"]) : <any>undefined;
+            this.security = data["security"] ? SecuritySettingsEditDto.fromJS(data["security"]) : new SecuritySettingsEditDto();
+            this.billing = data["billing"] ? TenantBillingSettingsEditDto.fromJS(data["billing"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): TenantSettingsEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TenantSettingsEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["general"] = this.general ? this.general.toJSON() : <any>undefined;
+        data["userManagement"] = this.userManagement ? this.userManagement.toJSON() : <any>undefined;
+        data["email"] = this.email ? this.email.toJSON() : <any>undefined;
+        data["ldap"] = this.ldap ? this.ldap.toJSON() : <any>undefined;
+        data["security"] = this.security ? this.security.toJSON() : <any>undefined;
+        data["billing"] = this.billing ? this.billing.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): TenantSettingsEditDto {
+        const json = this.toJSON();
+        let result = new TenantSettingsEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITenantSettingsEditDto {
+    general: GeneralSettingsEditDto | undefined;
+    userManagement: TenantUserManagementSettingsEditDto;
+    email: EmailSettingsEditDto | undefined;
+    ldap: LdapSettingsEditDto | undefined;
+    security: SecuritySettingsEditDto;
+    billing: TenantBillingSettingsEditDto | undefined;
+}
+
+export class TenantUserManagementSettingsEditDto implements ITenantUserManagementSettingsEditDto {
+    /** 是否启用注册 */
+    allowSelfRegistration: boolean | undefined;
+    /** 是否新注册用户默认激活 */
+    isNewRegisteredUserActiveByDefault: boolean | undefined;
+    /** 是否必须校验邮箱才能登陆 */
+    isEmailConfirmationRequiredForLogin: boolean | undefined;
+    /** 是否注册使用验证码 */
+    useCaptchaOnUserRegistration: boolean | undefined;
+    /** 注册验证码类型 */
+    captchaOnUserRegistrationType: TenantUserManagementSettingsEditDtoCaptchaOnUserRegistrationType | undefined;
+    /** 注册验证码长度 */
+    captchaOnUserRegistrationLength: number | undefined;
+    /** 是否登陆使用验证码 */
+    useCaptchaOnUserLogin: boolean | undefined;
+    /** 登陆验证码类型 */
+    captchaOnUserLoginType: TenantUserManagementSettingsEditDtoCaptchaOnUserLoginType | undefined;
+    /** 登陆验证码长度 */
+    captchaOnUserLoginLength: number | undefined;
+
+    constructor(data?: ITenantUserManagementSettingsEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.allowSelfRegistration = data["allowSelfRegistration"];
+            this.isNewRegisteredUserActiveByDefault = data["isNewRegisteredUserActiveByDefault"];
+            this.isEmailConfirmationRequiredForLogin = data["isEmailConfirmationRequiredForLogin"];
+            this.useCaptchaOnUserRegistration = data["useCaptchaOnUserRegistration"];
+            this.captchaOnUserRegistrationType = data["captchaOnUserRegistrationType"];
+            this.captchaOnUserRegistrationLength = data["captchaOnUserRegistrationLength"];
+            this.useCaptchaOnUserLogin = data["useCaptchaOnUserLogin"];
+            this.captchaOnUserLoginType = data["captchaOnUserLoginType"];
+            this.captchaOnUserLoginLength = data["captchaOnUserLoginLength"];
+        }
+    }
+
+    static fromJS(data: any): TenantUserManagementSettingsEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TenantUserManagementSettingsEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["allowSelfRegistration"] = this.allowSelfRegistration;
+        data["isNewRegisteredUserActiveByDefault"] = this.isNewRegisteredUserActiveByDefault;
+        data["isEmailConfirmationRequiredForLogin"] = this.isEmailConfirmationRequiredForLogin;
+        data["useCaptchaOnUserRegistration"] = this.useCaptchaOnUserRegistration;
+        data["captchaOnUserRegistrationType"] = this.captchaOnUserRegistrationType;
+        data["captchaOnUserRegistrationLength"] = this.captchaOnUserRegistrationLength;
+        data["useCaptchaOnUserLogin"] = this.useCaptchaOnUserLogin;
+        data["captchaOnUserLoginType"] = this.captchaOnUserLoginType;
+        data["captchaOnUserLoginLength"] = this.captchaOnUserLoginLength;
+        return data; 
+    }
+
+    clone(): TenantUserManagementSettingsEditDto {
+        const json = this.toJSON();
+        let result = new TenantUserManagementSettingsEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITenantUserManagementSettingsEditDto {
+    /** 是否启用注册 */
+    allowSelfRegistration: boolean | undefined;
+    /** 是否新注册用户默认激活 */
+    isNewRegisteredUserActiveByDefault: boolean | undefined;
+    /** 是否必须校验邮箱才能登陆 */
+    isEmailConfirmationRequiredForLogin: boolean | undefined;
+    /** 是否注册使用验证码 */
+    useCaptchaOnUserRegistration: boolean | undefined;
+    /** 注册验证码类型 */
+    captchaOnUserRegistrationType: TenantUserManagementSettingsEditDtoCaptchaOnUserRegistrationType | undefined;
+    /** 注册验证码长度 */
+    captchaOnUserRegistrationLength: number | undefined;
+    /** 是否登陆使用验证码 */
+    useCaptchaOnUserLogin: boolean | undefined;
+    /** 登陆验证码类型 */
+    captchaOnUserLoginType: TenantUserManagementSettingsEditDtoCaptchaOnUserLoginType | undefined;
+    /** 登陆验证码长度 */
+    captchaOnUserLoginLength: number | undefined;
+}
+
+export class LdapSettingsEditDto implements ILdapSettingsEditDto {
+    /** 模块启用 */
+    isModuleEnabled: boolean | undefined;
+    /** 启用 */
+    isEnabled: boolean | undefined;
+    domain: string | undefined;
+    /** 用户名 */
+    userName: string | undefined;
+    /** 密码 */
+    password: string | undefined;
+
+    constructor(data?: ILdapSettingsEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.isModuleEnabled = data["isModuleEnabled"];
+            this.isEnabled = data["isEnabled"];
+            this.domain = data["domain"];
+            this.userName = data["userName"];
+            this.password = data["password"];
+        }
+    }
+
+    static fromJS(data: any): LdapSettingsEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new LdapSettingsEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isModuleEnabled"] = this.isModuleEnabled;
+        data["isEnabled"] = this.isEnabled;
+        data["domain"] = this.domain;
+        data["userName"] = this.userName;
+        data["password"] = this.password;
+        return data; 
+    }
+
+    clone(): LdapSettingsEditDto {
+        const json = this.toJSON();
+        let result = new LdapSettingsEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ILdapSettingsEditDto {
+    /** 模块启用 */
+    isModuleEnabled: boolean | undefined;
+    /** 启用 */
+    isEnabled: boolean | undefined;
+    domain: string | undefined;
+    /** 用户名 */
+    userName: string | undefined;
+    /** 密码 */
+    password: string | undefined;
+}
+
+export class TenantBillingSettingsEditDto implements ITenantBillingSettingsEditDto {
+    legalName: string | undefined;
+    address: string | undefined;
+    taxVatNo: string | undefined;
+
+    constructor(data?: ITenantBillingSettingsEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.legalName = data["legalName"];
+            this.address = data["address"];
+            this.taxVatNo = data["taxVatNo"];
+        }
+    }
+
+    static fromJS(data: any): TenantBillingSettingsEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TenantBillingSettingsEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["legalName"] = this.legalName;
+        data["address"] = this.address;
+        data["taxVatNo"] = this.taxVatNo;
+        return data; 
+    }
+
+    clone(): TenantBillingSettingsEditDto {
+        const json = this.toJSON();
+        let result = new TenantBillingSettingsEditDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITenantBillingSettingsEditDto {
+    legalName: string | undefined;
+    address: string | undefined;
+    taxVatNo: string | undefined;
+}
+
+export class ListResultDtoOfNameValueDto implements IListResultDtoOfNameValueDto {
+    items: NameValueDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfNameValueDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(NameValueDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfNameValueDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfNameValueDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfNameValueDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfNameValueDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfNameValueDto {
+    items: NameValueDto[] | undefined;
 }
 
 export class AuthenticateModel implements IAuthenticateModel {
     userNameOrEmailAddress: string;
     password: string;
+    verificationCode: string | undefined;
     rememberClient: boolean | undefined;
+    returnUrl: string | undefined;
 
     constructor(data?: IAuthenticateModel) {
         if (data) {
@@ -2571,7 +12500,9 @@ export class AuthenticateModel implements IAuthenticateModel {
         if (data) {
             this.userNameOrEmailAddress = data["userNameOrEmailAddress"];
             this.password = data["password"];
+            this.verificationCode = data["verificationCode"];
             this.rememberClient = data["rememberClient"];
+            this.returnUrl = data["returnUrl"];
         }
     }
 
@@ -2586,7 +12517,9 @@ export class AuthenticateModel implements IAuthenticateModel {
         data = typeof data === 'object' ? data : {};
         data["userNameOrEmailAddress"] = this.userNameOrEmailAddress;
         data["password"] = this.password;
+        data["verificationCode"] = this.verificationCode;
         data["rememberClient"] = this.rememberClient;
+        data["returnUrl"] = this.returnUrl;
         return data; 
     }
 
@@ -2601,7 +12534,9 @@ export class AuthenticateModel implements IAuthenticateModel {
 export interface IAuthenticateModel {
     userNameOrEmailAddress: string;
     password: string;
+    verificationCode: string | undefined;
     rememberClient: boolean | undefined;
+    returnUrl: string | undefined;
 }
 
 export class AuthenticateResultModel implements IAuthenticateResultModel {
@@ -2609,6 +12544,9 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
     encryptedAccessToken: string | undefined;
     expireInSeconds: number | undefined;
     userId: number | undefined;
+    shouldResetPassword: boolean | undefined;
+    passwordResetCode: string | undefined;
+    returnUrl: string | undefined;
 
     constructor(data?: IAuthenticateResultModel) {
         if (data) {
@@ -2625,6 +12563,9 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
             this.encryptedAccessToken = data["encryptedAccessToken"];
             this.expireInSeconds = data["expireInSeconds"];
             this.userId = data["userId"];
+            this.shouldResetPassword = data["shouldResetPassword"];
+            this.passwordResetCode = data["passwordResetCode"];
+            this.returnUrl = data["returnUrl"];
         }
     }
 
@@ -2641,6 +12582,9 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
         data["encryptedAccessToken"] = this.encryptedAccessToken;
         data["expireInSeconds"] = this.expireInSeconds;
         data["userId"] = this.userId;
+        data["shouldResetPassword"] = this.shouldResetPassword;
+        data["passwordResetCode"] = this.passwordResetCode;
+        data["returnUrl"] = this.returnUrl;
         return data; 
     }
 
@@ -2657,6 +12601,9 @@ export interface IAuthenticateResultModel {
     encryptedAccessToken: string | undefined;
     expireInSeconds: number | undefined;
     userId: number | undefined;
+    shouldResetPassword: boolean | undefined;
+    passwordResetCode: string | undefined;
+    returnUrl: string | undefined;
 }
 
 export class ExternalLoginProviderInfoModel implements IExternalLoginProviderInfoModel {
@@ -2812,16 +12759,12 @@ export interface IExternalAuthenticateResultModel {
     waitingForActivation: boolean | undefined;
 }
 
-export class CreateUserDto implements ICreateUserDto {
-    userName: string;
-    name: string;
-    surname: string;
-    emailAddress: string;
-    isActive: boolean | undefined;
-    roleNames: string[] | undefined;
-    password: string;
+export class ImpersonatedAuthenticateResultModel implements IImpersonatedAuthenticateResultModel {
+    accessToken: string | undefined;
+    encryptedAccessToken: string | undefined;
+    expireInSeconds: number | undefined;
 
-    constructor(data?: ICreateUserDto) {
+    constructor(data?: IImpersonatedAuthenticateResultModel) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2832,74 +12775,47 @@ export class CreateUserDto implements ICreateUserDto {
 
     init(data?: any) {
         if (data) {
-            this.userName = data["userName"];
-            this.name = data["name"];
-            this.surname = data["surname"];
-            this.emailAddress = data["emailAddress"];
-            this.isActive = data["isActive"];
-            if (data["roleNames"] && data["roleNames"].constructor === Array) {
-                this.roleNames = [] as any;
-                for (let item of data["roleNames"])
-                    this.roleNames.push(item);
-            }
-            this.password = data["password"];
+            this.accessToken = data["accessToken"];
+            this.encryptedAccessToken = data["encryptedAccessToken"];
+            this.expireInSeconds = data["expireInSeconds"];
         }
     }
 
-    static fromJS(data: any): CreateUserDto {
+    static fromJS(data: any): ImpersonatedAuthenticateResultModel {
         data = typeof data === 'object' ? data : {};
-        let result = new CreateUserDto();
+        let result = new ImpersonatedAuthenticateResultModel();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["userName"] = this.userName;
-        data["name"] = this.name;
-        data["surname"] = this.surname;
-        data["emailAddress"] = this.emailAddress;
-        data["isActive"] = this.isActive;
-        if (this.roleNames && this.roleNames.constructor === Array) {
-            data["roleNames"] = [];
-            for (let item of this.roleNames)
-                data["roleNames"].push(item);
-        }
-        data["password"] = this.password;
+        data["accessToken"] = this.accessToken;
+        data["encryptedAccessToken"] = this.encryptedAccessToken;
+        data["expireInSeconds"] = this.expireInSeconds;
         return data; 
     }
 
-    clone(): CreateUserDto {
+    clone(): ImpersonatedAuthenticateResultModel {
         const json = this.toJSON();
-        let result = new CreateUserDto();
+        let result = new ImpersonatedAuthenticateResultModel();
         result.init(json);
         return result;
     }
 }
 
-export interface ICreateUserDto {
-    userName: string;
-    name: string;
-    surname: string;
-    emailAddress: string;
-    isActive: boolean | undefined;
-    roleNames: string[] | undefined;
-    password: string;
+export interface IImpersonatedAuthenticateResultModel {
+    accessToken: string | undefined;
+    encryptedAccessToken: string | undefined;
+    expireInSeconds: number | undefined;
 }
 
-export class UserDto implements IUserDto {
-    userName: string;
-    name: string;
-    surname: string;
-    emailAddress: string;
-    isActive: boolean | undefined;
-    fullName: string | undefined;
-    lastLoginTime: moment.Moment | undefined;
-    creationTime: moment.Moment | undefined;
-    roleNames: string[] | undefined;
-    id: number | undefined;
+export class SwitchedAccountAuthenticateResultModel implements ISwitchedAccountAuthenticateResultModel {
+    accessToken: string | undefined;
+    encryptedAccessToken: string | undefined;
+    expireInSeconds: number | undefined;
 
-    constructor(data?: IUserDto) {
+    constructor(data?: ISwitchedAccountAuthenticateResultModel) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2910,267 +12826,219 @@ export class UserDto implements IUserDto {
 
     init(data?: any) {
         if (data) {
-            this.userName = data["userName"];
-            this.name = data["name"];
-            this.surname = data["surname"];
-            this.emailAddress = data["emailAddress"];
-            this.isActive = data["isActive"];
-            this.fullName = data["fullName"];
-            this.lastLoginTime = data["lastLoginTime"] ? moment(data["lastLoginTime"].toString()) : <any>undefined;
-            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
-            if (data["roleNames"] && data["roleNames"].constructor === Array) {
-                this.roleNames = [] as any;
-                for (let item of data["roleNames"])
-                    this.roleNames.push(item);
+            this.accessToken = data["accessToken"];
+            this.encryptedAccessToken = data["encryptedAccessToken"];
+            this.expireInSeconds = data["expireInSeconds"];
+        }
+    }
+
+    static fromJS(data: any): SwitchedAccountAuthenticateResultModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new SwitchedAccountAuthenticateResultModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["accessToken"] = this.accessToken;
+        data["encryptedAccessToken"] = this.encryptedAccessToken;
+        data["expireInSeconds"] = this.expireInSeconds;
+        return data; 
+    }
+
+    clone(): SwitchedAccountAuthenticateResultModel {
+        const json = this.toJSON();
+        let result = new SwitchedAccountAuthenticateResultModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISwitchedAccountAuthenticateResultModel {
+    accessToken: string | undefined;
+    encryptedAccessToken: string | undefined;
+    expireInSeconds: number | undefined;
+}
+
+/** 用户信息新增和编辑时用Dto */
+export class CreateOrUpdateUserInput implements ICreateOrUpdateUserInput {
+    /** 用户信息编辑Dto */
+    user: UserEditDto | undefined;
+    /** 授权的角色 */
+    assignedRoleNames: string[];
+    /** 所在的组织机构的ID */
+    organizationUnits: number[] | undefined;
+    /** 发送激活邮件 */
+    sendActivationEmail: boolean | undefined;
+    /** 设置随机密码 */
+    setRandomPassword: boolean | undefined;
+
+    constructor(data?: ICreateOrUpdateUserInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
+        }
+        if (!data) {
+            this.assignedRoleNames = [];
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.user = data["user"] ? UserEditDto.fromJS(data["user"]) : <any>undefined;
+            if (data["assignedRoleNames"] && data["assignedRoleNames"].constructor === Array) {
+                this.assignedRoleNames = [] as any;
+                for (let item of data["assignedRoleNames"])
+                    this.assignedRoleNames.push(item);
+            }
+            if (data["organizationUnits"] && data["organizationUnits"].constructor === Array) {
+                this.organizationUnits = [] as any;
+                for (let item of data["organizationUnits"])
+                    this.organizationUnits.push(item);
+            }
+            this.sendActivationEmail = data["sendActivationEmail"];
+            this.setRandomPassword = data["setRandomPassword"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrUpdateUserInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrUpdateUserInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+        if (this.assignedRoleNames && this.assignedRoleNames.constructor === Array) {
+            data["assignedRoleNames"] = [];
+            for (let item of this.assignedRoleNames)
+                data["assignedRoleNames"].push(item);
+        }
+        if (this.organizationUnits && this.organizationUnits.constructor === Array) {
+            data["organizationUnits"] = [];
+            for (let item of this.organizationUnits)
+                data["organizationUnits"].push(item);
+        }
+        data["sendActivationEmail"] = this.sendActivationEmail;
+        data["setRandomPassword"] = this.setRandomPassword;
+        return data; 
+    }
+
+    clone(): CreateOrUpdateUserInput {
+        const json = this.toJSON();
+        let result = new CreateOrUpdateUserInput();
+        result.init(json);
+        return result;
+    }
+}
+
+/** 用户信息新增和编辑时用Dto */
+export interface ICreateOrUpdateUserInput {
+    /** 用户信息编辑Dto */
+    user: UserEditDto | undefined;
+    /** 授权的角色 */
+    assignedRoleNames: string[];
+    /** 所在的组织机构的ID */
+    organizationUnits: number[] | undefined;
+    /** 发送激活邮件 */
+    sendActivationEmail: boolean | undefined;
+    /** 设置随机密码 */
+    setRandomPassword: boolean | undefined;
+}
+
+/** 用户信息编辑用Dto */
+export class UserEditDto implements IUserEditDto {
+    /** 根据id是否有值来判断是创建还是添加 */
+    id: number | undefined;
+    userName: string;
+    emailAddress: string;
+    phoneNumber: string | undefined;
+    password: string | undefined;
+    isLockoutEnabled: boolean | undefined;
+    /** 需要修改密码 */
+    needToChangeThePassword: boolean | undefined;
+    /** 头像Id */
+    profilePictureId: string | undefined;
+    isActive: boolean | undefined;
+
+    constructor(data?: IUserEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
             this.id = data["id"];
+            this.userName = data["userName"];
+            this.emailAddress = data["emailAddress"];
+            this.phoneNumber = data["phoneNumber"];
+            this.password = data["password"];
+            this.isLockoutEnabled = data["isLockoutEnabled"];
+            this.needToChangeThePassword = data["needToChangeThePassword"];
+            this.profilePictureId = data["profilePictureId"];
+            this.isActive = data["isActive"];
         }
     }
 
-    static fromJS(data: any): UserDto {
+    static fromJS(data: any): UserEditDto {
         data = typeof data === 'object' ? data : {};
-        let result = new UserDto();
+        let result = new UserEditDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["userName"] = this.userName;
-        data["name"] = this.name;
-        data["surname"] = this.surname;
-        data["emailAddress"] = this.emailAddress;
-        data["isActive"] = this.isActive;
-        data["fullName"] = this.fullName;
-        data["lastLoginTime"] = this.lastLoginTime ? this.lastLoginTime.toISOString() : <any>undefined;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        if (this.roleNames && this.roleNames.constructor === Array) {
-            data["roleNames"] = [];
-            for (let item of this.roleNames)
-                data["roleNames"].push(item);
-        }
         data["id"] = this.id;
+        data["userName"] = this.userName;
+        data["emailAddress"] = this.emailAddress;
+        data["phoneNumber"] = this.phoneNumber;
+        data["password"] = this.password;
+        data["isLockoutEnabled"] = this.isLockoutEnabled;
+        data["needToChangeThePassword"] = this.needToChangeThePassword;
+        data["profilePictureId"] = this.profilePictureId;
+        data["isActive"] = this.isActive;
         return data; 
     }
 
-    clone(): UserDto {
+    clone(): UserEditDto {
         const json = this.toJSON();
-        let result = new UserDto();
+        let result = new UserEditDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IUserDto {
-    userName: string;
-    name: string;
-    surname: string;
-    emailAddress: string;
-    isActive: boolean | undefined;
-    fullName: string | undefined;
-    lastLoginTime: moment.Moment | undefined;
-    creationTime: moment.Moment | undefined;
-    roleNames: string[] | undefined;
+/** 用户信息编辑用Dto */
+export interface IUserEditDto {
+    /** 根据id是否有值来判断是创建还是添加 */
     id: number | undefined;
+    userName: string;
+    emailAddress: string;
+    phoneNumber: string | undefined;
+    password: string | undefined;
+    isLockoutEnabled: boolean | undefined;
+    /** 需要修改密码 */
+    needToChangeThePassword: boolean | undefined;
+    /** 头像Id */
+    profilePictureId: string | undefined;
+    isActive: boolean | undefined;
 }
 
-export class ListResultDtoOfRoleDto implements IListResultDtoOfRoleDto {
-    items: RoleDto[] | undefined;
-
-    constructor(data?: IListResultDtoOfRoleDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items.push(RoleDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): ListResultDtoOfRoleDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ListResultDtoOfRoleDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-
-    clone(): ListResultDtoOfRoleDto {
-        const json = this.toJSON();
-        let result = new ListResultDtoOfRoleDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IListResultDtoOfRoleDto {
-    items: RoleDto[] | undefined;
-}
-
-export class ChangeUserLanguageDto implements IChangeUserLanguageDto {
-    languageName: string;
-
-    constructor(data?: IChangeUserLanguageDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.languageName = data["languageName"];
-        }
-    }
-
-    static fromJS(data: any): ChangeUserLanguageDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ChangeUserLanguageDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["languageName"] = this.languageName;
-        return data; 
-    }
-
-    clone(): ChangeUserLanguageDto {
-        const json = this.toJSON();
-        let result = new ChangeUserLanguageDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IChangeUserLanguageDto {
-    languageName: string;
-}
-
-export class ChangePasswordDto implements IChangePasswordDto {
-    currentPassword: string;
-    newPassword: string;
-
-    constructor(data?: IChangePasswordDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.currentPassword = data["currentPassword"];
-            this.newPassword = data["newPassword"];
-        }
-    }
-
-    static fromJS(data: any): ChangePasswordDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ChangePasswordDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["currentPassword"] = this.currentPassword;
-        data["newPassword"] = this.newPassword;
-        return data; 
-    }
-
-    clone(): ChangePasswordDto {
-        const json = this.toJSON();
-        let result = new ChangePasswordDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IChangePasswordDto {
-    currentPassword: string;
-    newPassword: string;
-}
-
-export class ResetPasswordDto implements IResetPasswordDto {
-    adminPassword: string;
-    userId: number;
-    newPassword: string;
-
-    constructor(data?: IResetPasswordDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.adminPassword = data["adminPassword"];
-            this.userId = data["userId"];
-            this.newPassword = data["newPassword"];
-        }
-    }
-
-    static fromJS(data: any): ResetPasswordDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ResetPasswordDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["adminPassword"] = this.adminPassword;
-        data["userId"] = this.userId;
-        data["newPassword"] = this.newPassword;
-        return data; 
-    }
-
-    clone(): ResetPasswordDto {
-        const json = this.toJSON();
-        let result = new ResetPasswordDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IResetPasswordDto {
-    adminPassword: string;
-    userId: number;
-    newPassword: string;
-}
-
-export class PagedResultDtoOfUserDto implements IPagedResultDtoOfUserDto {
+export class PagedResultDtoOfUserListDto implements IPagedResultDtoOfUserListDto {
     totalCount: number | undefined;
-    items: UserDto[] | undefined;
+    items: UserListDto[] | undefined;
 
-    constructor(data?: IPagedResultDtoOfUserDto) {
+    constructor(data?: IPagedResultDtoOfUserListDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3185,14 +13053,14 @@ export class PagedResultDtoOfUserDto implements IPagedResultDtoOfUserDto {
             if (data["items"] && data["items"].constructor === Array) {
                 this.items = [] as any;
                 for (let item of data["items"])
-                    this.items.push(UserDto.fromJS(item));
+                    this.items.push(UserListDto.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): PagedResultDtoOfUserDto {
+    static fromJS(data: any): PagedResultDtoOfUserListDto {
         data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfUserDto();
+        let result = new PagedResultDtoOfUserListDto();
         result.init(data);
         return result;
     }
@@ -3208,20 +13076,790 @@ export class PagedResultDtoOfUserDto implements IPagedResultDtoOfUserDto {
         return data; 
     }
 
-    clone(): PagedResultDtoOfUserDto {
+    clone(): PagedResultDtoOfUserListDto {
         const json = this.toJSON();
-        let result = new PagedResultDtoOfUserDto();
+        let result = new PagedResultDtoOfUserListDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IPagedResultDtoOfUserDto {
+export interface IPagedResultDtoOfUserListDto {
     totalCount: number | undefined;
-    items: UserDto[] | undefined;
+    items: UserListDto[] | undefined;
+}
+
+/** 用户信息列表Dto */
+export class UserListDto implements IUserListDto {
+    userName: string | undefined;
+    emailAddress: string | undefined;
+    phoneNumber: string | undefined;
+    isEmailConfirmed: boolean | undefined;
+    roles: UserListRoleDto[] | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    creationTime: moment.Moment | undefined;
+    isActive: boolean | undefined;
+    id: number | undefined;
+
+    constructor(data?: IUserListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.userName = data["userName"];
+            this.emailAddress = data["emailAddress"];
+            this.phoneNumber = data["phoneNumber"];
+            this.isEmailConfirmed = data["isEmailConfirmed"];
+            if (data["roles"] && data["roles"].constructor === Array) {
+                this.roles = [] as any;
+                for (let item of data["roles"])
+                    this.roles.push(UserListRoleDto.fromJS(item));
+            }
+            this.lastLoginTime = data["lastLoginTime"] ? moment(data["lastLoginTime"].toString()) : <any>undefined;
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.isActive = data["isActive"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): UserListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userName"] = this.userName;
+        data["emailAddress"] = this.emailAddress;
+        data["phoneNumber"] = this.phoneNumber;
+        data["isEmailConfirmed"] = this.isEmailConfirmed;
+        if (this.roles && this.roles.constructor === Array) {
+            data["roles"] = [];
+            for (let item of this.roles)
+                data["roles"].push(item.toJSON());
+        }
+        data["lastLoginTime"] = this.lastLoginTime ? this.lastLoginTime.toISOString() : <any>undefined;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["isActive"] = this.isActive;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): UserListDto {
+        const json = this.toJSON();
+        let result = new UserListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+/** 用户信息列表Dto */
+export interface IUserListDto {
+    userName: string | undefined;
+    emailAddress: string | undefined;
+    phoneNumber: string | undefined;
+    isEmailConfirmed: boolean | undefined;
+    roles: UserListRoleDto[] | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    creationTime: moment.Moment | undefined;
+    isActive: boolean | undefined;
+    id: number | undefined;
+}
+
+export class UserListRoleDto implements IUserListRoleDto {
+    roleId: number | undefined;
+    roleName: string | undefined;
+
+    constructor(data?: IUserListRoleDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.roleId = data["roleId"];
+            this.roleName = data["roleName"];
+        }
+    }
+
+    static fromJS(data: any): UserListRoleDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserListRoleDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["roleId"] = this.roleId;
+        data["roleName"] = this.roleName;
+        return data; 
+    }
+
+    clone(): UserListRoleDto {
+        const json = this.toJSON();
+        let result = new UserListRoleDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserListRoleDto {
+    roleId: number | undefined;
+    roleName: string | undefined;
+}
+
+export class GetUserPermissionsTreeForEditOutput implements IGetUserPermissionsTreeForEditOutput {
+    permissions: FlatPermissionDto[] | undefined;
+    grantedPermissionNames: string[] | undefined;
+
+    constructor(data?: IGetUserPermissionsTreeForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["permissions"] && data["permissions"].constructor === Array) {
+                this.permissions = [] as any;
+                for (let item of data["permissions"])
+                    this.permissions.push(FlatPermissionDto.fromJS(item));
+            }
+            if (data["grantedPermissionNames"] && data["grantedPermissionNames"].constructor === Array) {
+                this.grantedPermissionNames = [] as any;
+                for (let item of data["grantedPermissionNames"])
+                    this.grantedPermissionNames.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): GetUserPermissionsTreeForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetUserPermissionsTreeForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.permissions && this.permissions.constructor === Array) {
+            data["permissions"] = [];
+            for (let item of this.permissions)
+                data["permissions"].push(item.toJSON());
+        }
+        if (this.grantedPermissionNames && this.grantedPermissionNames.constructor === Array) {
+            data["grantedPermissionNames"] = [];
+            for (let item of this.grantedPermissionNames)
+                data["grantedPermissionNames"].push(item);
+        }
+        return data; 
+    }
+
+    clone(): GetUserPermissionsTreeForEditOutput {
+        const json = this.toJSON();
+        let result = new GetUserPermissionsTreeForEditOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetUserPermissionsTreeForEditOutput {
+    permissions: FlatPermissionDto[] | undefined;
+    grantedPermissionNames: string[] | undefined;
+}
+
+export class UpdateUserPermissionsInput implements IUpdateUserPermissionsInput {
+    id: number | undefined;
+    grantedPermissionNames: string[];
+
+    constructor(data?: IUpdateUserPermissionsInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.grantedPermissionNames = [];
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            if (data["grantedPermissionNames"] && data["grantedPermissionNames"].constructor === Array) {
+                this.grantedPermissionNames = [] as any;
+                for (let item of data["grantedPermissionNames"])
+                    this.grantedPermissionNames.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): UpdateUserPermissionsInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateUserPermissionsInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        if (this.grantedPermissionNames && this.grantedPermissionNames.constructor === Array) {
+            data["grantedPermissionNames"] = [];
+            for (let item of this.grantedPermissionNames)
+                data["grantedPermissionNames"].push(item);
+        }
+        return data; 
+    }
+
+    clone(): UpdateUserPermissionsInput {
+        const json = this.toJSON();
+        let result = new UpdateUserPermissionsInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUpdateUserPermissionsInput {
+    id: number | undefined;
+    grantedPermissionNames: string[];
+}
+
+export class EntityDtoOfInt64 implements IEntityDtoOfInt64 {
+    id: number | undefined;
+
+    constructor(data?: IEntityDtoOfInt64) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): EntityDtoOfInt64 {
+        data = typeof data === 'object' ? data : {};
+        let result = new EntityDtoOfInt64();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): EntityDtoOfInt64 {
+        const json = this.toJSON();
+        let result = new EntityDtoOfInt64();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEntityDtoOfInt64 {
+    id: number | undefined;
+}
+
+export class GetUserForEditTreeOutput implements IGetUserForEditTreeOutput {
+    user: UserEditDto | undefined;
+    roles: UserRoleDto[] | undefined;
+    allOrganizationUnits: OrganizationUnitListDto[] | undefined;
+    memberedOrganizationUnits: string[] | undefined;
+
+    constructor(data?: IGetUserForEditTreeOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.user = data["user"] ? UserEditDto.fromJS(data["user"]) : <any>undefined;
+            if (data["roles"] && data["roles"].constructor === Array) {
+                this.roles = [] as any;
+                for (let item of data["roles"])
+                    this.roles.push(UserRoleDto.fromJS(item));
+            }
+            if (data["allOrganizationUnits"] && data["allOrganizationUnits"].constructor === Array) {
+                this.allOrganizationUnits = [] as any;
+                for (let item of data["allOrganizationUnits"])
+                    this.allOrganizationUnits.push(OrganizationUnitListDto.fromJS(item));
+            }
+            if (data["memberedOrganizationUnits"] && data["memberedOrganizationUnits"].constructor === Array) {
+                this.memberedOrganizationUnits = [] as any;
+                for (let item of data["memberedOrganizationUnits"])
+                    this.memberedOrganizationUnits.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): GetUserForEditTreeOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetUserForEditTreeOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+        if (this.roles && this.roles.constructor === Array) {
+            data["roles"] = [];
+            for (let item of this.roles)
+                data["roles"].push(item.toJSON());
+        }
+        if (this.allOrganizationUnits && this.allOrganizationUnits.constructor === Array) {
+            data["allOrganizationUnits"] = [];
+            for (let item of this.allOrganizationUnits)
+                data["allOrganizationUnits"].push(item.toJSON());
+        }
+        if (this.memberedOrganizationUnits && this.memberedOrganizationUnits.constructor === Array) {
+            data["memberedOrganizationUnits"] = [];
+            for (let item of this.memberedOrganizationUnits)
+                data["memberedOrganizationUnits"].push(item);
+        }
+        return data; 
+    }
+
+    clone(): GetUserForEditTreeOutput {
+        const json = this.toJSON();
+        let result = new GetUserForEditTreeOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetUserForEditTreeOutput {
+    user: UserEditDto | undefined;
+    roles: UserRoleDto[] | undefined;
+    allOrganizationUnits: OrganizationUnitListDto[] | undefined;
+    memberedOrganizationUnits: string[] | undefined;
+}
+
+export class UserRoleDto implements IUserRoleDto {
+    roleId: number | undefined;
+    roleName: string | undefined;
+    roleDisplayName: string | undefined;
+    isAssigned: boolean | undefined;
+
+    constructor(data?: IUserRoleDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.roleId = data["roleId"];
+            this.roleName = data["roleName"];
+            this.roleDisplayName = data["roleDisplayName"];
+            this.isAssigned = data["isAssigned"];
+        }
+    }
+
+    static fromJS(data: any): UserRoleDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserRoleDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["roleId"] = this.roleId;
+        data["roleName"] = this.roleName;
+        data["roleDisplayName"] = this.roleDisplayName;
+        data["isAssigned"] = this.isAssigned;
+        return data; 
+    }
+
+    clone(): UserRoleDto {
+        const json = this.toJSON();
+        let result = new UserRoleDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserRoleDto {
+    roleId: number | undefined;
+    roleName: string | undefined;
+    roleDisplayName: string | undefined;
+    isAssigned: boolean | undefined;
+}
+
+export class NullableIdDtoOfInt64 implements INullableIdDtoOfInt64 {
+    id: number | undefined;
+
+    constructor(data?: INullableIdDtoOfInt64) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): NullableIdDtoOfInt64 {
+        data = typeof data === 'object' ? data : {};
+        let result = new NullableIdDtoOfInt64();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): NullableIdDtoOfInt64 {
+        const json = this.toJSON();
+        let result = new NullableIdDtoOfInt64();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface INullableIdDtoOfInt64 {
+    id: number | undefined;
+}
+
+export class ListResultDtoOfUserLoginAttemptDto implements IListResultDtoOfUserLoginAttemptDto {
+    items: UserLoginAttemptDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfUserLoginAttemptDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items.push(UserLoginAttemptDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfUserLoginAttemptDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfUserLoginAttemptDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfUserLoginAttemptDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfUserLoginAttemptDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfUserLoginAttemptDto {
+    items: UserLoginAttemptDto[] | undefined;
+}
+
+export class UserLoginAttemptDto implements IUserLoginAttemptDto {
+    tenancyName: string | undefined;
+    userNameOrEmailAddress: string | undefined;
+    clientIpAddress: string | undefined;
+    clientName: string | undefined;
+    browserInfo: string | undefined;
+    result: string | undefined;
+    creationTime: moment.Moment | undefined;
+
+    constructor(data?: IUserLoginAttemptDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenancyName = data["tenancyName"];
+            this.userNameOrEmailAddress = data["userNameOrEmailAddress"];
+            this.clientIpAddress = data["clientIpAddress"];
+            this.clientName = data["clientName"];
+            this.browserInfo = data["browserInfo"];
+            this.result = data["result"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): UserLoginAttemptDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserLoginAttemptDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenancyName"] = this.tenancyName;
+        data["userNameOrEmailAddress"] = this.userNameOrEmailAddress;
+        data["clientIpAddress"] = this.clientIpAddress;
+        data["clientName"] = this.clientName;
+        data["browserInfo"] = this.browserInfo;
+        data["result"] = this.result;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): UserLoginAttemptDto {
+        const json = this.toJSON();
+        let result = new UserLoginAttemptDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserLoginAttemptDto {
+    tenancyName: string | undefined;
+    userNameOrEmailAddress: string | undefined;
+    clientIpAddress: string | undefined;
+    clientName: string | undefined;
+    browserInfo: string | undefined;
+    result: string | undefined;
+    creationTime: moment.Moment | undefined;
+}
+
+export class GetLatestWebLogsOutput implements IGetLatestWebLogsOutput {
+    latestWebLogLines: string[] | undefined;
+
+    constructor(data?: IGetLatestWebLogsOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["latestWebLogLines"] && data["latestWebLogLines"].constructor === Array) {
+                this.latestWebLogLines = [] as any;
+                for (let item of data["latestWebLogLines"])
+                    this.latestWebLogLines.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): GetLatestWebLogsOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetLatestWebLogsOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.latestWebLogLines && this.latestWebLogLines.constructor === Array) {
+            data["latestWebLogLines"] = [];
+            for (let item of this.latestWebLogLines)
+                data["latestWebLogLines"].push(item);
+        }
+        return data; 
+    }
+
+    clone(): GetLatestWebLogsOutput {
+        const json = this.toJSON();
+        let result = new GetLatestWebLogsOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetLatestWebLogsOutput {
+    latestWebLogLines: string[] | undefined;
+}
+
+export class FileDto implements IFileDto {
+    fileName: string;
+    fileType: string;
+    fileToken: string;
+
+    constructor(data?: IFileDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.fileName = data["fileName"];
+            this.fileType = data["fileType"];
+            this.fileToken = data["fileToken"];
+        }
+    }
+
+    static fromJS(data: any): FileDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FileDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["fileName"] = this.fileName;
+        data["fileType"] = this.fileType;
+        data["fileToken"] = this.fileToken;
+        return data; 
+    }
+
+    clone(): FileDto {
+        const json = this.toJSON();
+        let result = new FileDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFileDto {
+    fileName: string;
+    fileType: string;
+    fileToken: string;
+}
+
+/** 是否阅读枚举 0是未读 1是已经阅读 */
+export enum State {
+    _0 = 0, 
+    _1 = 1, 
+}
+
+export enum DefaultTimezoneScope {
+    _1 = 1, 
+    _2 = 2, 
+    _4 = 4, 
+    _7 = 7, 
+}
+
+export enum T {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+    _4 = 4, 
 }
 
 export enum IsTenantAvailableOutputState {
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+}
+
+export enum HostUserManagementSettingsEditDtoCaptchaOnUserLoginType {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+}
+
+export enum TenantManagementSettingsEditDtoCaptchaOnTenantRegistrationType {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+}
+
+export enum UserNotificationState {
+    _0 = 0, 
+    _1 = 1, 
+}
+
+export enum TenantNotificationSeverity {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+    _4 = 4, 
+}
+
+export enum AbpUserSessionConfigDtoMultiTenancySide {
+    _1 = 1, 
+    _2 = 2, 
+}
+
+export enum AbpMultiTenancySidesConfigDtoHost {
+    _1 = 1, 
+    _2 = 2, 
+}
+
+export enum AbpMultiTenancySidesConfigDtoTenant {
+    _1 = 1, 
+    _2 = 2, 
+}
+
+export enum TenantUserManagementSettingsEditDtoCaptchaOnUserRegistrationType {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+}
+
+export enum TenantUserManagementSettingsEditDtoCaptchaOnUserLoginType {
+    _0 = 0, 
     _1 = 1, 
     _2 = 2, 
     _3 = 3, 
