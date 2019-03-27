@@ -1,6 +1,6 @@
 import PassportLayout from '@/layout/passport/passport.component.vue';
 
-const router = {
+const AccountRouter = {
     path: '/passport',
     component: PassportLayout,
     name: '/passport',
@@ -11,13 +11,14 @@ const router = {
     },
     children: [{
         path: 'login',
-        name: '/passport/login',
-        component: () => import(/* webpackChunkName: "widgets" */ '@/views/passport/login/login.vue'),
+        name: '/account/login',
+        component: () => import('@/views/account/login/login.vue'),
         meta: {
-          title: '登录',
+            title: '登录',
+            i18n: 'Login'
         },
-      },
+    },
     ],
-  };
+};
 
-export default router;
+export default AccountRouter;

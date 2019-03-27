@@ -1,6 +1,6 @@
 import MainLayout from '@/layout/main/MainLayout.vue';
 
-const router = {
+const ListRouter = {
     path: '/list',
     component: MainLayout,
     name: '/list',
@@ -43,4 +43,4 @@ const router = {
     }],
   };
 
-export default router;
+export default ListRouter;

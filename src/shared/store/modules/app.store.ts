@@ -1,5 +1,5 @@
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex';
-import { RootState } from './../store';
+import { RootState } from '../root.store';
 
 export interface Doctitle {
   title?: string;
@@ -51,33 +51,5 @@ const app: Module<IAppState, RootState> = {
   actions,
   mutations,
 };
-/*
-const app = {
-    namespaced: true,
-    state: {
-      isCollapse: false,
-      name: '',
-      doctitle: {
-        title: '',
-        i18n: null,
-      },
-    },
-    mutations: {
-      collapse(state: any) {
-        state.isCollapse = !state.isCollapse;
-      },
-      setApp(state: any, appinfo: any) {
-        state.name = appinfo.name;
-      },
-      changeTitle(state: any, titleInfo: any) {
-        state.doctitle = {
-          ...titleInfo,
-        };
-      },
-    },
-    actions: {
-    },
-  };
-*/
 
 export default app;

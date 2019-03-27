@@ -1,6 +1,6 @@
 import MainLayout from '@/layout/main/MainLayout.vue';
 
-const router = {
+const WidgetsRouter = {
     path: '/widgets',
     component: MainLayout,
     name: '/widgets',
@@ -20,4 +20,4 @@ const router = {
     ],
   };
 
-export default router;
+export default WidgetsRouter;

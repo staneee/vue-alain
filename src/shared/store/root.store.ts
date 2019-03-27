@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import appState from './modules/app';
-import userState from './modules/user';
-import reuseTabState from './modules/routerTabs';
+import appState from './modules/app.store';
+import userState from './modules/user.store';
+import reuseTabState from './modules/reuse-tab.store';
 
 Vue.use(Vuex);
 

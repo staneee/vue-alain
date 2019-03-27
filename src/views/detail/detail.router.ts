@@ -1,6 +1,6 @@
 import MainLayout from '@/layout/main/MainLayout.vue';
 
-const router = {
+const DetailRouter = {
     path: '/detail',
     component: MainLayout,
     name: '/detail',
@@ -30,4 +30,4 @@ const router = {
     }],
   };
 
-export default router;
+export default DetailRouter;

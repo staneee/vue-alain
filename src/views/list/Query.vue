@@ -159,7 +159,7 @@ import UpdateTaskForm from './components/UpdateTaskForm.vue';
 import TestModal from './components/TestModal.vue';
 
 
-import modalService from '@/core/ModalService.ts';
+import modalService from '@/shared/services/modal.service';
 import AppComponentBase from '@/shared/component-base/app-component-base';
 const statusMap = ['default', 'processing', 'success', 'error'];
 const status = ['关闭', '运行中', '已上线', '异常'];

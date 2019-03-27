@@ -1,6 +1,6 @@
 import { Route } from 'vue-router';
 import AppConsts from '@/shared/AppConsts';
-import store from '@/store/store';
+import RootStore from '@/shared/store/root.store';
 
 /**
  * 路由守卫
@@ -41,9 +41,9 @@ class RouterGuard {
         };
 
         // 设置复用tab
-        store.dispatch('reuseTab/add', tabInfo);
+        RootStore.dispatch('reuseTab/add', tabInfo);
         // 设置标题
-        store.commit('app/changeTitle', {
+        RootStore.commit('app/changeTitle', {
             title: tabInfo.title,
             i18n: tabInfo.i18n,
         });

@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
 import { Module, MutationTree, ActionTree, GetterTree, ActionContext } from 'vuex';
-import { RootState } from './../store';
+import { RootState } from '@/shared/store/root.store';
 
 export interface IReusetabState {
     source: any[] ;

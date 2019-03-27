@@ -333,7 +333,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import moment from 'moment';
 
-import { getTimeDistance } from '@/util/util';
+import util from '@/shared/utils/util';
 import {format} from 'date-fns';
 import axios from 'axios';
 import AppComponentBase from '@/shared/component-base/app-component-base';
@@ -353,7 +353,7 @@ for (let i = 0; i < 7; i += 1) {
   components: {},
 })
 export default class Analysis extends AppComponentBase {
-  private rangePickerValue: moment.Moment[] = getTimeDistance('year');
+  private rangePickerValue: moment.Moment[] = util.getTimeDistance('year');
 
   private rankingListData: any[] = rankingListDataSource;
 
@@ -463,7 +463,7 @@ export default class Analysis extends AppComponentBase {
   }
 
   private isActive(type: string) {
-    const value = getTimeDistance(type);
+    const value = util.getTimeDistance(type);
     if (!this.rangePickerValue[0] || !this.rangePickerValue[1]) {
       return '';
     }
@@ -477,7 +477,7 @@ export default class Analysis extends AppComponentBase {
   }
 
   private selectDate(type: string) {
-    this.rangePickerValue = getTimeDistance(type);
+    this.rangePickerValue = util.getTimeDistance(type);
   }
 
   private handleRangePickerChange(value: any) {
