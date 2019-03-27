@@ -1,6 +1,6 @@
 import PassportLayout from '@/layout/passport/passport.component.vue';
 
-const AccountRouter = {
+const accountRouter = {
     path: '/passport',
     component: PassportLayout,
     name: '/passport',
@@ -21,4 +21,4 @@ const AccountRouter = {
     ],
 };
 
-export default AccountRouter;
+export default accountRouter;

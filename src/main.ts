@@ -6,7 +6,7 @@ import '@/registerServiceWorker';
 
 
 import App from '@/App.vue';
-import RootRouter from '@/root.router';
+import RootRouter from '@/root.routing';
 import RootStore from '@/shared/store/root.store';
 
 import AppPreBootstrap from '@/AppPreBootstrap';

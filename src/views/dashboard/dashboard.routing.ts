@@ -1,6 +1,6 @@
 import MainLayout from '@/layout/main/MainLayout.vue';
 
-const AdminRouter = {
+const dashboardRouter = {
     path: '',
     component: MainLayout,
     redirect: '/analysis',
@@ -45,4 +45,4 @@ const AdminRouter = {
     }],
   };
 
-export default AdminRouter;
+export default dashboardRouter;

@@ -1,6 +1,6 @@
 import MainLayout from '@/layout/main/MainLayout.vue';
 
-const FormRouter = {
+const formRouter = {
     path: '/form',
     component: MainLayout,
     name: '/form',
@@ -57,4 +57,4 @@ const FormRouter = {
     }],
   };
 
-export default FormRouter;
+export default formRouter;
