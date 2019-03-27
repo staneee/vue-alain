@@ -383,10 +383,10 @@ export default class Analysis extends AppComponentBase {
 
   constructor() {
     super();
-    this.userService=new UserServiceProxy(undefined,httpClient);
-     this.userService.getAll(undefined,undefined,0,10).then((res)=>{
-       debugger
-     });
+    // this.userService=new UserServiceProxy(undefined,httpClient);
+    //  this.userService.getAll(undefined,undefined,0,10).then((res)=>{
+    //    debugger
+    //  });
   }
 
   private handleTabChange(name: string) {

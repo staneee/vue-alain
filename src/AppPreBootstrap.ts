@@ -5,6 +5,7 @@ import { TokenAuthServiceProxy, SessionServiceProxy } from '@/shared/service-pro
 import * as _ from 'lodash';
 import momentTz from 'moment-timezone';
 import moment from 'moment';
+import { MessageExtension } from './shared/helpers/message.extension';
 
 /**
  * 程序启动服务
@@ -15,6 +16,11 @@ export default class AppPreBootstrap {
      * 初始化应用
      */
     static async bootstrap() {
+
+        // 覆写默认abp的弹出框和消息通知
+        MessageExtension.overrideAbpMessageByModal();
+        MessageExtension.overrideAbpNotify();
+
         // 初始化基本参数
         await this.getApplicationConfig();
 

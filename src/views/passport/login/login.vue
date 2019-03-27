@@ -173,6 +173,13 @@ export default class PassportLayout extends AppComponentBase {
     this.tokenService = new TokenAuthServiceProxy(undefined, httpClient);
     this.input.rememberClient =
       sessionStorage.getItem("rememberClient") === "1" ? true : false;
+
+    // 进入这个页面就删除掉token,保证重新登陆
+    abp.auth.clearToken();
+    abp.utils.deleteCookie(
+      AppConsts.authorization.encrptedAuthTokenName,
+      abp.appPath
+    );
   }
 
   private mounted() {}

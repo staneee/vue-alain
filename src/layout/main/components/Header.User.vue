@@ -52,10 +52,8 @@ export default class HeaderUser extends Vue {
    */
   private logout() {
     abp.auth.clearToken();
-    abp.utils.setCookieValue(
+    abp.utils.deleteCookie(
       AppConsts.authorization.encrptedAuthTokenName,
-      null,
-      undefined,
       abp.appPath
     );
     this.$router.push("/passport/login");
