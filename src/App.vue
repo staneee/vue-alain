@@ -7,48 +7,42 @@
 </template>
 
 <style lang="less">
-
 </style>
 
 <script  lang="ts">
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-
-import { State, Mutation, namespace } from 'vuex-class';
-import AppComponentBase from '@/shared/component-base/app-component-base';
+import { State, Mutation, namespace } from "vuex-class";
+import AppComponentBase from "@/shared/component-base/app-component-base";
+import { IDocumentTitle } from "@/shared/states/modules/app.state";
 
 // app模块
-const appModule = namespace('app');
+const appModule = namespace("app");
 
 /**
  * app主入口
  */
 @Component({
-  components: {
-  },
+  components: {}
 })
 export default class App extends AppComponentBase {
-
   // 折叠
-  @appModule.State('isCollapse')
+  @appModule.State("isCollapse")
   private isCollapse!: boolean;
 
   // 浏览器标题信息
-  @appModule.State('doctitle')
-  private doctitle!: any;
+  @appModule.State("documentTitle")
+  private documentTitle!: IDocumentTitle;
 
   // app名称
-  @appModule.State('name')
+  @appModule.State("name")
   private appName!: any;
 
   /**
    * 获取浏览器标题，包含多语言信息
    */
   get title() {
-    let title = this.doctitle.title;
-    if (this.doctitle.i18n) {
-      title = this.l(this.doctitle.i18n);
-    }
+    let title = this.documentTitle.title;
     return this.appName ? `${title} - ${this.appName}` : title;
   }
 
@@ -63,7 +57,6 @@ export default class App extends AppComponentBase {
   /**
    * mounted 周期
    */
-  private mounted() {
-  }
+  private mounted() {}
 }
 </script>

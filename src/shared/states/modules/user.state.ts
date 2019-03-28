@@ -1,6 +1,6 @@
 
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex';
-import { RootState } from '../root.store';
+import { RootState } from '../root.state';
 
 export interface ILoginInfoState {
   token?: string ;

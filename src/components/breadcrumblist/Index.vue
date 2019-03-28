@@ -1,58 +1,55 @@
 <template>
-<a-breadcrumb >
-    <span slot="separator" style="color: #fff">></span>
+  <a-breadcrumb v-if="source">
+    <span slot="separator" style="color: rgba(0, 0, 0, 0.65) !important;">></span>
     <a-breadcrumb-item>
-        <router-link to="/" style="color:#fff">
-            <a-icon type="home" />
-            <span >{{l(`menu.home`)}}</span>
-        </router-link>
+      <span style="color: rgba(0, 0, 0, 0.65) !important;">
+        <a-icon v-if="breadcrumb.icon" v-bind:type="breadcrumb.icon"/>
+        <span>{{breadcrumb.text}}</span>
+      </span>
     </a-breadcrumb-item>
-
-    <a-breadcrumb-item v-for="(item,index) in source" :key="index">
-        <router-link :to="item.name" style="color:#fff">
-            <a-icon v-if="item.meta.icon" :type="item.meta.icon" />
-            <span>{{l(item.meta.i18n)}}</span>
-        </router-link>
+    <a-breadcrumb-item v-for="(item) in source" :key="item.name">
+      <a style="color: rgba(0, 0, 0, 0.65) !important;">
+        <a-icon v-if="item.icon" :type="item.icon"/>
+        <span>{{item.text}}</span>
+      </a>
     </a-breadcrumb-item>
-</a-breadcrumb>
+  </a-breadcrumb>
 </template>
 
 <script lang="tsx">
-
-import { Breadcrumb, Icon } from 'ant-design-vue';
-// Vue.component(Icon.name, Icon);
-// Vue.component(Breadcrumb.name, Breadcrumb);
-// Vue.component(Breadcrumb.Item.name, Breadcrumb.Item);
-
-import {
-    Component,
-    Prop,
-    Vue,
-    Emit,
-    Watch,
-} from 'vue-property-decorator';
-import * as _ from 'lodash';
-import AppComponentBase from '@/shared/component-base/app-component-base';
+import { Breadcrumb, Icon } from "ant-design-vue";
+import { Component, Prop, Vue, Emit, Watch } from "vue-property-decorator";
+import { IMapMenu } from "@/shared/states/modules/menu.state";
+import { RouteConfig } from "vue-router";
+import { IBreadcrumb } from "@/shared/states/modules/app.state";
+import * as _ from "lodash";
+import AppComponentBase from "@/shared/component-base/app-component-base";
+import menuService from "@/shared/services/menu.service";
+import appService from "@/shared/services/app.service";
 
 @Component({
-    components: {
-        [Icon.name]: Icon,
-        [Breadcrumb.name]: Breadcrumb,
-        [Breadcrumb.Item.name]: Breadcrumb.Item,
-    },
+  components: {
+    [Icon.name]: Icon,
+    [Breadcrumb.name]: Breadcrumb,
+    [Breadcrumb.Item.name]: Breadcrumb.Item
+  }
 })
 export default class BreadcrumbList extends AppComponentBase {
+  get source(): IMapMenu[] {
+    return this.$route.matched
+      .map(item => {
+        return menuService.getMapMenu(item.name);
+      })
+      .filter(o => !!o);
+  }
 
-    get source() {
-        return this.$route.matched;
-    }
+  get breadcrumb(): IBreadcrumb {
+    return appService.getBreadcrumb();
+  }
 
-    private mounted() {
-    }
-
+  private mounted() {}
 }
 </script>
 
 <style lang="less">
-
 </style>

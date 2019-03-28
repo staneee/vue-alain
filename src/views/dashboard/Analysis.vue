@@ -1,313 +1,277 @@
 <template>
   <div>
-<a-row style="margin: 0 -12px">
+    <av-page-header title="分析页" breadcrumb="true">
+      <av-breadcrumb-list slot="breadcrumb"></av-breadcrumb-list>
+      <div slot="content">系统分析页面</div>
+    </av-page-header>
+    <a-row style="margin: 0 -12px">
       <a-col :sm="24" :md="12" :xl="6" style="padding: 12px 12px 24px;">
         <av-chart-card :title="l('app.analysis.total-sales')" total="￥ 189,345">
           <a-tooltip :title="l('app.analysis.introduce')" slot="action">
-            <a-icon type="info-circle-o" />
+            <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
-            <av-trend style="margin-right: 16px" 
-            :term="l(`app.analysis.week`)" 
-            :percent="12" 
-            :is-increase="true" 
-            :scale="0" />
-            <av-trend 
-            :term="l(`app.analysis.day`)" 
-            :target="100" 
-            :value="89" 
-            :scale="0" />
+            <av-trend
+              style="margin-right: 16px"
+              :term="l(`app.analysis.week`)"
+              :percent="12"
+              :is-increase="true"
+              :scale="0"
+            />
+            <av-trend :term="l(`app.analysis.day`)" :target="100" :value="89" :scale="0"/>
           </div>
-          <div slot="footer">{{l('app.analysis.day-sales')}}<span> ￥234.56</span></div>
+          <div slot="footer">
+            {{l('app.analysis.day-sales')}}
+            <span>￥234.56</span>
+          </div>
         </av-chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" style="padding: 12px 12px 24px;">
         <av-chart-card :title="l('app.analysis.visits')" total="￥ 189,345">
           <a-tooltip :title="l('app.analysis.introduce')" slot="action">
-            <a-icon type="info-circle-o" />
+            <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
-            <av-mini-area color="#975FE4" :data="visitData" />
+            <av-mini-area color="#975FE4" :data="visitData"/>
           </div>
-          <div slot="footer">{{l(`app.analysis.day-visits`)}}<span> 123,4</span></div>
+          <div slot="footer">
+            {{l(`app.analysis.day-visits`)}}
+            <span>123,4</span>
+          </div>
         </av-chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" style="padding: 12px 12px 24px;">
         <av-chart-card :title="l(`app.analysis.payments`)" total="￥ 189,345">
           <a-tooltip :title="l('app.analysis.introduce')" slot="action">
-            <a-icon type="info-circle-o" />
+            <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
             <av-mini-bar :data="visitData"/>
           </div>
-          <div slot="footer">{{l(`app.analysis.conversion-rate`)}} <span>60%</span></div>
+          <div slot="footer">
+            {{l(`app.analysis.conversion-rate`)}}
+            <span>60%</span>
+          </div>
         </av-chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" style="padding: 12px 12px 24px;">
         <av-chart-card :title="l(`app.analysis.operational-effect`)" total="73%">
           <a-tooltip :title="l('app.analysis.introduce')" slot="action">
-            <a-icon type="info-circle-o" />
+            <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
             <av-mini-progress :target="90" :percent="78" color="#13C2C2" height="8px"/>
           </div>
           <div slot="footer">
-            <av-trend style="margin-right: 16px" 
-            :term="l(`app.analysis.week`)" 
-            :percent="12" 
-            :is-increase="true" 
-            :scale="0" />
-            <av-trend 
-            :term="l(`app.analysis.day`)" 
-            :target="100" 
-            :value="89" 
-            :scale="0" />
+            <av-trend
+              style="margin-right: 16px"
+              :term="l(`app.analysis.week`)"
+              :percent="12"
+              :is-increase="true"
+              :scale="0"
+            />
+            <av-trend :term="l(`app.analysis.day`)" :target="100" :value="89" :scale="0"/>
           </div>
         </av-chart-card>
       </a-col>
     </a-row>
     <a-row>
-      <a-col  :sm="24" :md="24" :xl="24" >
+      <a-col :sm="24" :md="24" :xl="24">
         <a-card :bordered="false" :bodyStyle="{ padding: 0 }">
-          <a-tabs 
-            size="large" 
-            :tabBarStyle="{ marginBottom: 24 }">
+          <a-tabs size="large" :tabBarStyle="{ marginBottom: 24 }">
             <div slot="tabBarExtraContent">
-      <div class="salesExtraWrap">
-        <div class="salesExtra">
-          <a :class="this.isActive('today')" @click="selectDate('today')">
-            {{l(`app.analysis.all-day`)}}
-          </a>
-          <a :class="this.isActive('week')" @click="selectDate('week')">
-            {{l(`app.analysis.all-week`)}}
-          </a>
-          <a :class="this.isActive('month')" @click="selectDate('month')">
-            {{l(`app.analysis.all-month`)}}
-          </a>
-          <a  :class="this.isActive('year')" @click="selectDate('year')">
-            {{l(`app.analysis.all-year`)}}
-          </a>
-        </div>
-        <a-range-picker :value="rangePickerValue" @change="handleRangePickerChange" :style="{ width: 256 }"/>
-      </div>
-
+              <div class="salesExtraWrap">
+                <div class="salesExtra">
+                  <a
+                    :class="this.isActive('today')"
+                    @click="selectDate('today')"
+                  >{{l(`app.analysis.all-day`)}}</a>
+                  <a
+                    :class="this.isActive('week')"
+                    @click="selectDate('week')"
+                  >{{l(`app.analysis.all-week`)}}</a>
+                  <a
+                    :class="this.isActive('month')"
+                    @click="selectDate('month')"
+                  >{{l(`app.analysis.all-month`)}}</a>
+                  <a
+                    :class="this.isActive('year')"
+                    @click="selectDate('year')"
+                  >{{l(`app.analysis.all-year`)}}</a>
+                </div>
+                <a-range-picker
+                  :value="rangePickerValue"
+                  @change="handleRangePickerChange"
+                  :style="{ width: 256 }"
+                />
+              </div>
             </div>
-            <a-tab-pane
-                :tab="l(`app.analysis.sales`)"
-                key="sales">
-                <a-row>
-                  <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                    <div class="salesBar">
-                      <av-bar
-                        :height="295"
-                        :title="l(`app.analysis.sales-trend`)"
-                        :data="salesData"
-                      />
-                    </div>
-                  </a-col>
-                  <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                    <div class="salesRank">
-                      <h4 class="rankingTitle">
-                        {{l(`app.analysis.sales-ranking`)}}
-                      </h4>
-                      <ul class="rankingList">
-                            <li :key='item.title' v-for="(item,i) in rankingListData">
-                            <span
-                              class="rankingItemNumber"
-                              :class="i<3?'active':''"
-                            >
-                              {{i + 1}}
-                            </span>
-                            <span class="rankingItemTitle" :title="item.title">
-                              {{item.title}}
-                            </span>
-                            <span class="rankingItemValue">
-                              {{$numeral(item.total).format('0,0')}}
-                            </span>
-                          </li>
-                        
-                      </ul>
-                    </div>
-                  </a-col>
-                </a-row>
+            <a-tab-pane :tab="l(`app.analysis.sales`)" key="sales">
+              <a-row>
+                <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
+                  <div class="salesBar">
+                    <av-bar :height="295" :title="l(`app.analysis.sales-trend`)" :data="salesData"/>
+                  </div>
+                </a-col>
+                <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
+                  <div class="salesRank">
+                    <h4 class="rankingTitle">{{l(`app.analysis.sales-ranking`)}}</h4>
+                    <ul class="rankingList">
+                      <li :key="item.title" v-for="(item,i) in rankingListData">
+                        <span class="rankingItemNumber" :class="i<3?'active':''">{{i + 1}}</span>
+                        <span class="rankingItemTitle" :title="item.title">{{item.title}}</span>
+                        <span class="rankingItemValue">{{$numeral(item.total).format('0,0')}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </a-col>
+              </a-row>
             </a-tab-pane>
-            <a-tab-pane
-                :tab="l(`app.analysis.visits`)"
-                key="views">
-                <a-row>
-                  <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                    <div  class="salesBar">
-                      <av-bar
-                        :height="292"
-                        :title="l(`app.analysis.visits-trend`)"
-                        :data="salesData"
-                      />
-                    </div>
-                  </a-col>
-                  <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                    <div class="salesRank">
-                      <h4 class="rankingTitle">
-                        {{l(`app.analysis.visits-ranking`)}}
-                      </h4>
-                      <ul class="rankingList">
-                        
-                        <li :key='item.title' v-for="(item,i) in rankingListData">
-                            <span
-                              class="rankingItemNumber"
-                              :class="i<3?'active':''"
-                            >
-                              {{i + 1}}
-                            </span>
-                            <span class="rankingItemTitle" :title="item.title">
-                              {{item.title}}
-                            </span>
-                            <span class="rankingItemValue">
-                              {{$numeral(item.total).format('0,0')}}
-                            </span>
-                          </li>
-                          <!---->
-                      </ul>
-                    </div>
-                  </a-col>
-                </a-row>
+            <a-tab-pane :tab="l(`app.analysis.visits`)" key="views">
+              <a-row>
+                <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
+                  <div class="salesBar">
+                    <av-bar
+                      :height="292"
+                      :title="l(`app.analysis.visits-trend`)"
+                      :data="salesData"
+                    />
+                  </div>
+                </a-col>
+                <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
+                  <div class="salesRank">
+                    <h4 class="rankingTitle">{{l(`app.analysis.visits-ranking`)}}</h4>
+                    <ul class="rankingList">
+                      <li :key="item.title" v-for="(item,i) in rankingListData">
+                        <span class="rankingItemNumber" :class="i<3?'active':''">{{i + 1}}</span>
+                        <span class="rankingItemTitle" :title="item.title">{{item.title}}</span>
+                        <span class="rankingItemValue">{{$numeral(item.total).format('0,0')}}</span>
+                      </li>
+                      <!---->
+                    </ul>
+                  </div>
+                </a-col>
+              </a-row>
             </a-tab-pane>
           </a-tabs>
         </a-card>
       </a-col>
     </a-row>
     <a-row :gutter="24">
-          <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-            <a-card
-              :bordered="false"
-              :title="l(`app.analysis.online-top-search`)"
-              :style="{ 'margin-top': '24px' }"
-            >
-              <div slot="extra">更多操作</div>
-              <a-row :gutter="68">
-                <a-col :sm="12" :xs="24" :style="{ 'margin-bottom': '24px' }">
-                  <av-number-info :gap="8"
-                        :total="$numeral(12321).format('0,0')"
-                        status="up"
-                        :subTotal="17.1">
-
-                    <span slot="subTitle">
-                      {{l(`app.analysis.search-users`)}}
-                      <a-tooltip
-                          :title="l('app.analysis.introduce')"
-                        >
-                          <a-icon style="margin-left: 8" type="info-circle-o" />
-                        </a-tooltip>
-                    </span>
-                  </av-number-info>
-                  <av-mini-area  line style="height: 45px" :data="visitData2" />
-                </a-col>
-                <a-col :sm="12" :xs="24" :style="{ 'margin-bottom': '24px' }">
-                  <av-number-info
-                        :gap="8"
-                        total="2.7"
-                        status="down"
-                        :subTotal="26.2">
-                    <span slot="subTitle">
-                      {{l(`app.analysis.per-capita-search`)}}
-                    </span>
-                  </av-number-info>
-                  <av-mini-area line style="height: 45px" :data="visitData2" />
-                </a-col>
-              </a-row>
-              <!---->
-              <a-table
-                :rowKey="(record) => record.index"
-                size="small"
-                :columns="columns"
-                :dataSource="searchData"
-                :pagination="{
+      <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
+        <a-card
+          :bordered="false"
+          :title="l(`app.analysis.online-top-search`)"
+          :style="{ 'margin-top': '24px' }"
+        >
+          <div slot="extra">更多操作</div>
+          <a-row :gutter="68">
+            <a-col :sm="12" :xs="24" :style="{ 'margin-bottom': '24px' }">
+              <av-number-info
+                :gap="8"
+                :total="$numeral(12321).format('0,0')"
+                status="up"
+                :subTotal="17.1"
+              >
+                <span slot="subTitle">
+                  {{l(`app.analysis.search-users`)}}
+                  <a-tooltip :title="l('app.analysis.introduce')">
+                    <a-icon style="margin-left: 8" type="info-circle-o"/>
+                  </a-tooltip>
+                </span>
+              </av-number-info>
+              <av-mini-area line style="height: 45px" :data="visitData2"/>
+            </a-col>
+            <a-col :sm="12" :xs="24" :style="{ 'margin-bottom': '24px' }">
+              <av-number-info :gap="8" total="2.7" status="down" :subTotal="26.2">
+                <span slot="subTitle">{{l(`app.analysis.per-capita-search`)}}</span>
+              </av-number-info>
+              <av-mini-area line style="height: 45px" :data="visitData2"/>
+            </a-col>
+          </a-row>
+          <!---->
+          <a-table
+            :rowKey="(record) => record.index"
+            size="small"
+            :columns="columns"
+            :dataSource="searchData"
+            :pagination="{
                   style: { marginBottom: 0 },
                   pageSize: 5,
                 }"
-              >
-                <a href="#/" slot="keyword" slot-scope="text">{{text}}</a>
-                <av-trend slot="range" slot-scope="record" :flag="record.status === 1 ? 'down' : 'up'">
-                  <span style="margin-right: 4px">{{record.text}}%</span>
-                </av-trend>
-              </a-table>
-            </a-card>
-          </a-col>
-          <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-            <a-card
-              class="salesCard"
-              :bordered="false"
-              :title="l(`app.analysis.the-proportion-of-sales`)"
-              :bodyStyle="{ padding: 24 }"
-              :style="{ 'margin-top': '24px', 'min-height': '509px' }"
-            >
-            <div slot="extra">更多操作</div>
-            
-            <div style="padding-bottom:15px">
-                    <a-radio-group v-model="salesType">
-                      <a-radio-button value="all">
-                        {{l(`app.analysis.channel.all`)}}
-                      </a-radio-button>
-                      <a-radio-button value="online">
-                        {{l(`app.analysis.channel.online`)}}
-                      </a-radio-button>
-                      <a-radio-button value="stores">
-                        {{l(`app.analysis.channel.stores`)}}
-                      </a-radio-button>
-                    </a-radio-group>
-                  </div>
-              <h4 :style="{ marginTop: 8, marginBottom: 32 }">
-                {{l(`app.analysis.sales`)}}
-              </h4>
-              <av-pie
-                hasLegend
-                hasLabel
-                hasTooltip
-                :title="l(`app.analysis.sales`)"
-                :total="this.pieTotal"
-                :data="salesPieData"
-                style="height:248px"
-                :height="400"
-                :lineWidth="4"
-                showTitle
-                :subtitle="`${this.pieTotal}`"
-              />
-            </a-card>
+          >
+            <a href="#/" slot="keyword" slot-scope="text">{{text}}</a>
+            <av-trend slot="range" slot-scope="record" :flag="record.status === 1 ? 'down' : 'up'">
+              <span style="margin-right: 4px">{{record.text}}%</span>
+            </av-trend>
+          </a-table>
+        </a-card>
+      </a-col>
+      <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
+        <a-card
+          class="salesCard"
+          :bordered="false"
+          :title="l(`app.analysis.the-proportion-of-sales`)"
+          :bodyStyle="{ padding: 24 }"
+          :style="{ 'margin-top': '24px', 'min-height': '509px' }"
+        >
+          <div slot="extra">更多操作</div>
 
-          </a-col>
+          <div style="padding-bottom:15px">
+            <a-radio-group v-model="salesType">
+              <a-radio-button value="all">{{l(`app.analysis.channel.all`)}}</a-radio-button>
+              <a-radio-button value="online">{{l(`app.analysis.channel.online`)}}</a-radio-button>
+              <a-radio-button value="stores">{{l(`app.analysis.channel.stores`)}}</a-radio-button>
+            </a-radio-group>
+          </div>
+          <h4 :style="{ marginTop: 8, marginBottom: 32 }">{{l(`app.analysis.sales`)}}</h4>
+          <av-pie
+            hasLegend
+            hasLabel
+            hasTooltip
+            :title="l(`app.analysis.sales`)"
+            :total="this.pieTotal"
+            :data="salesPieData"
+            style="height:248px"
+            :height="400"
+            :lineWidth="4"
+            showTitle
+            :subtitle="`${this.pieTotal}`"
+          />
+        </a-card>
+      </a-col>
     </a-row>
     <a-card
-          class="offlineCard"
-          :bordered="false"
-          :bodyStyle="{ padding: '0 0 32px 0' }"
-          style="margin-top: 32px"
-        >
-          <a-tabs defaultActiveKey="Stores 0" @change="handleTabChange">
-            <a-tab-pane
-              v-for="(shop) in offlineData"
-              :key="shop.name">
-              <div slot="tab">
-                <a-row :gutter="8" class="row">
-                  <a-col :span="12">
-                    <av-number-info
-                      :title="shop.name"
-                      :subTitle="l(`app.analysis.conversion-rate`)"
-                      :gap="2"
-                      :total="`${shop.cvr * 100}%`"
-                    />
-                  </a-col>
-                  <a-col :span="12" style="padding-top: 36px">
-                    <av-pie
-                      :percent="shop.cvr * 100"
-                      :color="activeKey !== shop.name?'#BDE4FF':null"
-                      :inner="0.55"
-                      :height="64"
-                    />
-                  </a-col>
-                </a-row>
-              </div>
-              <av-timeline-chart
-                :columns="['日期', '成本', '利润']"
-                  :data="[
+      class="offlineCard"
+      :bordered="false"
+      :bodyStyle="{ padding: '0 0 32px 0' }"
+      style="margin-top: 32px"
+    >
+      <a-tabs defaultActiveKey="Stores 0" @change="handleTabChange">
+        <a-tab-pane v-for="(shop) in offlineData" :key="shop.name">
+          <div slot="tab">
+            <a-row :gutter="8" class="row">
+              <a-col :span="12">
+                <av-number-info
+                  :title="shop.name"
+                  :subTitle="l(`app.analysis.conversion-rate`)"
+                  :gap="2"
+                  :total="`${shop.cvr * 100}%`"
+                />
+              </a-col>
+              <a-col :span="12" style="padding-top: 36px">
+                <av-pie
+                  :percent="shop.cvr * 100"
+                  :color="activeKey !== shop.name?'#BDE4FF':null"
+                  :inner="0.55"
+                  :height="64"
+                />
+              </a-col>
+            </a-row>
+          </div>
+          <av-timeline-chart
+            :columns="['日期', '成本', '利润']"
+            :data="[
           { '日期': '1月1日', '成本': 15, '利润': 12 },
           { '日期': '1月2日', '成本': 12, '利润': 25 },
           { '日期': '1月3日', '成本': 21, '利润': 10 },
@@ -315,45 +279,45 @@
           { '日期': '1月5日', '成本': 31, '利润': 30 },
           { '日期': '1月6日', '成本': 71, '利润': 55 }
         ]"
-              ></av-timeline-chart>
-            </a-tab-pane>
-          </a-tabs>
-        </a-card>
-        <a-card
-          title="echarts"
-          :bordered="false"
-          :bodyStyle="{ padding: '0 0 32px 0' }"
-          style="margin-top: 32px">
-        </a-card>
+          ></av-timeline-chart>
+        </a-tab-pane>
+      </a-tabs>
+    </a-card>
+    <a-card
+      title="echarts"
+      :bordered="false"
+      :bodyStyle="{ padding: '0 0 32px 0' }"
+      style="margin-top: 32px"
+    ></a-card>
   </div>
 </template>
 
 
 <script  lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import moment from 'moment';
+import { Component, Prop, Vue } from "vue-property-decorator";
+import moment from "moment";
 
-import util from '@/shared/utils/util';
-import {format} from 'date-fns';
-import axios from 'axios';
-import AppComponentBase from '@/shared/component-base/app-component-base';
+import util from "@/shared/utils/util";
+import { format } from "date-fns";
+import axios from "axios";
+import AppComponentBase from "@/shared/component-base/app-component-base";
 
-import { UserServiceProxy } from '@/shared/service-proxies/service-proxies';
-import httpClient from '@/shared/utils/http-client';
+import { UserServiceProxy } from "@/shared/service-proxies/service-proxies";
+import httpClient from "@/shared/utils/http-client";
 
 const rankingListDataSource: any[] = [];
 for (let i = 0; i < 7; i += 1) {
   rankingListDataSource.push({
     title: `工专路 ${i} 号店`,
-    total: 323234,
+    total: 323234
   });
 }
 
 @Component({
-  components: {},
+  components: {}
 })
 export default class Analysis extends AppComponentBase {
-  private rangePickerValue: moment.Moment[] = util.getTimeDistance('year');
+  private rangePickerValue: moment.Moment[] = util.getTimeDistance("year");
 
   private rankingListData: any[] = rankingListDataSource;
 
@@ -361,9 +325,9 @@ export default class Analysis extends AppComponentBase {
   private visitData: any[] = [];
   private offlineChartData: any[] = [];
 
-  private salesType: string = 'all';
+  private salesType: string = "all";
 
-  private activeKey: string = 'Stores 0';
+  private activeKey: string = "Stores 0";
 
   private salesTypeData: any[] = [];
 
@@ -379,7 +343,7 @@ export default class Analysis extends AppComponentBase {
 
   private offlineData: any[] = [];
 
-  private userService:UserServiceProxy;
+  private userService: UserServiceProxy;
 
   constructor() {
     super();
@@ -395,13 +359,16 @@ export default class Analysis extends AppComponentBase {
 
   get salesPieData(): any[] {
     let data: any[] = [];
-    if (this.salesType === 'all') {
+    if (this.salesType === "all") {
       data = this.salesTypeData;
     } else {
-      data = this.salesType === 'online' ? this.salesTypeDataOnline : this.salesTypeDataOffline;
+      data =
+        this.salesType === "online"
+          ? this.salesTypeDataOnline
+          : this.salesTypeDataOffline;
     }
 
-    return data.map( (x: any) => {
+    return data.map((x: any) => {
       x.item = x.x;
       x.count = x.y;
       return x;
@@ -412,68 +379,67 @@ export default class Analysis extends AppComponentBase {
     return this.salesPieData.reduce((pre: any, now: any) => now.y + pre, 0);
   }
 
-
   get columns() {
     return [
       {
         title: this.l(`app.analysis.table.rank`),
-        dataIndex: 'index',
-        key: 'index',
+        dataIndex: "index",
+        key: "index"
       },
       {
         title: this.l(`app.analysis.table.search-keyword`),
-        dataIndex: 'keyword',
-        key: 'keyword',
+        dataIndex: "keyword",
+        key: "keyword",
         scopedSlots: {
-          customRender: 'keyword',
-        },
+          customRender: "keyword"
+        }
       },
       {
         title: this.l(`app.analysis.table.users`),
-        dataIndex: 'count',
-        key: 'count',
+        dataIndex: "count",
+        key: "count",
         sorter: (a: any, b: any) => a.count - b.count,
-        class: 'alignRight',
+        class: "alignRight"
       },
       {
         title: this.l(`app.analysis.table.weekly-range`),
-        dataIndex: 'range',
-        key: 'range',
+        dataIndex: "range",
+        key: "range",
         sorter: (a: any, b: any) => a.range - b.range,
         scopedSlots: {
-          customRender: 'range',
+          customRender: "range"
         },
-        align: 'right',
-      },
+        align: "right"
+      }
     ];
   }
 
   get pieChartData() {
     return {
-        columns: ['item', 'count'],
-        rows: [
-          {item: '家用电器', count: 4544},
-          {item: '食用酒水', count: 3321},
-          {item: '个护健康', count: 3113},
-          {item: '服饰箱包', count: 2341},
-          {item: '母婴产品', count: 1231},
-          {item: '其他', count: 1231},
-        ],
+      columns: ["item", "count"],
+      rows: [
+        { item: "家用电器", count: 4544 },
+        { item: "食用酒水", count: 3321 },
+        { item: "个护健康", count: 3113 },
+        { item: "服饰箱包", count: 2341 },
+        { item: "母婴产品", count: 1231 },
+        { item: "其他", count: 1231 }
+      ]
     };
   }
 
   private isActive(type: string) {
     const value = util.getTimeDistance(type);
     if (!this.rangePickerValue[0] || !this.rangePickerValue[1]) {
-      return '';
+      return "";
     }
     if (
-      this.rangePickerValue[0].isSame(value[0], 'day') &&
-      this.rangePickerValue[1].isSame(value[1], 'day')
+      this.rangePickerValue[0].isSame(value[0], "day") &&
+      this.rangePickerValue[1].isSame(value[1], "day")
     ) {
-      return 'currentDate';
+      return "currentDate";
     }
-    return '';
+    return "";
   }
 
   private selectDate(type: string) {
@@ -485,22 +451,21 @@ export default class Analysis extends AppComponentBase {
   }
 
   private mounted() {
-    const url = '/api/fake_chart_data';
+    const url = "/api/fake_chart_data";
     axios.get(url).then((res: any) => {
-            const data = res.data;
-            this.visitData = data.visitData;
-            this.visitData2 = data.visitData2;
-            this.salesData = data.salesData;
-            this.searchData = data.searchData;
-            this.offlineData = data.offlineData;
-            this.offlineChartData = data.offlineChartData;
-            this.salesTypeData = data.salesTypeData;
-            this.salesTypeDataOnline = data.salesTypeDataOnline;
-            this.salesTypeDataOffline = data.salesTypeDataOffline;
-            this.radarData = data.radarData;
-        });
+      const data = res.data;
+      this.visitData = data.visitData;
+      this.visitData2 = data.visitData2;
+      this.salesData = data.salesData;
+      this.searchData = data.searchData;
+      this.offlineData = data.offlineData;
+      this.offlineChartData = data.offlineChartData;
+      this.salesTypeData = data.salesTypeData;
+      this.salesTypeDataOnline = data.salesTypeDataOnline;
+      this.salesTypeDataOffline = data.salesTypeDataOffline;
+      this.radarData = data.radarData;
+    });
   }
-
 }
 </script>
 

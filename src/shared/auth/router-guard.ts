@@ -1,6 +1,11 @@
 import { Route } from 'vue-router';
+import { IReusetTabItem } from '@/shared/states/modules/reuse-tab.state';
 import AppConsts from '@/shared/AppConsts';
-import RootStore from '@/shared/store/root.store';
+import appService from '@/shared/services/app.service';
+import reuseTabService from '@/shared/services/reuse-tab.service';
+import menuService from '@/shared/services/menu.service';
+
+
 
 /**
  * 路由守卫
@@ -14,7 +19,7 @@ class RouterGuard {
             // 需要路由守护,校验token
             if (!abp.auth.getToken()) {
                 next({
-                    name: AppConsts.loginUrl, 
+                    name: AppConsts.loginUrl,
                     query: {
                         redirect: '/',
                     }
@@ -30,26 +35,30 @@ class RouterGuard {
     }
 
 
-    afterEach(to: any, from: any) {
-        // 创建reuseTab
-        const tabInfo: any = {
+    afterEach(to: any, from: any) {      
+        let mapMenu = menuService.getMapMenu(to.name);
+        let newReuseTab: IReusetTabItem = {
             name: to.name,
             closable: true,
-            path: to.name,
-            title: to.meta.title,
+            link: to.path,
             activeName: from.name,
-            i18n: to.meta.i18n || null,
-        };
-
+            text: to.name,
+        }
+       
         // 设置复用tab
-        RootStore.dispatch('reuseTab/add', tabInfo);
-        // 设置标题
-        RootStore.commit('app/changeTitle', {
-            title: tabInfo.title,
-            i18n: tabInfo.i18n,
+        if (mapMenu) {
+            newReuseTab.name = mapMenu.name;
+            newReuseTab.link = mapMenu.link;
+            newReuseTab.text = mapMenu.text;
+        } 
+        reuseTabService.add(newReuseTab);
+
+        // 修改标题
+        appService.changeTitle({
+            name: newReuseTab.name,
+            title: menuService.getTitle(newReuseTab.name)
         });
     }
-
 }
 
 const routerGuard = new RouterGuard();

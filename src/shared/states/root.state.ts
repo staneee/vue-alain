@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import appState from './modules/app.store';
-import userState from './modules/user.store';
-import reuseTabState from './modules/reuse-tab.store';
+import appState from './modules/app.state';
+import userState from './modules/user.state';
+import reuseTabState from './modules/reuse-tab.state';
+import menuState from './modules/menu.state';
 
 Vue.use(Vuex);
 
@@ -24,5 +25,6 @@ export default new Vuex.Store<RootState>({
     app: appState,
     reuseTab: reuseTabState,
     user: userState,
+    menu: menuState
   },
 });

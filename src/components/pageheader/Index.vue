@@ -1,18 +1,7 @@
 <template>
-    <div class="page-header">
-        
-    <slot name="breadcrumb" v-if="!breadcrumb">
-        <!--
-      <nz-breadcrumb *ngIf="paths && paths.length > 0">
-        <nz-breadcrumb-item *ngFor="let i of paths">
-          <ng-container *ngIf="i.link">
-            <a [routerLink]="i.link">{{i.title}}</a>
-          </ng-container>
-          <ng-container *ngIf="!i.link">{{i.title}}</ng-container>
-        </nz-breadcrumb-item>
-      </nz-breadcrumb>
-      -->
-    </slot>
+  <div class="page-header">
+    <slot name="breadcrumb" v-if="!breadcrumb"></slot>
+
     <div class="page-header__detail">
       <div class="page-header__logo">
         <slot name="logo"></slot>
@@ -20,19 +9,15 @@
       <div class="page-header__main">
         <div class="page-header__row">
           <h1 class="page-header__title">
-            <slot name="title">
-              {{title}}
-            </slot>
+            <slot name="title">{{title}}</slot>
           </h1>
           <div class="page-header__action">
             <slot name="action" class="page-header__action"></slot>
           </div>
         </div>
         <div class="page-header__row">
-          <div class="page-header__desc" >
-            <slot name="content">
-              {{content}}
-            </slot>
+          <div class="page-header__desc">
+            <slot name="content">{{content}}</slot>
           </div>
           <div v-if="extra" class="page-header__extra">
             <slot name="extra"></slot>
@@ -41,23 +26,22 @@
       </div>
     </div>
     <slot name="tab"></slot>
-    </div>
+  </div>
 </template>
 
 <style lang="less">
-@import '../../styles/index.less';
+@import "../../styles/index.less";
 
-@page-header-bg: #fff;//#fafbfc;// #fff;
+@page-header-bg: #fff; //#fafbfc;// #fff;
 
-
- .page-header {
+.page-header {
   display: block;
-  background-color: #fafbfc;//@page-header-bg;
+  background-color: #fafbfc; //@page-header-bg;
   padding: 16px 32px 0 32px;
   border-bottom: @border-width-base @border-style-base @border-color-split;
-    margin-right: -24px;
-    margin-left: -24px;
-    margin-bottom: 24px;
+  margin-right: -24px;
+  margin-left: -24px;
+  margin-bottom: 24px;
   .ant-breadcrumb {
     margin-bottom: 16px;
   }
@@ -186,27 +170,25 @@
 </style>
 
 <script  lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-
+import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({})
 export default class PageHeader extends Vue {
+  private breadcrumb: boolean = false;
 
-    private breadcrumb: boolean = false;
+  private logo: boolean = false;
 
-    private logo: boolean = false;
+  private action: boolean = true;
 
-    private action: boolean = true;
+  @Prop({ type: Boolean, default: true })
+  private extra: boolean = true;
 
-    @Prop({type: Boolean, default: true})
-    private extra: boolean = true;
+  @Prop({ type: String, default: null })
+  private title!: string;
 
-    @Prop({type: String, default: null})
-    private title!: string;
+  @Prop({ type: String, default: null })
+  private content!: string;
 
-    @Prop({type: String, default: null})
-    private content!: string;
-
-    private titleTpl: string = '';
+  private titleTpl: string = "";
 }
 </script>

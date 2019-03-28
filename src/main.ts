@@ -7,7 +7,7 @@ import '@/registerServiceWorker';
 
 import App from '@/App.vue';
 import RootRouter from '@/root.routing';
-import RootStore from '@/shared/store/root.store';
+import RootStore from '@/shared/states/root.state';
 
 import AppPreBootstrap from '@/AppPreBootstrap';
 import httpClient from '@/shared/utils/http-client';
@@ -17,7 +17,8 @@ import { i18n } from '@/app/index';
 import { preloaderFinished } from '@/shared/utils/preloader';
 
 import * as _ from 'lodash';
-
+import menuService from '@/shared/services/menu.service';
+import menus from '@/shared/AppMenus';
 
 
 Vue.config.productionTip = false;
@@ -35,6 +36,8 @@ async function main() {
   await AppPreBootstrap.bootstrap();
   // 获取(未)登陆用户信息
   var result = await (new SessionServiceProxy(undefined, httpClient).getCurrentLoginInformations());
+  // 设置菜单
+  menuService.setMenus(menus);
 }
 
 main().then(() => {
