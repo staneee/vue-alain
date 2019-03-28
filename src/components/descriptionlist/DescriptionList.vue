@@ -51,7 +51,7 @@ export default class DescriptionList extends Vue {
 
 
 <style lang="less">
-@import '../../assets/theme/styles/index.less';
+@import '../../styles/index.less';
 
 .descriptionList {
 

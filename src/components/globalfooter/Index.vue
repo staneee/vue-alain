@@ -58,7 +58,7 @@ export default class GlobalFooter extends Vue {
 </script>
 
 <style lang="less">
-@import '../../assets/theme/styles/index.less';
+@import '../../styles/index.less';
 
 @global-footer-prefix: ~'.global-footer';
 

@@ -140,7 +140,7 @@ export default class CardList extends Vue {
 </script>
 
 <style lang="less">
-@import '../../assets/theme/styles/index.less';
+@import '../../styles/index.less';
 
 .cardList {
     margin-bottom: -24px;

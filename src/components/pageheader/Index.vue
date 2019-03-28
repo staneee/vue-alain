@@ -45,7 +45,7 @@
 </template>
 
 <style lang="less">
-@import '../../assets/theme/styles/index.less';
+@import '../../styles/index.less';
 
 @page-header-bg: #fff;//#fafbfc;// #fff;
 

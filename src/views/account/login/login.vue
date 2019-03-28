@@ -81,7 +81,7 @@
 </template>
 
 <style lang="less">
-@import "../../../assets/theme/styles/index.less";
+@import "../../../styles/index.less";
 
 .login {
   display: block;

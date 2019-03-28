@@ -248,7 +248,7 @@ export default class BasicDetail extends Vue {
 </script>
 
 <style lang="less">
-@import '../../assets/theme/styles/index.less';
+@import '../../styles/index.less';
 
 .title {
     color: @heading-color;

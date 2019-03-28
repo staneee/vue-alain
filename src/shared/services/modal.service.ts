@@ -13,7 +13,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { of } from 'rxjs/observable/of';
 import { catchError  } from 'rxjs/operators';
 
-class ModalService {
+export class ModalService {
 
     /**
      * 打开对话框
@@ -67,6 +67,6 @@ class ModalService {
     }
 }
 
-const service = new ModalService();
+const modalService = new ModalService();
 
-export default service;
+export default modalService;

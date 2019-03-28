@@ -9,16 +9,20 @@ const accountRouter = {
     meta: {
         title: '登录页',
         icon: 'appstore-o',
+        hide: true,
     },
-    children: [{
-        path: 'login',
-        name: AppConsts.loginUrl,
-        component: () => import('@/views/account/login/login.vue'),
-        meta: {
-            title: '登录',
-            i18n: 'Login'
+    children: [
+        {
+            path: 'login',
+            name: AppConsts.loginUrl,
+            component: () => import('@/views/account/login/login.vue'),
+            meta: {
+                title: '登录',
+                i18n: 'Login',
+                hide: true
+            },
         },
-    },
+
     ],
 };
 

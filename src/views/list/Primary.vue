@@ -175,7 +175,7 @@ export default class PrimaryList extends Vue {
 
 <style lang="less">
 
-@import '../../assets/theme/styles/index.less';
+@import '../../styles/index.less';
 
 .standardList {
   :global {

@@ -1,8 +1,9 @@
 <template>
 <a-layout class="wrapper">
-  <admin-header></admin-header>
+  <!-- <admin-header></admin-header> -->
   <a-layout>
     <admin-sidebar></admin-sidebar>
+    <admin-header></admin-header>
     <a-layout>
       <a-layout-content class="content">
         <reuse-tab :list="tabList"

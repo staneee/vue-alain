@@ -1,17 +1,18 @@
 import MainLayout from '@/layout/main/MainLayout.vue';
 
 const dashboardRouter = {
-    path: '',
-    component: MainLayout,
-    redirect: '/analysis',
-    name: '/',
-    meta: {
-        title: '工作台',
-        icon: 'dashboard',
-        routerGuard: true,
-        i18n: `Dashboard`,
-    },
-    children: [{
+  path: '',
+  component: MainLayout,
+  redirect: '/analysis',
+  name: '/',
+  meta: {
+    title: '工作台',
+    icon: 'dashboard',
+    routerGuard: true,
+    i18n: `Dashboard`,
+  },
+  children: [
+    {
       path: '/analysis',
       name: '/analysis',
       component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/Analysis.vue'),
@@ -30,6 +31,7 @@ const dashboardRouter = {
         title: '监控页',
         routerGuard: true,
         i18n: `menu.dashboard.monitor`,
+        hide: true
       },
     },
     {
@@ -43,6 +45,6 @@ const dashboardRouter = {
         i18n: `menu.dashboard.workplace`,
       },
     }],
-  };
+};
 
 export default dashboardRouter;

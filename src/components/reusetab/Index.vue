@@ -70,7 +70,7 @@ export default class ReuseTab extends Vue {
 </script>
 
 <style lang="less">
-@import '../../assets/theme/styles/index.less';
+@import '../../styles/index.less';
 
 @reuse-tab-prefix: ~'.reuse-tab';
 @reuse-tab-height: 52px;

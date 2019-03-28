@@ -1,14 +1,22 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 import AppConsts from '../AppConsts';
 import moment from 'moment';
+import modalService, { ModalService } from '../services/modal.service';
 
 export default class AppComponentBase extends Vue {
+
+    /** model */
+    public modal: ModalService;
+    constructor() {
+        super();
+        this.modal = modalService;
+    }
 
     /** 校验权限 */
     isGranted(permissionName: string): boolean {
         return abp.auth.isGranted(permissionName);
     }
-    
+
     /** 校验一组权限,其中之一通过表示校验成功 */
     isAnyGranted(...args: string[]): boolean {
         return abp.auth.isAnyGranted(...args);
@@ -28,7 +36,7 @@ export default class AppComponentBase extends Vue {
     l(key: string, ...args: any[]): string {
         let localizedText = abp.localization.localize(
             key,
-            AppConsts.localization.defaultLocalizationSourceName
+            abp.localization.defaultSourceName
         );
 
         if (!localizedText) {
