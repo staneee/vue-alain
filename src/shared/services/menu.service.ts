@@ -29,11 +29,13 @@ class MenuService {
 
         // 重置菜单,刷新标签
         let documentTitle = appService.getTitle();
-        documentTitle.title = this.getTitle(documentTitle.name);
+        let mapMenu = this.getMapMenu(documentTitle.name);
+        documentTitle.title = mapMenu ? mapMenu.text : documentTitle.title;
         appService.changeTitle(documentTitle);
         reuseTabService.renderer({
             name: documentTitle.name,
-            text: documentTitle.title
+            text: documentTitle.title,
+            icon: mapMenu ? mapMenu.icon : null,
         });
     }
 

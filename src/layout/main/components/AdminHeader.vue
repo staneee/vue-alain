@@ -30,9 +30,6 @@
             <i class="fa fa-lock"></i>
           </div>
         </li>
-        <li class="hidden-xs">
-          <av-breadcrumb-list></av-breadcrumb-list>
-        </li>
       </ul>
       <ul class="top-nav">
         <li class="hidden-xs">

@@ -1,14 +1,16 @@
 <template>
   <div class="reuse-tab ad-rt fixed">
     <a-tabs :activeKey="pos" :animated="false" type="line">
-      <a-tab-pane v-for="(i) of list" :key="i.link">
+      <a-tab-pane v-for="(item) of list" :key="item.link">
         <template slot="tab">
-          <!--[reuse-tab-context-menu]="i" -->
-          <span @click="to($event, i)" class="name">{{i.text}}</span>
+          <span @click="to($event, item)" class="name">
+            <a-icon v-if="item.icon" v-bind:type="item.icon" :style="{'margin-reight':'0px'}"/>
+            {{item.text}}
+          </span>
           <i
-            v-if="i.closable&&list.length!==1"
+            v-if="item.closable&&list.length!==1"
             class="anticon anticon-close op"
-            @click="close($event, i, false)"
+            @click="close($event, item, false)"
           ></i>
         </template>
       </a-tab-pane>

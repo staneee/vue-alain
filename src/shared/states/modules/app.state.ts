@@ -41,6 +41,9 @@ const actions: ActionTree<IAppState, RootState> = {
 };
 
 const getters: GetterTree<IAppState, RootState> = {
+  appName: (state: IAppState): string => {
+    return state.name;
+  },
   documentTitle: (state: IAppState): IDocumentTitle => {
     return state.documentTitle;
   },

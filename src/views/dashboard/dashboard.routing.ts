@@ -3,13 +3,21 @@ import MainLayout from '@/layout/main/MainLayout.vue';
 const dashboardRouter = {
   path: '',
   component: MainLayout,
-  redirect: '/analysis',
+  redirect: '/workplace',
   name: '/',
   meta: {
-    icon: 'dashboard',
     routerGuard: true,
   },
   children: [
+    {
+      path: '/workplace',
+      name: '/workplace',
+      routerGuard: true,
+      component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/Workplace.vue'),
+      meta: {
+        routerGuard: true,
+      },
+    },
     {
       path: '/analysis',
       name: '/analysis',
@@ -27,15 +35,7 @@ const dashboardRouter = {
         routerGuard: true,
       },
     },
-    {
-      path: '/workplace',
-      name: '/workplace',
-      routerGuard: true,
-      component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/Workplace.vue'),
-      meta: {
-        routerGuard: true,
-      },
-    }],
+  ],
 };
 
 export default dashboardRouter;

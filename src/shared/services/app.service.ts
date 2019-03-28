@@ -18,6 +18,9 @@ class AppService {
         rootStore.commit('app/appName', appName);
     }
 
+    getAppName(): string {
+        return rootStore.getters["app/appName"];
+    }
     setBreadcrumb(breadcrumb: IBreadcrumb) {
         rootStore.commit('app/breadcrumb', breadcrumb);
     }

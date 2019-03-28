@@ -4,27 +4,30 @@ const menus: IMenu[] = [
     {
         name: '/dashborad',
         text: '工作台',
+        icon: 'dashboard',
         children: [
+            {
+                name: '/workplace',
+                text: '工作台',
+                link: '/workplace',
+            },
             {
                 name: '/analysis',
                 text: '分析页',
                 link: '/analysis',
+                icon: 'info',
             },
             {
                 name: '/monitor',
                 text: '监控页',
                 link: '/monitor',
             },
-            {
-                name: '/workplace',
-                text: '工作台',
-                link: '/workplace',
-            }
         ]
     },
     {
         name: '/form',
         text: '表单页',
+        icon: 'form',
         children: [
             {
                 name: '/form/basic',

@@ -6,6 +6,7 @@ import { RootState } from '@/shared/states/root.state';
 export interface IReReusetTabItem {
     name: string;
     text: string;
+    icon?: string;
 }
 
 export interface IReusetTabItem {
@@ -14,6 +15,7 @@ export interface IReusetTabItem {
     closable: boolean;
     link: string;
     activeName: string;
+    icon?: string;
 }
 
 export interface IReusetabState {
@@ -31,7 +33,9 @@ const mutations: MutationTree<IReusetabState> = {
     renderer(state: IReusetabState, reReusetTabItem: IReReusetTabItem) {
         let reusetTabItem = state.source.find(o => o.name == reReusetTabItem.name);
         if (reusetTabItem) {
+            reusetTabItem.name = reReusetTabItem.name;
             reusetTabItem.text = reReusetTabItem.text;
+            reusetTabItem.icon = reReusetTabItem.icon;
         }
     }
 };

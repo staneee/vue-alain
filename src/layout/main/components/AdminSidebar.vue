@@ -24,7 +24,10 @@
             <span>{{menuitem.text}}</span>
           </template>
           <a-menu-item :key="child.name" v-for="child in menuitem.children">
-            <router-link :to="child.link">{{child.text}}</router-link>
+            <router-link :to="child.link">
+              <a-icon :type="child.icon"/>
+              <span>{{child.text}}</span>
+            </router-link>
           </a-menu-item>
         </a-sub-menu>
       </template>

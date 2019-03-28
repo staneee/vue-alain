@@ -35,7 +35,7 @@ class RouterGuard {
     }
 
 
-    afterEach(to: any, from: any) {      
+    afterEach(to: any, from: any) {
         let mapMenu = menuService.getMapMenu(to.name);
         let newReuseTab: IReusetTabItem = {
             name: to.name,
@@ -44,13 +44,14 @@ class RouterGuard {
             activeName: from.name,
             text: to.name,
         }
-       
+
         // 设置复用tab
         if (mapMenu) {
             newReuseTab.name = mapMenu.name;
             newReuseTab.link = mapMenu.link;
             newReuseTab.text = mapMenu.text;
-        } 
+            newReuseTab.icon = mapMenu.icon;
+        }
         reuseTabService.add(newReuseTab);
 
         // 修改标题
