@@ -151,7 +151,7 @@ import AppConsts from "@/shared/AppConsts";
 @Component({
   components: {}
 })
-export default class PassportLayout extends AppComponentBase {
+export default class Login extends AppComponentBase {
   private loginForm: any = null;
 
   private loading: boolean = false;
