@@ -56,7 +56,7 @@ export default class HeaderUser extends Vue {
       AppConsts.authorization.encrptedAuthTokenName,
       abp.appPath
     );
-    this.$router.push("/passport/login");
+    this.$router.push(AppConsts.loginUrl);
   }
 }
 </script>
