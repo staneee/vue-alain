@@ -14,7 +14,8 @@ class RouterGuard {
             // 需要路由守护,校验token
             if (!abp.auth.getToken()) {
                 next({
-                    name: '/passport/login', query: {
+                    name: AppConsts.loginUrl, 
+                    query: {
                         redirect: '/',
                     }
                 });

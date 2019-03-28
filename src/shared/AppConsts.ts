@@ -1,9 +1,10 @@
 const AppConsts = {
+    loginUrl: "/account/login",
     userManagement: {
         defaultAdminUserName: 'admin'
     },
     localization: {
-        defaultLocalizationSourceName: 'YoyoCmsTemplate'
+        defaultSourceName: 'YoyoCmsTemplate'
     },
     authorization: {
         encrptedAuthTokenName: 'enc_auth_token'
@@ -15,7 +16,7 @@ const AppConsts = {
     l: (key: string, ...args: any[]): string => {
         let localizedText = abp.localization.localize(
             key,
-            AppConsts.localization.defaultLocalizationSourceName
+            abp.localization.defaultSourceName
         );
 
         if (!localizedText) {

@@ -57,7 +57,7 @@ export default class AppPreBootstrap {
         let result = response.data;
 
         _.merge(abp, result);
-        abp.localization.defaultSourceName = AppConsts.localization.defaultLocalizationSourceName;
+        abp.localization.defaultSourceName = AppConsts.localization.defaultSourceName;
         abp.clock.provider = this.getCurrentClockProvider(result.clock.provider);
 
         let locale = this.convertAbpLocaleToMomentLocale(abp.localization.currentLanguage.name);

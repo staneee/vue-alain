@@ -38,12 +38,12 @@ httpClient.interceptors.response.use((response) => {
         })
     } else if (!!error.response && !!error.response.data.error && !!error.response.data.error.message) {
         Modal.error({
-            title: abp.localization.localize("LoginFailed",AppConsts.localization.defaultLocalizationSourceName),
+            title: abp.localization.localize("LoginFailed",abp.localization.defaultSourceName),
             ontent: error.response.data.error.message
         })
     } else if (!error.response) {
         Modal.error({
-            content: abp.localization.localize('UnknownError', AppConsts.localization.defaultLocalizationSourceName)
+            content: abp.localization.localize('UnknownError', abp.localization.defaultSourceName)
         });
     }
 

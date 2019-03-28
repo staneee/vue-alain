@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import RouterGuard from '@/shared/auth/router-guard';
+import routerGuard from '@/shared/auth/router-guard';
 
 import accountRouter from '@/views/account/account.routing';
 import dashboardRouter from '@/views/dashboard/dashboard.routing';
@@ -31,9 +31,9 @@ const rootRouter = new Router({
 
 
 /** 绑定路由守卫 */
-rootRouter.beforeResolve(RouterGuard.beforeResolve);
-rootRouter.beforeEach(RouterGuard.beforeEach);
-rootRouter.afterEach(RouterGuard.afterEach);
+rootRouter.beforeResolve(routerGuard.beforeResolve);
+rootRouter.beforeEach(routerGuard.beforeEach);
+rootRouter.afterEach(routerGuard.afterEach);
 
 
 export default rootRouter;
