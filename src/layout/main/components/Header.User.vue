@@ -32,7 +32,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { State, Mutation, namespace } from "vuex-class";
 import AppConsts from "@/shared/AppConsts";
 
-const userModule = namespace("user");
+const userState = namespace("user");
 
 @Component({})
 export default class HeaderUser extends Vue {
@@ -44,7 +44,7 @@ export default class HeaderUser extends Vue {
     this.menuCommand[e.key]();
   }
 
-  @userModule.Mutation("loginSuccess")
+  @userState.Mutation("loginSuccess")
   private loginSuccess(param: any) {}
 
   /**

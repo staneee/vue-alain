@@ -65,7 +65,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 import { State, Mutation, namespace } from "vuex-class";
 
-const appModule = namespace("app");
+const appState = namespace("app");
 
 import HeaderUser from "./Header.User.vue";
 import HeaderNotify from "./Header.Notify.vue";
@@ -81,10 +81,10 @@ import SelectLange from "./SelectLange.vue";
   }
 })
 export default class AdminHeader extends Vue {
-  @appModule.State("isCollapse")
+  @appState.State("isCollapse")
   private isCollapse!: boolean;
 
-  @appModule.Mutation("collapse")
+  @appState.Mutation("collapse")
   private collapse!: () => void;
 
   private handlerCollapsedSidebar(): void {

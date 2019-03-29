@@ -26,13 +26,7 @@
 <script  lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { State, Mutation, namespace } from "vuex-class";
-// app 模块
-const appModule = namespace("app");
-// 复用tab模块
-const reuseTabModule = namespace("reuseTab");
-
 import ReuseTab from "@/components/reusetab/Index.vue";
-
 import AdminHeader from "./components/AdminHeader.vue";
 import AdminSidebar from "./components/AdminSidebar.vue";
 import AdminFooter from "./components/AdminFooter.vue";
@@ -40,6 +34,10 @@ import AdminFooter from "./components/AdminFooter.vue";
 import * as _ from "lodash";
 import AppComponentBase from "@/shared/component-base/app-component-base";
 import { IReusetTabItem } from "@/shared/states/modules/reuse-tab.state";
+// app 模块
+const appState = namespace("app");
+// 复用tab模块
+const reuseTabState = namespace("reuseTab");
 
 @Component({
   components: {
@@ -51,15 +49,15 @@ import { IReusetTabItem } from "@/shared/states/modules/reuse-tab.state";
 })
 export default class MainLayout extends AppComponentBase {
   // 是否折叠
-  @appModule.State("isCollapse")
+  @appState.State("isCollapse")
   private isCollapse!: boolean;
 
   // 复用tab数据源
-  @reuseTabModule.State("source")
+  @reuseTabState.State("source")
   private reuseTabSource!: IReusetTabItem[];
 
   // 复用tab跳转
-  @reuseTabModule.State("to")
+  @reuseTabState.State("to")
   private reuseTabTo!: string;
 
   private copyright: string = "2018 vue alain";
@@ -110,7 +108,7 @@ export default class MainLayout extends AppComponentBase {
   /**
    * 关于路由tab
    */
-  @reuseTabModule.Action("remove")
+  @reuseTabState.Action("remove")
   private reuseTabClose(param: any) {}
 
   /**

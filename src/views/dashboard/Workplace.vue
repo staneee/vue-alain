@@ -111,7 +111,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { State, Mutation, namespace } from "vuex-class";
 import AppComponentBase from "@/shared/component-base/app-component-base";
-const appModule = namespace("app");
+const appState = namespace("app");
 
 @Component({
   components: {}

@@ -138,7 +138,7 @@ import { State, Mutation, namespace } from "vuex-class";
 import AppComponentBase from "@/shared/component-base/app-component-base";
 import httpClient from "@/shared/utils/http-client";
 
-const userModule = namespace("user");
+const userState = namespace("user");
 
 import axios from "axios";
 import {
@@ -160,7 +160,7 @@ export default class Login extends AppComponentBase {
 
   private input: AuthenticateModel = new AuthenticateModel();
 
-  @userModule.Mutation("loginSuccess")
+  @userState.Mutation("loginSuccess")
   private loginSuccess: any;
 
   private accountService: AccountServiceProxy;

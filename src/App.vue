@@ -17,7 +17,7 @@ import AppComponentBase from "@/shared/component-base/app-component-base";
 import { IDocumentTitle } from "@/shared/states/modules/app.state";
 
 // app模块
-const appModule = namespace("app");
+const appState = namespace("app");
 
 /**
  * app主入口
@@ -27,15 +27,15 @@ const appModule = namespace("app");
 })
 export default class App extends AppComponentBase {
   // 折叠
-  @appModule.State("isCollapse")
+  @appState.State("isCollapse")
   private isCollapse!: boolean;
 
   // 浏览器标题信息
-  @appModule.State("documentTitle")
+  @appState.State("documentTitle")
   private documentTitle!: IDocumentTitle;
 
   // app名称
-  @appModule.State("name")
+  @appState.State("name")
   private appName!: any;
 
   /**
