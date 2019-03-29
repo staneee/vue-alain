@@ -66,7 +66,7 @@
           </a-card-grid>
         </a-card>
         <a-card :bodyStyle="{ padding: 0 }" :bordered="false" class="active-card mb-lg" title="动态">
-          <a-list size="large">
+          <a-list >
             <div class="activities">{this.renderActivities()}</div>
           </a-list>
         </a-card>

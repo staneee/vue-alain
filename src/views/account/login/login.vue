@@ -8,7 +8,7 @@
             fieldDecoratorId="userName"
             :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入账户名且至少五个字符！' }]}"
           >
-            <a-input size="large" placeholder="admin" v-model="input.userNameOrEmailAddress">
+            <a-input  placeholder="admin" v-model="input.userNameOrEmailAddress">
               <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)"/>
             </a-input>
           </a-form-item>
@@ -16,26 +16,26 @@
             fieldDecoratorId="password"
             :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入密码！' }]}"
           >
-            <a-input size="large" type="password" placeholder="123qwe" v-model="input.password">
+            <a-input  type="password" placeholder="123qwe" v-model="input.password">
               <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)"/>
             </a-input>
           </a-form-item>
         </a-tab-pane>
         <a-tab-pane tab="手机号登录" key="2">
           <a-form-item fieldDecoratorId="mobile">
-            <a-input size="large" placeholder="手机号">
+            <a-input  placeholder="手机号">
               <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)"/>
             </a-input>
           </a-form-item>
           <a-form-item fieldDecoratorId="captcha">
-            <a-input-group size="large">
+            <a-input-group >
               <a-col :span="16">
                 <a-input placeholder="验证码">
                   <a-icon slot="prefix" type="mail" style="color:rgba(0,0,0,.25)"/>
                 </a-input>
               </a-col>
               <a-col :span="8">
-                <a-button size="large" block>获取验证码</a-button>
+                <a-button  block>获取验证码</a-button>
               </a-col>
             </a-input-group>
           </a-form-item>
@@ -56,7 +56,7 @@
         <a-button
           type="primary"
           htmlType="submit"
-          size="large"
+          
           :loading="loading"
           class="ant-btn__block"
         >登录</a-button>

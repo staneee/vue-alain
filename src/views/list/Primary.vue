@@ -42,7 +42,7 @@
         <a-button type="dashed" style="width:100%;margin-bottom:8px" icon="plus" @click="newModal">
             添加
         </a-button>
-        <a-list size="large" rowKey="id" :loading="loading" :pagination="paginationProps" :dataSource="list">
+        <a-list  rowKey="id" :loading="loading" :pagination="paginationProps" :dataSource="list">
             <a-list-item slot="renderItem" slot-scope="item, index">
                 <template slot="actions">
                   <a @click="(e)=>handleEditClick(e,item)">
@@ -62,7 +62,7 @@
                 </template>
                 <a-list-item-meta :description="item.subDescription">
                     <a slot="title" :href="item.href">{{item.title}}</a>
-                    <a-avatar slot="avatar" :src="item.logo" shape="square" size="large" />
+                    <a-avatar slot="avatar" :src="item.logo" shape="square"  />
                 </a-list-item-meta>
                 <div class="listContent">
                   <div class="listContentItem">

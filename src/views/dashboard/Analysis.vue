@@ -78,7 +78,7 @@
     <a-row>
       <a-col :sm="24" :md="24" :xl="24">
         <a-card :bordered="false" :bodyStyle="{ padding: 0 }">
-          <a-tabs size="large" :tabBarStyle="{ marginBottom: 24 }">
+          <a-tabs  :tabBarStyle="{ marginBottom: 24 }">
             <div slot="tabBarExtraContent">
               <div class="salesExtraWrap">
                 <div class="salesExtra">
