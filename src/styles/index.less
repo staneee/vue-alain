@@ -5,28 +5,34 @@
 // 自定义样式
 
 @aside-bg: #001529 !important;
+@aside-box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+@aside-after-border-right: none; //1px solid #efe3e5;
 @header-logo-bg: #002140 !important;
 @header-bg: #fff !important;
 @header-item-fg: rgba(0, 0, 0, 0.65) !important;
 @header-item-fg-hover: #1890ff !important;
-
+@header-box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+@page-header-bg: #fff !important;
 
 // 左侧菜单栏容器
 .aside {
     background: @aside-bg;
-    box-shadow: 4px 0px 4px -4px  rgba(0, 21, 41, .08);
+    box-shadow: @aside-box-shadow;
+
+    &::after {
+        border-right: @aside-after-border-right;
+    }
 }
 
 // 顶部header
 .header {
     background: @header-bg;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+    box-shadow: @header-box-shadow;
 
     // logo
     .logo {
         background-color: @header-logo-bg;
-        margin-left: -17px !important;
-        box-shadow: 4px 0px 4px -4px  rgba(0, 21, 41, .08);
+        box-shadow: @aside-box-shadow;
     }
 
 }
@@ -42,7 +48,7 @@
 }
 
 .page-header {
-    background-color: #fff !important;
+    background-color: @page-header-bg;
 }
 
 .ant-menu-inline-collapsed>.ant-menu-submenu>.ant-menu-submenu-title {

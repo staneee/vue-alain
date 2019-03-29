@@ -4,7 +4,7 @@
       <a-tab-pane v-for="(item) of list" :key="item.link">
         <template slot="tab">
           <span @click="to($event, item)" class="name">
-            <a-icon v-if="item.icon" v-bind:type="item.icon" :style="{'margin-reight':'0px'}"/>
+            <a-icon v-if="item.icon" v-bind:type="item.icon" :style="{'margin-right':'0px'}"/>
             {{item.text}}
           </span>
           <i
