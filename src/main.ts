@@ -4,15 +4,12 @@ import './directives/index';
 import '@/registerServiceWorker';
 
 
-
 import App from '@/App.vue';
 import RootRouter from '@/root.routing';
 import RootStore from '@/shared/states/root.state';
 
 import AppPreBootstrap from '@/AppPreBootstrap';
-import httpClient from '@/shared/utils/http-client';
 
-import { SessionServiceProxy } from '@/shared/service-proxies/service-proxies';
 import { i18n } from '@/app/index';
 import { preloaderFinished } from '@/shared/utils/preloader';
 
@@ -34,8 +31,6 @@ const rootApp = new Vue({
 
 async function main() {
   await AppPreBootstrap.bootstrap();
-  // 获取(未)登陆用户信息
-  var result = await (new SessionServiceProxy(undefined, httpClient).getCurrentLoginInformations());
   // 设置菜单
   menuService.setMenus(menus);
 }

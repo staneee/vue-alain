@@ -1,47 +1,55 @@
 <template>
-<a-dropdown>
+  <a-dropdown>
     <div class="item">
-        <a-icon type="global" />
-        <span>{l(`lang.${this.$i18n.locale}`)}}</span>
+      <a-icon type="global"/>
+      <span>{{currentLanguage.displayName}}</span>
     </div>
     <a-menu slot="overlay" @click="localeChange">
-        <a-menu-item v-for="(locale) in localeList()" :key="locale.key">
-            <a href="javascript:;">{{l(`lang.${locale.key}`)}}</a>
-        </a-menu-item>
+      <a-menu-item v-for="(item) in languages" :key="item.name">
+        <i :class="item.icon"></i>
+        <a href="javascript:;">{{item.displayName}}</a>
+      </a-menu-item>
     </a-menu>
-</a-dropdown>
+  </a-dropdown>
 </template>
 
 <script lang="ts">
 /**
  * 多语言选择组件
  */
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { State, Mutation, namespace } from 'vuex-class';
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { State, Mutation, namespace } from "vuex-class";
 
-import localeService from '@/core/localeService';
-import AppComponentBase from '@/shared/component-base/app-component-base';
-import * as _ from 'lodash';
+import AppComponentBase from "@/shared/component-base/app-component-base";
+
+import abpService from "@/shared/services/abp.service";
+import languageService from "@/shared/services/language.service";
+import { ILanguageInfo } from "@/shared/states/modules/language.state";
+
+import * as _ from "lodash";
 
 @Component({})
 export default class SelectLange extends AppComponentBase {
+  get currentLanguage(): ILanguageInfo {
+    return languageService.currentLanguage;
+  }
 
-    /**
-     * 多语言列表
-     */
-    private localeList() {
-        return _.map(_.keys(this.$i18n.messages), (item: any) => {
-            return { key: item };
-        });
-    }
+  get languages(): ILanguageInfo[] {
+    return _.filter(
+      languageService.languages,
+      o => !o.isDisabled && o.name !== this.currentLanguage.name
+    );
+  }
 
-    /**
-     * 切换语言
-     */
-    private localeChange(e: any) {
-        localeService.loadLanguageAsync(e.key)
-            .then((res: any) => {
-            });
-    }
+  constructor() {
+    super();
+  }
+
+  /**
+   * 切换语言
+   */
+  private localeChange(e: any) {
+    abpService.changeLanguage(e.key).then(() => {});
+  }
 }
 </script>

@@ -5,6 +5,7 @@ const menus: IMenu[] = [
         name: '/dashborad',
         text: '工作台',
         icon: 'dashboard',
+        i18n: 'Dashboard',
         children: [
             {
                 name: '/workplace',
